@@ -11,10 +11,14 @@
     <None Include="..\..\Source\JJW_ProjectEditor.Target.cs">
       <Filter>Source</Filter>
     </None>
+    <None Include="..\..\.vsconfig" />
     <Filter Include="Config">
       <UniqueIdentifier>{FA535FFB-25E1-3D20-B416-52F9BE21E06E}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Config\DefaultEditor.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEditorPerProjectUserSettings.ini">
       <Filter>Config</Filter>
     </None>
     <None Include="..\..\Config\DefaultEngine.ini">
@@ -37,6 +41,15 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\JJW_Project\JJW_Project.h">
       <Filter>Source\JJW_Project</Filter>
+    </ClCompile>
+    <Filter Include="Source\JJW_Project\Player">
+      <UniqueIdentifier>{3990E14F-4AB4-3042-BBB8-409AED2D22CA}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\JJW_Project\Player\CPlayer.cpp">
+      <Filter>Source\JJW_Project\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\JJW_Project\Player\CPlayer.h">
+      <Filter>Source\JJW_Project\Player</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
