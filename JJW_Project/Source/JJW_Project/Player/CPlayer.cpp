@@ -7,6 +7,11 @@
 #include "InputActionValue.h"
 #include "Engine/LocalPlayer.h"
 
+
+#include "Camera/CameraComponent.h"
+#include "GameFrameWork/SpringArmComponent.h"
+
+
 ACPlayer::ACPlayer()
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -71,7 +76,5 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	enhancedInput->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ACPlayer::Move);
 	enhancedInput->BindAction(LookAction, ETriggerEvent::Triggered, this, &ACPlayer::Look);
-
-
 }
 

@@ -51,5 +51,11 @@
     <ClCompile Include="..\..\Source\JJW_Project\Player\CPlayer.h">
       <Filter>Source\JJW_Project\Player</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\JJW_Project\Player\CPlayerAnim.cpp">
+      <Filter>Source\JJW_Project\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\JJW_Project\Player\CPlayerAnim.h">
+      <Filter>Source\JJW_Project\Player</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
