@@ -20,8 +20,6 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
-
-
 private:
 	void Move( const struct FInputActionValue& Value);
 	void Look(const struct FInputActionValue& Value);

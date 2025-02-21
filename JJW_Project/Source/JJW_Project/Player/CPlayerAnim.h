@@ -11,8 +11,9 @@ public:
 	virtual void NativeBeginPlay() override;
 
 	GENERATED_BODY()
-
 protected:
+	class ACharacter* Owner;
 
-	
+	class UMovementComponent* MoveComp;
+
 };
