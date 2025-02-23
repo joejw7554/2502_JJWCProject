@@ -1,27 +1,50 @@
 #include "CPlayer.h"
+#include "../Components/CMovementComponent.h"
 
 #include "InputMappingContext.h"
-#include "InputAction.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
-#include "InputActionValue.h"
 #include "Engine/LocalPlayer.h"
-
 
 #include "Camera/CameraComponent.h"
 #include "GameFrameWork/SpringArmComponent.h"
+#include "Components/CapsuleComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
+
 
 
 ACPlayer::ACPlayer()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
+	GetMesh()->SetRelativeLocation(FVector(0, 0, -90));
+	GetMesh()->SetRelativeRotation(FRotator(0, -90,0));
+
+	Movement = CreateDefaultSubobject<UCMovementComponent>("MovementComponent");
+
+	SpringArm = CreateDefaultSubobject<USpringArmComponent>("CameraBoom");
+	SpringArm->SetupAttachment(GetCapsuleComponent());
+	SpringArm->bEnableCameraLag = true;
+	SpringArm->bUsePawnControlRotation = true;
+	
+
+	GetCharacterMovement()->MaxWalkSpeed = 400;
+	FollowCamera = CreateDefaultSubobject<UCameraComponent>("CameraComponent");
+	FollowCamera->SetupAttachment(SpringArm);
 }
 
 void ACPlayer::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	InitializePlayerEnhnacedInput();
+
+	if(Movement)
+	Movement->DisableControlRotation();
+}
+
+void ACPlayer::InitializePlayerEnhnacedInput()
+{
 	APlayerController* playerController = Cast<APlayerController>(GetController());
 
 	if (playerController)
@@ -36,30 +59,6 @@ void ACPlayer::BeginPlay()
 			}
 		}
 	}
-
-}
-
-void ACPlayer::Move(const FInputActionValue& Value)
-{
-	FVector2D val = Value.Get<FVector2D>();
-
-	FRotator yawRotator = FRotator(0.f, GetControlRotation().Yaw,0.f);
-
-	FVector forward = FRotationMatrix(yawRotator).GetUnitAxis(EAxis::X);
-	FVector right = FRotationMatrix(yawRotator).GetUnitAxis(EAxis::Y);
-
-	AddMovementInput(forward, val.Y);
-	AddMovementInput(right, val.X);
-
-}
-
-void ACPlayer::Look(const FInputActionValue& Value)
-{
-	FVector2D val = Value.Get<FVector2D>();
-
-	AddControllerYawInput(val.X);
-	AddControllerPitchInput(-val.Y);
-
 }
 
 void ACPlayer::Tick(float DeltaTime)
@@ -74,7 +73,9 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	UEnhancedInputComponent* enhancedInput = Cast<UEnhancedInputComponent>(PlayerInputComponent);
 
-	enhancedInput->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ACPlayer::Move);
-	enhancedInput->BindAction(LookAction, ETriggerEvent::Triggered, this, &ACPlayer::Look);
+	if (!Movement) return;
+
+	enhancedInput->BindAction(MoveAction, ETriggerEvent::Triggered, Movement, &UCMovementComponent::Move);
+	enhancedInput->BindAction(LookAction, ETriggerEvent::Triggered, Movement, &UCMovementComponent::Look);
 }
 

@@ -1,0 +1,15 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "c:\\users\\joejw\\desktop\\2502_jjwcproject\\jjw_project\\intermediate\\build\\win64\\unrealeditor\\inc\\jjw_project\\uht\\cmovementcomponent.gen.cpp",
+        "ProvidedModule": "",
+        "PCH": "c:\\users\\joejw\\desktop\\2502_jjwcproject\\jjw_project\\intermediate\\build\\win64\\x64\\jjw_projecteditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.h.pch",
+        "Includes": [
+            "c:\\users\\joejw\\desktop\\2502_jjwcproject\\jjw_project\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\jjw_project\\definitions.jjw_project.h",
+            "c:\\users\\joejw\\desktop\\2502_jjwcproject\\jjw_project\\source\\jjw_project\\components\\cmovementcomponent.h",
+            "c:\\users\\joejw\\desktop\\2502_jjwcproject\\jjw_project\\intermediate\\build\\win64\\unrealeditor\\inc\\jjw_project\\uht\\cmovementcomponent.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

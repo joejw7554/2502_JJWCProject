@@ -11,7 +11,6 @@
     <None Include="..\..\Source\JJW_ProjectEditor.Target.cs">
       <Filter>Source</Filter>
     </None>
-    <None Include="..\..\.vsconfig" />
     <Filter Include="Config">
       <UniqueIdentifier>{FA535FFB-25E1-3D20-B416-52F9BE21E06E}</UniqueIdentifier>
     </Filter>
@@ -41,6 +40,15 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\JJW_Project\JJW_Project.h">
       <Filter>Source\JJW_Project</Filter>
+    </ClCompile>
+    <Filter Include="Source\JJW_Project\Components">
+      <UniqueIdentifier>{0916F223-5D42-3E64-B793-454A0862CCB4}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\JJW_Project\Components\CMovementComponent.cpp">
+      <Filter>Source\JJW_Project\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\JJW_Project\Components\CMovementComponent.h">
+      <Filter>Source\JJW_Project\Components</Filter>
     </ClCompile>
     <Filter Include="Source\JJW_Project\Player">
       <UniqueIdentifier>{3990E14F-4AB4-3042-BBB8-409AED2D22CA}</UniqueIdentifier>

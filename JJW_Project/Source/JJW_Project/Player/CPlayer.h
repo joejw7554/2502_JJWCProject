@@ -21,9 +21,7 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-	void Move( const struct FInputActionValue& Value);
-	void Look(const struct FInputActionValue& Value);
-
+	void InitializePlayerEnhnacedInput();
 protected:
 	UPROPERTY(EditDefaultsOnly, Category="Input")
 	class UInputMappingContext* InputMappingContext;
@@ -39,4 +37,8 @@ protected:
 
 	UPROPERTY(VisibleAnywhere)
 	class UCameraComponent* FollowCamera;
+
+private:
+	UPROPERTY(VisibleAnywhere)
+	class UCMovementComponent* Movement;
 };
