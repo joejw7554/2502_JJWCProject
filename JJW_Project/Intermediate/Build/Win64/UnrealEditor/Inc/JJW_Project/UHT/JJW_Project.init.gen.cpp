@@ -7,23 +7,27 @@
 #include "UObject/GeneratedCppIncludes.h"
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 void EmptyLinkFunctionForGeneratedCodeJJW_Project_init() {}
+	JJW_PROJECT_API UFunction* Z_Construct_UDelegateFunction_JJW_Project_StateChange__DelegateSignature();
 	static FPackageRegistrationInfo Z_Registration_Info_UPackage__Script_JJW_Project;
 	FORCENOINLINE UPackage* Z_Construct_UPackage__Script_JJW_Project()
 	{
 		if (!Z_Registration_Info_UPackage__Script_JJW_Project.OuterSingleton)
 		{
+			static UObject* (*const SingletonFuncArray[])() = {
+				(UObject* (*)())Z_Construct_UDelegateFunction_JJW_Project_StateChange__DelegateSignature,
+			};
 			static const UECodeGen_Private::FPackageParams PackageParams = {
 				"/Script/JJW_Project",
-				nullptr,
-				0,
+				SingletonFuncArray,
+				UE_ARRAY_COUNT(SingletonFuncArray),
 				PKG_CompiledIn | 0x00000000,
-				0xDA046E23,
-				0x447B0CA7,
+				0x6FB07D3C,
+				0xB6B52459,
 				METADATA_PARAMS(0, nullptr)
 			};
 			UECodeGen_Private::ConstructUPackage(Z_Registration_Info_UPackage__Script_JJW_Project.OuterSingleton, PackageParams);
 		}
 		return Z_Registration_Info_UPackage__Script_JJW_Project.OuterSingleton;
 	}
-	static FRegisterCompiledInInfo Z_CompiledInDeferPackage_UPackage__Script_JJW_Project(Z_Construct_UPackage__Script_JJW_Project, TEXT("/Script/JJW_Project"), Z_Registration_Info_UPackage__Script_JJW_Project, CONSTRUCT_RELOAD_VERSION_INFO(FPackageReloadVersionInfo, 0xDA046E23, 0x447B0CA7));
+	static FRegisterCompiledInInfo Z_CompiledInDeferPackage_UPackage__Script_JJW_Project(Z_Construct_UPackage__Script_JJW_Project, TEXT("/Script/JJW_Project"), Z_Registration_Info_UPackage__Script_JJW_Project, CONSTRUCT_RELOAD_VERSION_INFO(FPackageReloadVersionInfo, 0x6FB07D3C, 0xB6B52459));
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

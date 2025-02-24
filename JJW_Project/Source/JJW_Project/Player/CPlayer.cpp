@@ -1,5 +1,6 @@
 #include "CPlayer.h"
 #include "../Components/CMovementComponent.h"
+#include "../Components/CStateComponent.h"
 
 #include "InputMappingContext.h"
 #include "EnhancedInputSubsystems.h"
@@ -13,6 +14,7 @@
 
 
 
+
 ACPlayer::ACPlayer()
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -21,6 +23,8 @@ ACPlayer::ACPlayer()
 	GetMesh()->SetRelativeRotation(FRotator(0, -90,0));
 
 	Movement = CreateDefaultSubobject<UCMovementComponent>("MovementComponent");
+
+	State= CreateDefaultSubobject<UCStateComponent>("StateComponent");
 
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>("CameraBoom");
 	SpringArm->SetupAttachment(GetCapsuleComponent());

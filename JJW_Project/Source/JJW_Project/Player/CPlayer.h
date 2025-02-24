@@ -41,4 +41,7 @@ protected:
 private:
 	UPROPERTY(VisibleAnywhere)
 	class UCMovementComponent* Movement;
+
+	UPROPERTY(VisibleAnywhere)
+	class UCStateComponent* State;
 };
