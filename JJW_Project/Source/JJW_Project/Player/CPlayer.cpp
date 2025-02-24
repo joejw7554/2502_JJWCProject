@@ -24,7 +24,6 @@ ACPlayer::ACPlayer()
 
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>("CameraBoom");
 	SpringArm->SetupAttachment(GetCapsuleComponent());
-	SpringArm->TargetArmLength = 350.f;
 	SpringArm->bEnableCameraLag = true;
 	SpringArm->bUsePawnControlRotation = true;
 	
