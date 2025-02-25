@@ -21,11 +21,18 @@ class JJW_PROJECT_API UCStateComponent : public UActorComponent
 public:
 	UCStateComponent();
 
-	void SetIdleMode();
-	void SetAttackMode();
-	void SetDodgeMode();
-	void SetDamagedMode();
-	void SetDeadMode();
+	FORCEINLINE void SetIdleMode()	{ ChangeState(CurrentState, EState::Idle); }
+	FORCEINLINE void SetAttackMode() { ChangeState(CurrentState, EState::Attack); }
+	FORCEINLINE void SetDodgeMode() { ChangeState(CurrentState, EState::Dodge); }
+	FORCEINLINE void SetDamagedMode() { ChangeState(CurrentState, EState::Damaged); }
+	FORCEINLINE void SetDeadMode() { ChangeState(CurrentState, EState::Dead); }
+
+	FORCEINLINE bool IsIdle() { return CurrentState == EState::Idle; }
+	FORCEINLINE bool IsAttack() { return CurrentState == EState::Attack; }
+	FORCEINLINE bool IsDodge() { return CurrentState == EState::Dodge; }
+	FORCEINLINE bool IsDamaged() { return CurrentState == EState::Damaged; }
+	FORCEINLINE bool IsDead() { return CurrentState == EState::Dead; }
+
 
 protected:
 	virtual void BeginPlay() override;

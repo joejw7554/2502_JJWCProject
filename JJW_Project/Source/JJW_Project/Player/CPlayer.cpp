@@ -64,12 +64,30 @@ void ACPlayer::InitializePlayerEnhnacedInput()
 
 void ACPlayer::OnStateChanged(EState InPrevState, EState InNewState)
 {
-	/*switch (InNewState)
+	switch (InNewState)
 	{
+	case EState::Idle:
 
-	
-	}*/
+		break;
+	case EState::Attack:
 
+		break;
+	case EState::Dodge:
+
+		break;
+	case EState::Damaged:
+
+		break;
+	case EState::Dead:
+
+		break;
+	case EState::Max:
+
+		break;
+
+	default:
+		break;
+	}
 }
 
 void ACPlayer::Tick(float DeltaTime)

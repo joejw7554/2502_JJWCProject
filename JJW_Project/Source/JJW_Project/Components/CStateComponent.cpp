@@ -7,36 +7,6 @@ UCStateComponent::UCStateComponent()
 
 }
 
-void UCStateComponent::SetIdleMode()
-{
-	ChangeState(CurrentState, EState::Idle);
-}
-
-void UCStateComponent::SetAttackMode()
-{
-	ChangeState(CurrentState, EState::Attack);
-
-}
-
-void UCStateComponent::SetDodgeMode()
-{
-	ChangeState(CurrentState, EState::Dodge);
-
-}
-
-void UCStateComponent::SetDamagedMode()
-{
-	ChangeState(CurrentState, EState::Damaged);
-
-}
-
-void UCStateComponent::SetDeadMode()
-{
-	ChangeState(CurrentState, EState::Dead);
-
-}
-
-
 void UCStateComponent::BeginPlay()
 {
 	Super::BeginPlay();
