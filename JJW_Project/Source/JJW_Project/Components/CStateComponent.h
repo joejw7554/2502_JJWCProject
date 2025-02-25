@@ -33,7 +33,6 @@ public:
 	FORCEINLINE bool IsDamaged() { return CurrentState == EState::Damaged; }
 	FORCEINLINE bool IsDead() { return CurrentState == EState::Dead; }
 
-
 protected:
 	virtual void BeginPlay() override;
 

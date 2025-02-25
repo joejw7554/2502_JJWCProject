@@ -7,13 +7,22 @@
 UCLASS()
 class JJW_PROJECT_API UCPlayerAnim : public UAnimInstance
 {
-public:
-	virtual void NativeBeginPlay() override;
 
 	GENERATED_BODY()
+
+public:
+	virtual void NativeInitializeAnimation() override;
+
+	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
+
+
 protected:
+	UPROPERTY(VisibleAnywhere, Category="Player Property", BlueprintReadOnly)
+	float Speed;
+
+private:
 	class ACharacter* Owner;
 
-	class UMovementComponent* MoveComp;
+	class UMovementComponent* Movement;
 
 };

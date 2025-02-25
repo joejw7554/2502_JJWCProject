@@ -17,15 +17,28 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
-	void Move(const struct FInputActionValue& Value);
-	void Look(const FInputActionValue& Value);
+	void MoveAction(const struct FInputActionValue& Value);
+	void LookAction(const FInputActionValue& Value);
+	void SprintAction(const FInputActionValue& Value);
 
 	void EnableControlRotation();
 	void DisableControlRotation();
 
+	void SetWalkMode();
+	void SetSprintMode();
+
+private:
+	void SetMoveSpeed(float Value);
+
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Camera Property")
-	FVector2D PitchAngleLimit = FVector2D(-60, 60);
+	FVector2D PitchAngleLimit = FVector2D(-30, +30);
+
+	UPROPERTY(EditDefaultsOnly, Category = "Movement Property")
+	float WalkSpeed = 600.f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Movement Property")
+	float SprintSpeed = 1000.f;
 
 private:
 	ACharacter* Owner;

@@ -17,19 +17,22 @@ ACPlayer::ACPlayer()
 	GetMesh()->SetRelativeLocation(FVector(0, 0, -90));
 	GetMesh()->SetRelativeRotation(FRotator(0, -90,0));
 
-	Movement = CreateDefaultSubobject<UCMovementComponent>("MovementComponent");
-
-	State= CreateDefaultSubobject<UCStateComponent>("StateComponent");
+	//Components
+	{
+		Movement = CreateDefaultSubobject<UCMovementComponent>("MovementComponent");
+		State = CreateDefaultSubobject<UCStateComponent>("StateComponent");
+	}
 
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>("CameraBoom");
 	SpringArm->SetupAttachment(GetCapsuleComponent());
 	SpringArm->bEnableCameraLag = true;
+	SpringArm->SocketOffset = FVector(0,0,80);
 	SpringArm->bUsePawnControlRotation = true;
 	
-
-	GetCharacterMovement()->MaxWalkSpeed = 400;
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>("CameraComponent");
 	FollowCamera->SetupAttachment(SpringArm);
+
+	GetCharacterMovement()->MaxWalkSpeed = 600.f;
 }
 
 void ACPlayer::BeginPlay()
@@ -104,7 +107,14 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	if (!Movement) return;
 
-	enhancedInput->BindAction(MoveAction, ETriggerEvent::Triggered, Movement, &UCMovementComponent::Move);
-	enhancedInput->BindAction(LookAction, ETriggerEvent::Triggered, Movement, &UCMovementComponent::Look);
+	if(IA_MoveAction)
+	enhancedInput->BindAction(IA_MoveAction, ETriggerEvent::Triggered, Movement, &UCMovementComponent::MoveAction);
+
+	if(IA_LookAction)
+	enhancedInput->BindAction(IA_LookAction, ETriggerEvent::Triggered, Movement, &UCMovementComponent::LookAction);
+
+	if(IA_SprintAction)
+	enhancedInput->BindAction(IA_SprintAction, ETriggerEvent::Triggered, Movement, &UCMovementComponent::SprintAction);
+
 }
 

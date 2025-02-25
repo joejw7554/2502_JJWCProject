@@ -28,7 +28,7 @@ void UCMovementComponent::BeginPlay()
 	Owner->GetCharacterMovement()->RotationRate = FRotator(0, 540.f, 0);
 }
 
-void UCMovementComponent::Move(const FInputActionValue& Value)
+void UCMovementComponent::MoveAction(const FInputActionValue& Value)
 {
 	FVector2D val = Value.Get<FVector2D>();
 
@@ -40,12 +40,22 @@ void UCMovementComponent::Move(const FInputActionValue& Value)
 	Owner->AddMovementInput(right, val.X);
 }
 
-void UCMovementComponent::Look(const FInputActionValue& Value)
+void UCMovementComponent::LookAction(const FInputActionValue& Value)
 {
 	FVector2D val = Value.Get<FVector2D>();
 
 	Owner->AddControllerYawInput(val.X);
 	Owner->AddControllerPitchInput(-val.Y);
+}
+
+void UCMovementComponent::SprintAction(const FInputActionValue& Value)
+{
+	bool bPressed = Value.Get<bool>();
+
+	if (bPressed)
+		SetSprintMode();
+	else
+		SetWalkMode();
 }
 
 void UCMovementComponent::EnableControlRotation()
@@ -58,5 +68,20 @@ void UCMovementComponent::DisableControlRotation()
 {
 	Owner->GetCharacterMovement()->bOrientRotationToMovement = true;
 	Owner->bUseControllerRotationYaw = false;
+}
+
+void UCMovementComponent::SetWalkMode()
+{
+	SetMoveSpeed(WalkSpeed);
+}
+
+void UCMovementComponent::SetSprintMode()
+{
+	SetMoveSpeed(SprintSpeed);
+}
+
+void UCMovementComponent::SetMoveSpeed(float Value)
+{
+	Owner->GetCharacterMovement()->MaxWalkSpeed = Value;
 }
 

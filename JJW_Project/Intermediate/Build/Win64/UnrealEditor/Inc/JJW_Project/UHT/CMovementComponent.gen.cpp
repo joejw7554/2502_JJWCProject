@@ -37,8 +37,18 @@ struct Z_Construct_UClass_UCMovementComponent_Statics
 		{ "Category", "Camera Property" },
 		{ "ModuleRelativePath", "Components/CMovementComponent.h" },
 	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_WalkSpeed_MetaData[] = {
+		{ "Category", "Movement Property" },
+		{ "ModuleRelativePath", "Components/CMovementComponent.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_SprintSpeed_MetaData[] = {
+		{ "Category", "Movement Property" },
+		{ "ModuleRelativePath", "Components/CMovementComponent.h" },
+	};
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FStructPropertyParams NewProp_PitchAngleLimit;
+	static const UECodeGen_Private::FFloatPropertyParams NewProp_WalkSpeed;
+	static const UECodeGen_Private::FFloatPropertyParams NewProp_SprintSpeed;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
@@ -47,8 +57,12 @@ struct Z_Construct_UClass_UCMovementComponent_Statics
 	static const UECodeGen_Private::FClassParams ClassParams;
 };
 const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_UCMovementComponent_Statics::NewProp_PitchAngleLimit = { "PitchAngleLimit", nullptr, (EPropertyFlags)0x0040000000010001, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UCMovementComponent, PitchAngleLimit), Z_Construct_UScriptStruct_FVector2D, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_PitchAngleLimit_MetaData), NewProp_PitchAngleLimit_MetaData) };
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UCMovementComponent_Statics::NewProp_WalkSpeed = { "WalkSpeed", nullptr, (EPropertyFlags)0x0040000000010001, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UCMovementComponent, WalkSpeed), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_WalkSpeed_MetaData), NewProp_WalkSpeed_MetaData) };
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UCMovementComponent_Statics::NewProp_SprintSpeed = { "SprintSpeed", nullptr, (EPropertyFlags)0x0040000000010001, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UCMovementComponent, SprintSpeed), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_SprintSpeed_MetaData), NewProp_SprintSpeed_MetaData) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_UCMovementComponent_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UCMovementComponent_Statics::NewProp_PitchAngleLimit,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UCMovementComponent_Statics::NewProp_WalkSpeed,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UCMovementComponent_Statics::NewProp_SprintSpeed,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_UCMovementComponent_Statics::PropPointers) < 2048);
 UObject* (*const Z_Construct_UClass_UCMovementComponent_Statics::DependentSingletons[])() = {
@@ -91,10 +105,10 @@ UCMovementComponent::~UCMovementComponent() {}
 struct Z_CompiledInDeferFile_FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Components_CMovementComponent_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UCMovementComponent, UCMovementComponent::StaticClass, TEXT("UCMovementComponent"), &Z_Registration_Info_UClass_UCMovementComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UCMovementComponent), 59296456U) },
+		{ Z_Construct_UClass_UCMovementComponent, UCMovementComponent::StaticClass, TEXT("UCMovementComponent"), &Z_Registration_Info_UClass_UCMovementComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UCMovementComponent), 3049103872U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Components_CMovementComponent_h_50948684(TEXT("/Script/JJW_Project"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Components_CMovementComponent_h_143439725(TEXT("/Script/JJW_Project"),
 	Z_CompiledInDeferFile_FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Components_CMovementComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Components_CMovementComponent_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

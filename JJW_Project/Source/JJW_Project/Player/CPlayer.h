@@ -33,10 +33,13 @@ protected:
 	class UInputMappingContext* InputMappingContext;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
-	class UInputAction* MoveAction;
+	class UInputAction* IA_MoveAction;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Inpu")
-	class UInputAction* LookAction;
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	class UInputAction* IA_LookAction;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	class UInputAction* IA_SprintAction;
 
 	UPROPERTY(VisibleAnywhere)
 	class USpringArmComponent* SpringArm;

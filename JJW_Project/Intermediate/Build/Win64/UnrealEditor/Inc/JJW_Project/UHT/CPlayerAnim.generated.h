@@ -14,7 +14,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #endif
 #define JJW_PROJECT_CPlayerAnim_generated_h
 
-#define FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Player_CPlayerAnim_h_13_INCLASS_NO_PURE_DECLS \
+#define FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Player_CPlayerAnim_h_11_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUCPlayerAnim(); \
 	friend struct Z_Construct_UClass_UCPlayerAnim_Statics; \
@@ -23,7 +23,7 @@ public: \
 	DECLARE_SERIALIZER(UCPlayerAnim)
 
 
-#define FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Player_CPlayerAnim_h_13_ENHANCED_CONSTRUCTORS \
+#define FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Player_CPlayerAnim_h_11_ENHANCED_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API UCPlayerAnim(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()); \
 private: \
@@ -38,12 +38,12 @@ public: \
 
 
 #define FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Player_CPlayerAnim_h_7_PROLOG
-#define FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Player_CPlayerAnim_h_13_GENERATED_BODY \
+#define FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Player_CPlayerAnim_h_11_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Player_CPlayerAnim_h_13_INCLASS_NO_PURE_DECLS \
-	FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Player_CPlayerAnim_h_13_ENHANCED_CONSTRUCTORS \
-public: \
+	FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Player_CPlayerAnim_h_11_INCLASS_NO_PURE_DECLS \
+	FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Player_CPlayerAnim_h_11_ENHANCED_CONSTRUCTORS \
+private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
