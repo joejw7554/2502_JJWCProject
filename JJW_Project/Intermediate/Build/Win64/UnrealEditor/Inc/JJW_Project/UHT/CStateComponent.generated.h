@@ -15,11 +15,11 @@ enum class EState : uint8;
 #endif
 #define JJW_PROJECT_CStateComponent_generated_h
 
-#define FID_Users_Atents_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Components_CStateComponent_h_14_DELEGATE \
+#define FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Components_CStateComponent_h_14_DELEGATE \
 JJW_PROJECT_API void FStateChange_DelegateWrapper(const FMulticastScriptDelegate& StateChange, EState InPrevState, EState InNewState);
 
 
-#define FID_Users_Atents_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Components_CStateComponent_h_19_INCLASS_NO_PURE_DECLS \
+#define FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Components_CStateComponent_h_19_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUCStateComponent(); \
 	friend struct Z_Construct_UClass_UCStateComponent_Statics; \
@@ -28,7 +28,7 @@ public: \
 	DECLARE_SERIALIZER(UCStateComponent)
 
 
-#define FID_Users_Atents_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Components_CStateComponent_h_19_ENHANCED_CONSTRUCTORS \
+#define FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Components_CStateComponent_h_19_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	UCStateComponent(UCStateComponent&&); \
@@ -40,12 +40,12 @@ public: \
 	NO_API virtual ~UCStateComponent();
 
 
-#define FID_Users_Atents_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Components_CStateComponent_h_16_PROLOG
-#define FID_Users_Atents_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Components_CStateComponent_h_19_GENERATED_BODY \
+#define FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Components_CStateComponent_h_16_PROLOG
+#define FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Components_CStateComponent_h_19_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Users_Atents_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Components_CStateComponent_h_19_INCLASS_NO_PURE_DECLS \
-	FID_Users_Atents_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Components_CStateComponent_h_19_ENHANCED_CONSTRUCTORS \
+	FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Components_CStateComponent_h_19_INCLASS_NO_PURE_DECLS \
+	FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Components_CStateComponent_h_19_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -53,7 +53,7 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 template<> JJW_PROJECT_API UClass* StaticClass<class UCStateComponent>();
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID FID_Users_Atents_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Components_CStateComponent_h
+#define CURRENT_FILE_ID FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Components_CStateComponent_h
 
 
 #define FOREACH_ENUM_ESTATE(op) \
