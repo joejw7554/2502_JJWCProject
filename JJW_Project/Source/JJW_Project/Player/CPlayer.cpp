@@ -1,6 +1,4 @@
 #include "CPlayer.h"
-#include "../Components/CMovementComponent.h"
-#include "../Components/CStateComponent.h"
 
 #include "InputMappingContext.h"
 #include "EnhancedInputSubsystems.h"
@@ -11,9 +9,6 @@
 #include "GameFrameWork/SpringArmComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
-
-
-
 
 ACPlayer::ACPlayer()
 {
@@ -45,6 +40,8 @@ void ACPlayer::BeginPlay()
 
 	if(Movement)
 	Movement->DisableControlRotation();
+
+	State->OnStateChange.AddDynamic(this, &ACPlayer::OnStateChanged);
 }
 
 void ACPlayer::InitializePlayerEnhnacedInput()
@@ -63,6 +60,16 @@ void ACPlayer::InitializePlayerEnhnacedInput()
 			}
 		}
 	}
+}
+
+void ACPlayer::OnStateChanged(EState InPrevState, EState InNewState)
+{
+	/*switch (InNewState)
+	{
+
+	
+	}*/
+
 }
 
 void ACPlayer::Tick(float DeltaTime)

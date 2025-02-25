@@ -2,6 +2,9 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "../Components/CStateComponent.h"
+#include "../Components/CMovementComponent.h"
+
 #include "CPlayer.generated.h"
 
 UCLASS()
@@ -12,7 +15,7 @@ class JJW_PROJECT_API ACPlayer : public ACharacter
 public:
 	ACPlayer();
 
-public:	
+public:
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
@@ -22,8 +25,11 @@ protected:
 
 private:
 	void InitializePlayerEnhnacedInput();
+
+	UFUNCTION()
+	void OnStateChanged(EState InPrevState, EState InNewState);
 protected:
-	UPROPERTY(EditDefaultsOnly, Category="Input")
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	class UInputMappingContext* InputMappingContext;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
@@ -40,8 +46,8 @@ protected:
 
 private:
 	UPROPERTY(VisibleAnywhere)
-	class UCMovementComponent* Movement;
+	UCMovementComponent* Movement;
 
 	UPROPERTY(VisibleAnywhere)
-	class UCStateComponent* State;
+	UCStateComponent* State;
 };

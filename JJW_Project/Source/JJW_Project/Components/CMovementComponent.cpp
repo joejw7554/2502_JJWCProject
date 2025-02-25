@@ -46,7 +46,6 @@ void UCMovementComponent::Look(const FInputActionValue& Value)
 
 	Owner->AddControllerYawInput(val.X);
 	Owner->AddControllerPitchInput(-val.Y);
-
 }
 
 void UCMovementComponent::EnableControlRotation()
