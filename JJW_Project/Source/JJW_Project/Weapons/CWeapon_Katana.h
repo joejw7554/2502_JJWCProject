@@ -8,5 +8,15 @@ UCLASS()
 class JJW_PROJECT_API ACWeapon_Katana : public ACWeaponBase
 {
 	GENERATED_BODY()
-	
+
+public:
+	ACWeapon_Katana();
+
+protected:
+	virtual void BeginPlay() override;
+
+
+protected:
+	UPROPERTY(VisibleAnywhere)
+	USkeletalMeshComponent* ExtraMesh;
 };

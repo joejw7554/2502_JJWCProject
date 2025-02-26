@@ -19,6 +19,7 @@ void ACWeaponBase::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	
 }
 
 

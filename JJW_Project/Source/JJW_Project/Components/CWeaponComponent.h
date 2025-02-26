@@ -5,6 +5,8 @@
 #include "../Weapons/CWeaponBase.h"
 #include "CWeaponComponent.generated.h"
 
+
+//Delegate사용해서 웨폰에 명령을 내릴까?
 UENUM()
 enum class EWeaponType : uint8
 {

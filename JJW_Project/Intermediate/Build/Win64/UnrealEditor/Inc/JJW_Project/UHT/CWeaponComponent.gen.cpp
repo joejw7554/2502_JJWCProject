@@ -37,8 +37,14 @@ struct Z_Construct_UEnum_JJW_Project_EWeaponType_Statics
 {
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Enum_MetaDataParams[] = {
+#if !UE_BUILD_SHIPPING
+		{ "Comment", "//Delegate\xec\x82\xac\xec\x9a\xa9\xed\x95\xb4\xec\x84\x9c \xec\x9b\xa8\xed\x8f\xb0\xec\x97\x90 \xeb\xaa\x85\xeb\xa0\xb9\xec\x9d\x84 \xeb\x82\xb4\xeb\xa6\xb4\xea\xb9\x8c?\n" },
+#endif
 		{ "Katana.Name", "EWeaponType::Katana" },
 		{ "ModuleRelativePath", "Components/CWeaponComponent.h" },
+#if !UE_BUILD_SHIPPING
+		{ "ToolTip", "Delegate\xec\x82\xac\xec\x9a\xa9\xed\x95\xb4\xec\x84\x9c \xec\x9b\xa8\xed\x8f\xb0\xec\x97\x90 \xeb\xaa\x85\xeb\xa0\xb9\xec\x9d\x84 \xeb\x82\xb4\xeb\xa6\xb4\xea\xb9\x8c?" },
+#endif
 	};
 #endif // WITH_METADATA
 	static constexpr UECodeGen_Private::FEnumeratorParam Enumerators[] = {
@@ -155,13 +161,13 @@ UCWeaponComponent::~UCWeaponComponent() {}
 struct Z_CompiledInDeferFile_FID_Users_Atents_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Components_CWeaponComponent_h_Statics
 {
 	static constexpr FEnumRegisterCompiledInInfo EnumInfo[] = {
-		{ EWeaponType_StaticEnum, TEXT("EWeaponType"), &Z_Registration_Info_UEnum_EWeaponType, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 986891475U) },
+		{ EWeaponType_StaticEnum, TEXT("EWeaponType"), &Z_Registration_Info_UEnum_EWeaponType, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 1920288623U) },
 	};
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
 		{ Z_Construct_UClass_UCWeaponComponent, UCWeaponComponent::StaticClass, TEXT("UCWeaponComponent"), &Z_Registration_Info_UClass_UCWeaponComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UCWeaponComponent), 1194240669U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Atents_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Components_CWeaponComponent_h_1169556447(TEXT("/Script/JJW_Project"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Atents_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Components_CWeaponComponent_h_2574439618(TEXT("/Script/JJW_Project"),
 	Z_CompiledInDeferFile_FID_Users_Atents_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Components_CWeaponComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Atents_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Components_CWeaponComponent_h_Statics::ClassInfo),
 	nullptr, 0,
 	Z_CompiledInDeferFile_FID_Users_Atents_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Components_CWeaponComponent_h_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Atents_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Components_CWeaponComponent_h_Statics::EnumInfo));

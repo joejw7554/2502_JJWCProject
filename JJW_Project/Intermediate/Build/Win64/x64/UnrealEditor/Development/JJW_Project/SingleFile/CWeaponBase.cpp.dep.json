@@ -1050,7 +1050,9 @@
             "c:\\program files\\epic games\\ue_5.5\\engine\\source\\runtime\\engine\\classes\\animation\\attributescontainer.h",
             "c:\\program files\\epic games\\ue_5.5\\engine\\source\\runtime\\engine\\classes\\animation\\wrappedattribute.h",
             "c:\\program files\\epic games\\ue_5.5\\engine\\source\\runtime\\engine\\classes\\engine\\posewatchrenderdata.h",
-            "c:\\program files\\epic games\\ue_5.5\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\skeletalmeshcomponent.generated.h"
+            "c:\\program files\\epic games\\ue_5.5\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\skeletalmeshcomponent.generated.h",
+            "c:\\users\\atents\\desktop\\2502_jjwcproject\\jjw_project\\source\\jjw_project\\weapons\\cskillcomponent.h",
+            "c:\\users\\atents\\desktop\\2502_jjwcproject\\jjw_project\\intermediate\\build\\win64\\unrealeditor\\inc\\jjw_project\\uht\\cskillcomponent.generated.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

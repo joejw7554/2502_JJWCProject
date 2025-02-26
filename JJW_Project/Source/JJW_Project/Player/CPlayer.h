@@ -21,9 +21,12 @@ public:
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-
-public: 
+public:  //Action
 	void OnDodge();
+
+public: //Getter
+	FORCEINLINE UCWeaponComponent* GetWeaponComponent() { return Weapon; }
+
 
 protected:
 	virtual void BeginPlay() override;
