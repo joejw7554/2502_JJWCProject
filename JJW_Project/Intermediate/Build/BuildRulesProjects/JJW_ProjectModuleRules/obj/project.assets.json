@@ -6927,23 +6927,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\joejw\\.nuget\\packages\\": {},
+    "C:\\Users\\Atents\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\joejw\\Desktop\\2502_JJWCProject\\JJW_Project\\Intermediate\\Build\\BuildRulesProjects\\JJW_ProjectModuleRules\\JJW_ProjectModuleRules.csproj",
+      "projectUniqueName": "C:\\Users\\Atents\\Desktop\\2502_JJWCProject\\JJW_Project\\Intermediate\\Build\\BuildRulesProjects\\JJW_ProjectModuleRules\\JJW_ProjectModuleRules.csproj",
       "projectName": "JJW_ProjectModuleRules",
-      "projectPath": "C:\\Users\\joejw\\Desktop\\2502_JJWCProject\\JJW_Project\\Intermediate\\Build\\BuildRulesProjects\\JJW_ProjectModuleRules\\JJW_ProjectModuleRules.csproj",
-      "packagesPath": "C:\\Users\\joejw\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\joejw\\Desktop\\2502_JJWCProject\\JJW_Project\\Intermediate\\Build\\BuildRulesProjects\\JJW_ProjectModuleRules\\obj\\",
+      "projectPath": "C:\\Users\\Atents\\Desktop\\2502_JJWCProject\\JJW_Project\\Intermediate\\Build\\BuildRulesProjects\\JJW_ProjectModuleRules\\JJW_ProjectModuleRules.csproj",
+      "packagesPath": "C:\\Users\\Atents\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Atents\\Desktop\\2502_JJWCProject\\JJW_Project\\Intermediate\\Build\\BuildRulesProjects\\JJW_ProjectModuleRules\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\joejw\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Atents\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],

@@ -10,12 +10,14 @@
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
+#include  "Animation/AnimMontage.h"
+
 ACPlayer::ACPlayer()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
 	GetMesh()->SetRelativeLocation(FVector(0, 0, -90));
-	GetMesh()->SetRelativeRotation(FRotator(0, -90,0));
+	GetMesh()->SetRelativeRotation(FRotator(0, -90, 0));
 
 	//Components
 	{
@@ -26,23 +28,25 @@ ACPlayer::ACPlayer()
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>("CameraBoom");
 	SpringArm->SetupAttachment(GetCapsuleComponent());
 	SpringArm->bEnableCameraLag = true;
-	SpringArm->SocketOffset = FVector(0,0,80);
+	SpringArm->SocketOffset = FVector(0, 0, 80);
 	SpringArm->bUsePawnControlRotation = true;
-	
+
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>("CameraComponent");
 	FollowCamera->SetupAttachment(SpringArm);
 
 	GetCharacterMovement()->MaxWalkSpeed = 600.f;
+	GetCharacterMovement()->RotationRate = FRotator(0, 720, 0);
+
 }
 
 void ACPlayer::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 	InitializePlayerEnhnacedInput();
 
-	if(Movement)
-	Movement->DisableControlRotation();
+	if (Movement)
+		Movement->DisableControlRotation();
 
 	State->OnStateChange.AddDynamic(this, &ACPlayer::OnStateChanged);
 }
@@ -69,28 +73,21 @@ void ACPlayer::OnStateChanged(EState InPrevState, EState InNewState)
 {
 	switch (InNewState)
 	{
-	case EState::Idle:
 
-		break;
-	case EState::Attack:
-
-		break;
 	case EState::Dodge:
-
-		break;
-	case EState::Damaged:
-
-		break;
-	case EState::Dead:
-
-		break;
-	case EState::Max:
-
+		Movement->Dodge();
 		break;
 
 	default:
 		break;
 	}
+}
+
+void ACPlayer::OnDodge()
+{
+	SetActorRotation(GetLastMovementInputVector().Rotation(), ETeleportType::ResetPhysics);
+
+	State->SetDodgeMode();
 }
 
 void ACPlayer::Tick(float DeltaTime)
@@ -107,14 +104,17 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	if (!Movement) return;
 
-	if(IA_MoveAction)
-	enhancedInput->BindAction(IA_MoveAction, ETriggerEvent::Triggered, Movement, &UCMovementComponent::MoveAction);
+	if (IA_MoveAction)
+		enhancedInput->BindAction(IA_MoveAction, ETriggerEvent::Triggered, Movement, &UCMovementComponent::MoveAction);
 
-	if(IA_LookAction)
-	enhancedInput->BindAction(IA_LookAction, ETriggerEvent::Triggered, Movement, &UCMovementComponent::LookAction);
+	if (IA_LookAction)
+		enhancedInput->BindAction(IA_LookAction, ETriggerEvent::Triggered, Movement, &UCMovementComponent::LookAction);
 
-	if(IA_SprintAction)
-	enhancedInput->BindAction(IA_SprintAction, ETriggerEvent::Triggered, Movement, &UCMovementComponent::SprintAction);
+	if (IA_SprintAction)
+		enhancedInput->BindAction(IA_SprintAction, ETriggerEvent::Triggered, Movement, &UCMovementComponent::SprintAction);
+
+	if (IA_DodgeAction)
+		enhancedInput->BindAction(IA_DodgeAction, ETriggerEvent::Started, this, &ACPlayer::OnDodge);
 
 }
 

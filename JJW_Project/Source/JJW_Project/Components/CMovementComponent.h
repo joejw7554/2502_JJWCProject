@@ -20,6 +20,7 @@ public:
 	void MoveAction(const struct FInputActionValue& Value);
 	void LookAction(const FInputActionValue& Value);
 	void SprintAction(const FInputActionValue& Value);
+	void Dodge();
 
 	void EnableControlRotation();
 	void DisableControlRotation();
@@ -40,8 +41,19 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Movement Property")
 	float SprintSpeed = 1000.f;
 
+
+	////////Montage
+	UPROPERTY(EditDefaultsOnly, Category = "Animation")
+	class UAnimMontage* AnimMontage_Dodge;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Animation")
+	float PlayRate_Dodge = 1.5f;
+
 private:
 	ACharacter* Owner;
 
+	//Montage
+private:
+	
 
 };

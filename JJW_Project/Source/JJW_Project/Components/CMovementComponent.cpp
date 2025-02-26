@@ -58,6 +58,13 @@ void UCMovementComponent::SprintAction(const FInputActionValue& Value)
 		SetWalkMode();
 }
 
+void UCMovementComponent::Dodge()
+{
+	if (AnimMontage_Dodge)
+		if (!Owner->GetMesh()->GetAnimInstance()->Montage_IsPlaying(AnimMontage_Dodge))
+			Owner->PlayAnimMontage(AnimMontage_Dodge, PlayRate_Dodge);
+}
+
 void UCMovementComponent::EnableControlRotation()
 {
 	Owner->GetCharacterMovement()->bOrientRotationToMovement = false;

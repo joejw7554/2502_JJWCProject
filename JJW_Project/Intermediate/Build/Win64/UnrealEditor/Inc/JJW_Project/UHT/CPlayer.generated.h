@@ -15,11 +15,11 @@ enum class EState : uint8;
 #endif
 #define JJW_PROJECT_CPlayer_generated_h
 
-#define FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Player_CPlayer_h_13_RPC_WRAPPERS_NO_PURE_DECLS \
+#define FID_Users_Atents_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Player_CPlayer_h_13_RPC_WRAPPERS_NO_PURE_DECLS \
 	DECLARE_FUNCTION(execOnStateChanged);
 
 
-#define FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Player_CPlayer_h_13_INCLASS_NO_PURE_DECLS \
+#define FID_Users_Atents_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Player_CPlayer_h_13_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesACPlayer(); \
 	friend struct Z_Construct_UClass_ACPlayer_Statics; \
@@ -28,7 +28,7 @@ public: \
 	DECLARE_SERIALIZER(ACPlayer)
 
 
-#define FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Player_CPlayer_h_13_ENHANCED_CONSTRUCTORS \
+#define FID_Users_Atents_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Player_CPlayer_h_13_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	ACPlayer(ACPlayer&&); \
@@ -40,13 +40,13 @@ public: \
 	NO_API virtual ~ACPlayer();
 
 
-#define FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Player_CPlayer_h_10_PROLOG
-#define FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Player_CPlayer_h_13_GENERATED_BODY \
+#define FID_Users_Atents_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Player_CPlayer_h_10_PROLOG
+#define FID_Users_Atents_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Player_CPlayer_h_13_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Player_CPlayer_h_13_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Player_CPlayer_h_13_INCLASS_NO_PURE_DECLS \
-	FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Player_CPlayer_h_13_ENHANCED_CONSTRUCTORS \
+	FID_Users_Atents_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Player_CPlayer_h_13_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_Users_Atents_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Player_CPlayer_h_13_INCLASS_NO_PURE_DECLS \
+	FID_Users_Atents_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Player_CPlayer_h_13_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -54,7 +54,7 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 template<> JJW_PROJECT_API UClass* StaticClass<class ACPlayer>();
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Player_CPlayer_h
+#define CURRENT_FILE_ID FID_Users_Atents_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Player_CPlayer_h
 
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

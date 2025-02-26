@@ -20,14 +20,21 @@ public:
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+
+public: 
+	void OnDodge();
+
 protected:
 	virtual void BeginPlay() override;
+
 
 private:
 	void InitializePlayerEnhnacedInput();
 
 	UFUNCTION()
 	void OnStateChanged(EState InPrevState, EState InNewState);
+
+
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	class UInputMappingContext* InputMappingContext;
@@ -41,11 +48,17 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	class UInputAction* IA_SprintAction;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	class UInputAction* IA_DodgeAction;
+
 	UPROPERTY(VisibleAnywhere)
 	class USpringArmComponent* SpringArm;
 
 	UPROPERTY(VisibleAnywhere)
 	class UCameraComponent* FollowCamera;
+
+
+
 
 private:
 	UPROPERTY(VisibleAnywhere)
