@@ -11,7 +11,15 @@
 				"C:/Users/Atents/Desktop/2502_JJWCProject/JJW_Project/Content/Blueprints/Player/Animation/AM_Female_TwinKatana_Slide_F_Root_Montage.uasset",
 				"C:/Users/Atents/Desktop/2502_JJWCProject/JJW_Project/Content/Blueprints/Player/BP_CPlayer.uasset",
 				"C:/Users/Atents/Desktop/2502_JJWCProject/JJW_Project/Content/Blueprints/Player/Input/IA_Dodge.uasset",
-				"C:/Users/Atents/Desktop/2502_JJWCProject/JJW_Project/Content/Blueprints/Player/Input/IMC_Player.uasset"
+				"C:/Users/Atents/Desktop/2502_JJWCProject/JJW_Project/Content/Blueprints/Player/Input/IMC_Player.uasset",
+				"C:/Users/Atents/Desktop/2502_JJWCProject/JJW_Project/Content/Female_TwinKatana/Fallen_Samurai/Mesh/Separated_Mesh/Weapon/SK_Weapon2.uasset",
+				"C:/Users/Atents/Desktop/2502_JJWCProject/JJW_Project/Content/Female_TwinKatana/Fallen_Samurai/Mesh/Separated_Mesh/Weapon/SK_Weapon2_Skeleton1.uasset",
+				"C:/Users/Atents/Desktop/2502_JJWCProject/JJW_Project/Content/Female_TwinKatana/Fallen_Samurai/Mesh/Separated_Mesh/Weapon/SM_Weapon.uasset",
+				"C:/Users/Atents/Desktop/2502_JJWCProject/JJW_Project/Content/Female_TwinKatana/Fallen_Samurai/Mesh/Separated_Mesh/Armor/SK_Weapon.uasset",
+				"C:/Users/Atents/Desktop/2502_JJWCProject/JJW_Project/Content/Female_TwinKatana/Fallen_Samurai/Mesh/Separated_Mesh/Armor/SK_Weapon_Skeleton.uasset",
+				"C:/Users/Atents/Desktop/2502_JJWCProject/JJW_Project/Content/Female_TwinKatana/Fallen_Samurai/Mesh/Separated_Mesh/Armor/SK_Weapon2.uasset",
+				"C:/Users/Atents/Desktop/2502_JJWCProject/JJW_Project/Content/Female_TwinKatana/Fallen_Samurai/Mesh/Separated_Mesh/Armor/SK_Weapon2_Skeleton.uasset",
+				"C:/Users/Atents/Desktop/2502_JJWCProject/JJW_Project/Content/Blueprints/Weapons/BP_CWeapon_Katana.uasset"
 			]
 		}
 	]

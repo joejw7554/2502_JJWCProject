@@ -23,6 +23,7 @@ ACPlayer::ACPlayer()
 	{
 		Movement = CreateDefaultSubobject<UCMovementComponent>("MovementComponent");
 		State = CreateDefaultSubobject<UCStateComponent>("StateComponent");
+		Weapon = CreateDefaultSubobject<UCWeaponComponent>("WeaponComponent");
 	}
 
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>("CameraBoom");

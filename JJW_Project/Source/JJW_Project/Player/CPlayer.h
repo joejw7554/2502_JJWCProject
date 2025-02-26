@@ -4,6 +4,7 @@
 #include "GameFramework/Character.h"
 #include "../Components/CStateComponent.h"
 #include "../Components/CMovementComponent.h"
+#include "../Components/CWeaponComponent.h"
 
 #include "CPlayer.generated.h"
 
@@ -66,4 +67,7 @@ private:
 
 	UPROPERTY(VisibleAnywhere)
 	UCStateComponent* State;
+
+	UPROPERTY(VisibleAnywhere)
+	UCWeaponComponent* Weapon;
 };

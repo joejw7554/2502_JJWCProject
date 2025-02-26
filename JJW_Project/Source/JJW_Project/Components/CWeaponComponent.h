@@ -1,0 +1,48 @@
+#pragma once
+
+#include "CoreMinimal.h"
+#include "Components/ActorComponent.h"
+#include "../Weapons/CWeaponBase.h"
+#include "CWeaponComponent.generated.h"
+
+UENUM()
+enum class EWeaponType : uint8
+{
+	Katana = 0,
+};
+
+
+UCLASS()
+class JJW_PROJECT_API UCWeaponComponent : public UActorComponent
+{
+	GENERATED_BODY()
+
+public:
+	UCWeaponComponent();
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+	ACWeaponBase* GetCurrentWeapon() { return CurrentWeapon; }
+
+
+protected:
+	virtual void BeginPlay() override;
+
+	void SpawnWeapons();
+
+protected:
+	UPROPERTY(EditDefaultsOnly, Category = "Weapons")
+	TArray<TSubclassOf<class ACWeaponBase>> WeaponClassToSpawn;
+
+	UPROPERTY(VisibleAnywhere, Category = "Weapons")
+	TArray<class ACWeaponBase*> ActiveWeapons;
+
+public:
+
+
+private:
+	ACWeaponBase* CurrentWeapon;
+
+	ACharacter* Owner;
+
+	AActor* WeaponOwner;
+};

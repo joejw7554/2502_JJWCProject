@@ -11,6 +11,7 @@
     <None Include="..\..\Source\JJW_ProjectEditor.Target.cs">
       <Filter>Source</Filter>
     </None>
+    <None Include="..\..\.vsconfig" />
     <Filter Include="Config">
       <UniqueIdentifier>{FA535FFB-25E1-3D20-B416-52F9BE21E06E}</UniqueIdentifier>
     </Filter>
@@ -56,6 +57,12 @@
     <ClCompile Include="..\..\Source\JJW_Project\Components\CStateComponent.h">
       <Filter>Source\JJW_Project\Components</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\JJW_Project\Components\CWeaponComponent.cpp">
+      <Filter>Source\JJW_Project\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\JJW_Project\Components\CWeaponComponent.h">
+      <Filter>Source\JJW_Project\Components</Filter>
+    </ClCompile>
     <Filter Include="Source\JJW_Project\Player">
       <UniqueIdentifier>{3990E14F-4AB4-3042-BBB8-409AED2D22CA}</UniqueIdentifier>
     </Filter>
@@ -70,6 +77,27 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\JJW_Project\Player\CPlayerAnim.h">
       <Filter>Source\JJW_Project\Player</Filter>
+    </ClCompile>
+    <Filter Include="Source\JJW_Project\Weapons">
+      <UniqueIdentifier>{39667828-46E9-3F51-8FF4-393C90DEBC3E}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\JJW_Project\Weapons\CSkillComponent.cpp">
+      <Filter>Source\JJW_Project\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\JJW_Project\Weapons\CSkillComponent.h">
+      <Filter>Source\JJW_Project\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\JJW_Project\Weapons\CWeaponBase.cpp">
+      <Filter>Source\JJW_Project\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\JJW_Project\Weapons\CWeaponBase.h">
+      <Filter>Source\JJW_Project\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\JJW_Project\Weapons\CWeapon_Katana.cpp">
+      <Filter>Source\JJW_Project\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\JJW_Project\Weapons\CWeapon_Katana.h">
+      <Filter>Source\JJW_Project\Weapons</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
