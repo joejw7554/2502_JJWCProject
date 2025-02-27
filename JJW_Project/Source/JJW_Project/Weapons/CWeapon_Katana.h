@@ -21,5 +21,5 @@ protected:
 	FName SocketName_ExtraWeaponHolster;
 
 	UPROPERTY(VisibleAnywhere)
-	USkeletalMeshComponent* ExtraMesh;
+	USkeletalMeshComponent* LeftWeaponMesh;
 };

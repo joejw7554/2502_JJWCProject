@@ -9,8 +9,8 @@ ACWeaponBase::ACWeaponBase()
 	Root = CreateDefaultSubobject<USceneComponent>("Root");
 	SetRootComponent(Root);
 
-	Mesh = CreateDefaultSubobject<USkeletalMeshComponent>("RightHand_WeaponMesh");
-	Mesh->SetupAttachment(Root);
+	RightWeaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>("RightHand_WeaponMesh");
+	RightWeaponMesh->SetupAttachment(Root);
 
 	SkillComponent = CreateDefaultSubobject<UCSkillComponent>("SkillComponent");
 }

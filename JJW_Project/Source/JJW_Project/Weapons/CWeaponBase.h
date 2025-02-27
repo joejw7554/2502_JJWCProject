@@ -27,7 +27,7 @@ protected:
 	USceneComponent* Root;
 
 	UPROPERTY(VisibleAnywhere)
-	USkeletalMeshComponent* Mesh;
+	USkeletalMeshComponent* RightWeaponMesh;
 
 	UPROPERTY(VisibleAnywhere)
 	class UCSkillComponent* SkillComponent;

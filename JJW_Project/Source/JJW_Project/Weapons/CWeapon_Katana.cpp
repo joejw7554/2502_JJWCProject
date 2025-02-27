@@ -3,10 +3,11 @@
 
 ACWeapon_Katana::ACWeapon_Katana()
 {
-	ExtraMesh = CreateDefaultSubobject<USkeletalMeshComponent>("LeftHand_WeaponMesh");
-	ExtraMesh->SetupAttachment(Root);
-	/*SocketName_LeftHand=
-	SocketName_RightHand=*/
+	LeftWeaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>("LeftHand_WeaponMesh");
+	LeftWeaponMesh->SetupAttachment(Root);
+
+
+
 }
 
 void ACWeapon_Katana::BeginPlay()
@@ -16,15 +17,16 @@ void ACWeapon_Katana::BeginPlay()
 
 	ACharacter* weaponOwner = Cast<ACharacter>(Owner);
 
-	USkeletalMeshComponent* weaponOwnerMesh = weaponOwner->GetComponentByClass<USkeletalMeshComponent>();
+	USkeletalMeshComponent* ownerMesh = weaponOwner->GetComponentByClass<USkeletalMeshComponent>();
 
 	if (weaponOwner)
 	{
-		if (weaponOwnerMesh)
+		if (ownerMesh)
 		{
 			FAttachmentTransformRules transform(EAttachmentRule::SnapToTarget, true);
-			//ExtraMesh->AttachToComponent(ExtraMesh, transform, )
-			//칼 뺏을때 칼집만 남게할수있는 방법이 없을까?
+
+			/*RightWeaponMesh->AttachToComponent(ownerMesh, transform, "");
+			LeftWeaponMesh->AttachToComponent(ownerMesh, transform, "");*/
 		}
 	}
 
