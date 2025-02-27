@@ -18,5 +18,8 @@ protected:
 
 protected:
 	UPROPERTY(VisibleAnywhere)
+	FName SocketName_ExtraWeaponHolster;
+
+	UPROPERTY(VisibleAnywhere)
 	USkeletalMeshComponent* ExtraMesh;
 };

@@ -37,4 +37,7 @@ protected:
 
 	UPROPERTY(VisibleAnywhere)
 	FName SocketName_LeftHand;
+
+	UPROPERTY(VisibleAnywhere)
+	FName SocketName_WeaponHolster;
 };
