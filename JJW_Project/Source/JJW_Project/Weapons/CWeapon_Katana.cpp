@@ -1,13 +1,14 @@
 #include "CWeapon_Katana.h"
 #include "GameFramework/Character.h"
+#include "Components/StaticMeshComponent.h"
 
 ACWeapon_Katana::ACWeapon_Katana()
 {
-	LeftWeaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>("LeftHand_WeaponMesh");
-	LeftWeaponMesh->SetupAttachment(Root);
+	RightHandMesh = CreateDefaultSubobject<UStaticMeshComponent>("RightHand_WeaponMesh");
+	RightHandMesh->SetupAttachment(Root);
 
-
-
+	LeftHandMesh = CreateDefaultSubobject<UStaticMeshComponent>("LeftHand_WeaponMesh");
+	LeftHandMesh->SetupAttachment(Root);
 }
 
 void ACWeapon_Katana::BeginPlay()

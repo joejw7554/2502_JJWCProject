@@ -1,12 +1,12 @@
 {
     "Version": "1.2",
     "Data": {
-        "Source": "c:\\users\\atents\\desktop\\2502_jjwcproject\\jjw_project\\source\\jjw_project\\weapons\\cweaponbase.cpp",
+        "Source": "c:\\users\\joejw\\desktop\\2502_jjwcproject\\jjw_project\\source\\jjw_project\\weapons\\cweaponbase.cpp",
         "ProvidedModule": "",
         "Includes": [
-            "c:\\users\\atents\\desktop\\2502_jjwcproject\\jjw_project\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\jjw_project\\definitions.jjw_project.h",
-            "c:\\users\\atents\\desktop\\2502_jjwcproject\\jjw_project\\intermediate\\build\\win64\\x64\\jjw_projecteditor\\development\\unrealed\\shareddefinitions.unrealed.project.valapi.cpp20.h",
-            "c:\\users\\atents\\desktop\\2502_jjwcproject\\jjw_project\\source\\jjw_project\\weapons\\cweaponbase.h",
+            "c:\\users\\joejw\\desktop\\2502_jjwcproject\\jjw_project\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\jjw_project\\definitions.jjw_project.h",
+            "c:\\users\\joejw\\desktop\\2502_jjwcproject\\jjw_project\\intermediate\\build\\win64\\x64\\jjw_projecteditor\\development\\unrealed\\shareddefinitions.unrealed.project.valapi.cpp20.h",
+            "c:\\users\\joejw\\desktop\\2502_jjwcproject\\jjw_project\\source\\jjw_project\\weapons\\cweaponbase.h",
             "c:\\program files\\epic games\\ue_5.5\\engine\\source\\runtime\\core\\public\\coreminimal.h",
             "c:\\program files\\epic games\\ue_5.5\\engine\\source\\runtime\\core\\public\\coretypes.h",
             "c:\\program files\\epic games\\ue_5.5\\engine\\source\\runtime\\core\\public\\hal\\platform.h",
@@ -676,7 +676,7 @@
             "c:\\program files\\epic games\\ue_5.5\\engine\\source\\runtime\\core\\public\\misc\\paths.h",
             "c:\\program files\\epic games\\ue_5.5\\engine\\source\\runtime\\engine\\public\\worldpartition\\worldpartitionactordesctype.h",
             "c:\\program files\\epic games\\ue_5.5\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\actor.generated.h",
-            "c:\\users\\atents\\desktop\\2502_jjwcproject\\jjw_project\\intermediate\\build\\win64\\unrealeditor\\inc\\jjw_project\\uht\\cweaponbase.generated.h",
+            "c:\\users\\joejw\\desktop\\2502_jjwcproject\\jjw_project\\intermediate\\build\\win64\\unrealeditor\\inc\\jjw_project\\uht\\cweaponbase.generated.h",
             "c:\\program files\\epic games\\ue_5.5\\engine\\source\\runtime\\engine\\classes\\components\\skeletalmeshcomponent.h",
             "c:\\program files\\epic games\\ue_5.5\\engine\\source\\runtime\\engine\\public\\enginedefines.h",
             "c:\\program files\\epic games\\ue_5.5\\engine\\source\\runtime\\engine\\public\\collisionqueryparams.h",
@@ -1051,8 +1051,8 @@
             "c:\\program files\\epic games\\ue_5.5\\engine\\source\\runtime\\engine\\classes\\animation\\wrappedattribute.h",
             "c:\\program files\\epic games\\ue_5.5\\engine\\source\\runtime\\engine\\classes\\engine\\posewatchrenderdata.h",
             "c:\\program files\\epic games\\ue_5.5\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\skeletalmeshcomponent.generated.h",
-            "c:\\users\\atents\\desktop\\2502_jjwcproject\\jjw_project\\source\\jjw_project\\weapons\\cskillcomponent.h",
-            "c:\\users\\atents\\desktop\\2502_jjwcproject\\jjw_project\\intermediate\\build\\win64\\unrealeditor\\inc\\jjw_project\\uht\\cskillcomponent.generated.h"
+            "c:\\users\\joejw\\desktop\\2502_jjwcproject\\jjw_project\\source\\jjw_project\\weapons\\cskillcomponent.h",
+            "c:\\users\\joejw\\desktop\\2502_jjwcproject\\jjw_project\\intermediate\\build\\win64\\unrealeditor\\inc\\jjw_project\\uht\\cskillcomponent.generated.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

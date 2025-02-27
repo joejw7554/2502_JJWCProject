@@ -9,9 +9,6 @@ ACWeaponBase::ACWeaponBase()
 	Root = CreateDefaultSubobject<USceneComponent>("Root");
 	SetRootComponent(Root);
 
-	RightWeaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>("RightHand_WeaponMesh");
-	RightWeaponMesh->SetupAttachment(Root);
-
 	SkillComponent = CreateDefaultSubobject<UCSkillComponent>("SkillComponent");
 }
 
@@ -22,6 +19,9 @@ void ACWeaponBase::BeginPlay()
 	
 }
 
+void ACWeaponBase::Attack()
+{
+}
 
 
 void ACWeaponBase::Tick(float DeltaTime)

@@ -20,6 +20,10 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	FName SocketName_ExtraWeaponHolster;
 
+
 	UPROPERTY(VisibleAnywhere)
-	USkeletalMeshComponent* LeftWeaponMesh;
+	UStaticMeshComponent* RightHandMesh;
+
+	UPROPERTY(VisibleAnywhere)
+	UStaticMeshComponent* LeftHandMesh;
 };

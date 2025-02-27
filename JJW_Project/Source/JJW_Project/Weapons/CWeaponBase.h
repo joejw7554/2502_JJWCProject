@@ -15,8 +15,7 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
-	virtual void Attack() //자식에서 재정의해서 쓰는용도
-	{}
+	virtual void Attack(); //자식에서 재정의해서 쓰는용도
 
 public:	
 	virtual void Tick(float DeltaTime) override;
@@ -25,9 +24,6 @@ public:
 protected:
 	UPROPERTY(VisibleAnywhere)
 	USceneComponent* Root;
-
-	UPROPERTY(VisibleAnywhere)
-	USkeletalMeshComponent* RightWeaponMesh;
 
 	UPROPERTY(VisibleAnywhere)
 	class UCSkillComponent* SkillComponent;

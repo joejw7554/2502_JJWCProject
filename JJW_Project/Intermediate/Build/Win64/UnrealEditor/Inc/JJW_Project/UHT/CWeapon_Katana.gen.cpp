@@ -10,7 +10,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 void EmptyLinkFunctionForGeneratedCodeCWeapon_Katana() {}
 
 // Begin Cross Module References
-ENGINE_API UClass* Z_Construct_UClass_USkeletalMeshComponent_NoRegister();
+ENGINE_API UClass* Z_Construct_UClass_UStaticMeshComponent_NoRegister();
 JJW_PROJECT_API UClass* Z_Construct_UClass_ACWeapon_Katana();
 JJW_PROJECT_API UClass* Z_Construct_UClass_ACWeapon_Katana_NoRegister();
 JJW_PROJECT_API UClass* Z_Construct_UClass_ACWeaponBase();
@@ -37,14 +37,20 @@ struct Z_Construct_UClass_ACWeapon_Katana_Statics
 		{ "Category", "CWeapon_Katana" },
 		{ "ModuleRelativePath", "Weapons/CWeapon_Katana.h" },
 	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_LeftWeaponMesh_MetaData[] = {
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_RightHandMesh_MetaData[] = {
+		{ "Category", "CWeapon_Katana" },
+		{ "EditInline", "true" },
+		{ "ModuleRelativePath", "Weapons/CWeapon_Katana.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_LeftHandMesh_MetaData[] = {
 		{ "Category", "CWeapon_Katana" },
 		{ "EditInline", "true" },
 		{ "ModuleRelativePath", "Weapons/CWeapon_Katana.h" },
 	};
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FNamePropertyParams NewProp_SocketName_ExtraWeaponHolster;
-	static const UECodeGen_Private::FObjectPropertyParams NewProp_LeftWeaponMesh;
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_RightHandMesh;
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_LeftHandMesh;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
@@ -53,10 +59,12 @@ struct Z_Construct_UClass_ACWeapon_Katana_Statics
 	static const UECodeGen_Private::FClassParams ClassParams;
 };
 const UECodeGen_Private::FNamePropertyParams Z_Construct_UClass_ACWeapon_Katana_Statics::NewProp_SocketName_ExtraWeaponHolster = { "SocketName_ExtraWeaponHolster", nullptr, (EPropertyFlags)0x0020080000020001, UECodeGen_Private::EPropertyGenFlags::Name, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ACWeapon_Katana, SocketName_ExtraWeaponHolster), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_SocketName_ExtraWeaponHolster_MetaData), NewProp_SocketName_ExtraWeaponHolster_MetaData) };
-const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ACWeapon_Katana_Statics::NewProp_LeftWeaponMesh = { "LeftWeaponMesh", nullptr, (EPropertyFlags)0x00200800000a0009, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ACWeapon_Katana, LeftWeaponMesh), Z_Construct_UClass_USkeletalMeshComponent_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_LeftWeaponMesh_MetaData), NewProp_LeftWeaponMesh_MetaData) };
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ACWeapon_Katana_Statics::NewProp_RightHandMesh = { "RightHandMesh", nullptr, (EPropertyFlags)0x00200800000a0009, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ACWeapon_Katana, RightHandMesh), Z_Construct_UClass_UStaticMeshComponent_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_RightHandMesh_MetaData), NewProp_RightHandMesh_MetaData) };
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ACWeapon_Katana_Statics::NewProp_LeftHandMesh = { "LeftHandMesh", nullptr, (EPropertyFlags)0x00200800000a0009, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ACWeapon_Katana, LeftHandMesh), Z_Construct_UClass_UStaticMeshComponent_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_LeftHandMesh_MetaData), NewProp_LeftHandMesh_MetaData) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_ACWeapon_Katana_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ACWeapon_Katana_Statics::NewProp_SocketName_ExtraWeaponHolster,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ACWeapon_Katana_Statics::NewProp_LeftWeaponMesh,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ACWeapon_Katana_Statics::NewProp_RightHandMesh,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ACWeapon_Katana_Statics::NewProp_LeftHandMesh,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_ACWeapon_Katana_Statics::PropPointers) < 2048);
 UObject* (*const Z_Construct_UClass_ACWeapon_Katana_Statics::DependentSingletons[])() = {
@@ -99,10 +107,10 @@ ACWeapon_Katana::~ACWeapon_Katana() {}
 struct Z_CompiledInDeferFile_FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Weapons_CWeapon_Katana_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_ACWeapon_Katana, ACWeapon_Katana::StaticClass, TEXT("ACWeapon_Katana"), &Z_Registration_Info_UClass_ACWeapon_Katana, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ACWeapon_Katana), 2133359904U) },
+		{ Z_Construct_UClass_ACWeapon_Katana, ACWeapon_Katana::StaticClass, TEXT("ACWeapon_Katana"), &Z_Registration_Info_UClass_ACWeapon_Katana, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ACWeapon_Katana), 809783308U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Weapons_CWeapon_Katana_h_2526640558(TEXT("/Script/JJW_Project"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Weapons_CWeapon_Katana_h_1122282203(TEXT("/Script/JJW_Project"),
 	Z_CompiledInDeferFile_FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Weapons_CWeapon_Katana_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Weapons_CWeapon_Katana_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);
