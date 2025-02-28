@@ -21,7 +21,7 @@ protected:
 public:
 	virtual void Tick(float DeltaTime) override;
 
-	virtual void Equip();
+	void Equip();
 
 	virtual void ShowWeapon() {}
 	virtual void HideWeapon() {}

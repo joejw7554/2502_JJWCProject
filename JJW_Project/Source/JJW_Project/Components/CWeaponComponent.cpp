@@ -36,21 +36,27 @@ void UCWeaponComponent::SpawnWeapons()
 
 void UCWeaponComponent::EquipWeapon(EWeaponType InPrevType, EWeaponType InNewType)
 {
+
 	EWeaponType prev = InPrevType;
 
 	if (prev == InNewType)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("Prev==NewType"));
+
 		//GetCurrentWeapon->Unequip
 		CurrentWeaponType = EWeaponType::None;
 		return;
 	}
 	else if(prev==EWeaponType::None)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("Prev==None"));
 		CurrentWeaponType = InNewType;
 		GetCurrentWeapon()->Equip();
 		return;
 	}
 	
+	UE_LOG(LogTemp, Warning, TEXT("None of Conditions are Activated"));
+
 	//GetCurrentWeapon()->UnEquip() //UnEquipPrev
 	CurrentWeaponType = InNewType;
 
