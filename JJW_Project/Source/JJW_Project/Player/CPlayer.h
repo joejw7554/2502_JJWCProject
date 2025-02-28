@@ -2,7 +2,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "../Components/CStateComponent.h"
 #include "../Components/CMovementComponent.h"
 #include "../Components/CWeaponComponent.h"
 
@@ -21,8 +20,6 @@ public:
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-public:  //Action
-	void OnDodge();
 
 public: //Getter
 	FORCEINLINE UCWeaponComponent* GetWeaponComponent() { return Weapon; }
@@ -34,10 +31,6 @@ protected:
 
 private:
 	void InitializePlayerEnhnacedInput();
-
-	UFUNCTION()
-	void OnStateChanged(EState InPrevState, EState InNewState);
-
 
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
@@ -55,21 +48,18 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	class UInputAction* IA_DodgeAction;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	class UInputAction* IA_KatanaAction;
+
 	UPROPERTY(VisibleAnywhere)
 	class USpringArmComponent* SpringArm;
 
 	UPROPERTY(VisibleAnywhere)
 	class UCameraComponent* FollowCamera;
 
-
-
-
 private:
 	UPROPERTY(VisibleAnywhere)
 	UCMovementComponent* Movement;
-
-	UPROPERTY(VisibleAnywhere)
-	UCStateComponent* State;
 
 	UPROPERTY(VisibleAnywhere)
 	UCWeaponComponent* Weapon;

@@ -10,7 +10,7 @@
 UENUM()
 enum class EWeaponType : uint8
 {
-	Katana = 0,
+	None, Katana = 0
 };
 
 
@@ -23,13 +23,20 @@ public:
 	UCWeaponComponent();
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	ACWeaponBase* GetCurrentWeapon() { return CurrentWeapon; }
+	ACWeaponBase* GetCurrentWeapon();
+	void SetKatanaMode();
+
 
 
 protected:
 	virtual void BeginPlay() override;
 
 	void SpawnWeapons();
+
+
+private:
+	void EquipWeapon(EWeaponType InPrevType, EWeaponType InNewType);
+
 
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Weapons")
@@ -38,13 +45,13 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category = "Weapons")
 	TArray<class ACWeaponBase*> ActiveWeapons;
 
-public:
-
-
 private:
+	UPROPERTY(VisibleAnywhere, Category = "Value Debug")
+	EWeaponType CurrentWeaponType = EWeaponType::None;
+
+	UPROPERTY(VisibleAnywhere, Category = "Value Debug")
 	ACWeaponBase* CurrentWeapon;
 
+	UPROPERTY(VisibleAnywhere, Category = "Value Debug")
 	ACharacter* Owner;
-
-	AActor* WeaponOwner;
 };

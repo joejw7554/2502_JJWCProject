@@ -8,8 +8,8 @@ UCLASS(Abstract)
 class JJW_PROJECT_API ACWeaponBase : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	ACWeaponBase();
 
 protected:
@@ -17,9 +17,14 @@ protected:
 
 	virtual void Attack(); //자식에서 재정의해서 쓰는용도
 
-public:	
+
+public:
 	virtual void Tick(float DeltaTime) override;
 
+	virtual void Equip();
+
+	virtual void ShowWeapon() {}
+	virtual void HideWeapon() {}
 
 protected:
 	UPROPERTY(VisibleAnywhere)
@@ -28,12 +33,17 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	class UCSkillComponent* SkillComponent;
 
-	UPROPERTY(VisibleAnywhere)
+protected:
+	UPROPERTY(EditDefaultsOnly, Category = "Attachment")
 	FName SocketName_RightHand;
 
-	UPROPERTY(VisibleAnywhere)
-	FName SocketName_LeftHand;
+	UPROPERTY(EditDefaultsOnly, Category = "Attachment")
+	FName SocketName_HolsterRightWeapon;
 
-	UPROPERTY(VisibleAnywhere)
-	FName SocketName_WeaponHolster;
+	UPROPERTY(EditDefaultsOnly, Category = "Animation")
+	class UAnimMontage* EquipMontage;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Animation")
+	float EquipMontage_PlayRate = 1.25f;
+
 };

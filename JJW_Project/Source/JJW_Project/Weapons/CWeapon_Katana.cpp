@@ -4,11 +4,31 @@
 
 ACWeapon_Katana::ACWeapon_Katana()
 {
-	RightHandMesh = CreateDefaultSubobject<UStaticMeshComponent>("RightHand_WeaponMesh");
-	RightHandMesh->SetupAttachment(Root);
 
-	LeftHandMesh = CreateDefaultSubobject<UStaticMeshComponent>("LeftHand_WeaponMesh");
-	LeftHandMesh->SetupAttachment(Root);
+	RightHandWeaponMesh = CreateDefaultSubobject<UStaticMeshComponent>("RightHand_WeaponMesh");
+	RightHandWeaponMesh->SetupAttachment(Root);
+	LeftHandWeaponMesh = CreateDefaultSubobject<UStaticMeshComponent>("LeftHand_WeaponMesh");
+	LeftHandWeaponMesh->SetupAttachment(Root);
+
+	SocketName_LeftHand = "HandL_Katana";
+	SocketName_RightHand = "HandR_Katana";
+	SocketName_HolsterLeftWeapon = "spine02_LeftWeapon";
+	SocketName_HolsterRightWeapon = "spine02_RightWeapon";
+}
+
+void ACWeapon_Katana::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+
+	RightHandWeaponMesh->SetCollisionProfileName("OverlapAllDynamic");
+	LeftHandWeaponMesh->SetCollisionProfileName("OverlapAllDynamic");
+
+
+	RightHandWeaponMesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
+	LeftHandWeaponMesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
+
+	RightHandWeaponMesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
+	LeftHandWeaponMesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
 }
 
 void ACWeapon_Katana::BeginPlay()
@@ -26,8 +46,8 @@ void ACWeapon_Katana::BeginPlay()
 		{
 			FAttachmentTransformRules transform(EAttachmentRule::SnapToTarget, true);
 
-			/*RightWeaponMesh->AttachToComponent(ownerMesh, transform, "");
-			LeftWeaponMesh->AttachToComponent(ownerMesh, transform, "");*/
+			RightHandWeaponMesh->AttachToComponent(ownerMesh, transform, SocketName_HolsterRightWeapon);
+			LeftHandWeaponMesh->AttachToComponent(ownerMesh, transform, SocketName_HolsterLeftWeapon);
 		}
 	}
 

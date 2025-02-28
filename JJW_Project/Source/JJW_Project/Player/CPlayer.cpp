@@ -22,7 +22,6 @@ ACPlayer::ACPlayer()
 	//Components
 	{
 		Movement = CreateDefaultSubobject<UCMovementComponent>("MovementComponent");
-		State = CreateDefaultSubobject<UCStateComponent>("StateComponent");
 		Weapon = CreateDefaultSubobject<UCWeaponComponent>("WeaponComponent");
 	}
 
@@ -49,7 +48,6 @@ void ACPlayer::BeginPlay()
 	if (Movement)
 		Movement->DisableControlRotation();
 
-	State->OnStateChange.AddDynamic(this, &ACPlayer::OnStateChanged);
 }
 
 void ACPlayer::InitializePlayerEnhnacedInput()
@@ -68,27 +66,6 @@ void ACPlayer::InitializePlayerEnhnacedInput()
 			}
 		}
 	}
-}
-
-void ACPlayer::OnStateChanged(EState InPrevState, EState InNewState)
-{
-	switch (InNewState)
-	{
-
-	case EState::Dodge:
-		Movement->Dodge();
-		break;
-
-	default:
-		break;
-	}
-}
-
-void ACPlayer::OnDodge()
-{
-	SetActorRotation(GetLastMovementInputVector().Rotation(), ETeleportType::ResetPhysics);
-
-	State->SetDodgeMode();
 }
 
 void ACPlayer::Tick(float DeltaTime)
@@ -115,7 +92,11 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 		enhancedInput->BindAction(IA_SprintAction, ETriggerEvent::Triggered, Movement, &UCMovementComponent::SprintAction);
 
 	if (IA_DodgeAction)
-		enhancedInput->BindAction(IA_DodgeAction, ETriggerEvent::Started, this, &ACPlayer::OnDodge);
+		enhancedInput->BindAction(IA_DodgeAction, ETriggerEvent::Started, Movement, &UCMovementComponent::Dodge);
+
+	if(IA_KatanaAction)
+		enhancedInput->BindAction(IA_KatanaAction, ETriggerEvent::Started, Weapon, &UCWeaponComponent::SetKatanaMode);
+
 
 }
 

@@ -12,18 +12,31 @@ class JJW_PROJECT_API ACWeapon_Katana : public ACWeaponBase
 public:
 	ACWeapon_Katana();
 
+	virtual void PostInitializeComponents() override;
+
+	FORCEINLINE UStaticMeshComponent* GetRightHandMesh() { return RightHandWeaponMesh; }
+	FORCEINLINE UStaticMeshComponent* GetLeftHandMesh() { return LeftHandWeaponMesh; }
+
+	FORCEINLINE FName GetLeftHandSocket() { return SocketName_LeftHand; }
+	FORCEINLINE FName GetRightHandSocket() { return SocketName_RightHand; }
+
+	FORCEINLINE FName GetLeftHolsterSocket() { return SocketName_HolsterLeftWeapon; }
+	FORCEINLINE FName GetRightHolsterSocket() { return SocketName_HolsterRightWeapon; }
+
+
 protected:
 	virtual void BeginPlay() override;
 
-
 protected:
-	UPROPERTY(VisibleAnywhere)
-	FName SocketName_ExtraWeaponHolster;
+	UPROPERTY(EditDefaultsOnly, Category="Attachment")
+	FName SocketName_HolsterLeftWeapon;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Attachment")
+	FName SocketName_LeftHand;
 
-	UPROPERTY(VisibleAnywhere)
-	UStaticMeshComponent* RightHandMesh;
+	UPROPERTY(EditDefaultsOnly, Category = "Attachment")
+	UStaticMeshComponent* RightHandWeaponMesh;
 
-	UPROPERTY(VisibleAnywhere)
-	UStaticMeshComponent* LeftHandMesh;
+	UPROPERTY(EditDefaultsOnly, Category = "Attachment")
+	UStaticMeshComponent* LeftHandWeaponMesh;
 };

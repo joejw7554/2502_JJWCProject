@@ -11,6 +11,7 @@ void EmptyLinkFunctionForGeneratedCodeCWeaponBase() {}
 
 // Begin Cross Module References
 ENGINE_API UClass* Z_Construct_UClass_AActor();
+ENGINE_API UClass* Z_Construct_UClass_UAnimMontage_NoRegister();
 ENGINE_API UClass* Z_Construct_UClass_USceneComponent_NoRegister();
 JJW_PROJECT_API UClass* Z_Construct_UClass_ACWeaponBase();
 JJW_PROJECT_API UClass* Z_Construct_UClass_ACWeaponBase_NoRegister();
@@ -45,23 +46,28 @@ struct Z_Construct_UClass_ACWeaponBase_Statics
 		{ "ModuleRelativePath", "Weapons/CWeaponBase.h" },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_SocketName_RightHand_MetaData[] = {
-		{ "Category", "CWeaponBase" },
+		{ "Category", "Attachment" },
 		{ "ModuleRelativePath", "Weapons/CWeaponBase.h" },
 	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_SocketName_LeftHand_MetaData[] = {
-		{ "Category", "CWeaponBase" },
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_SocketName_HolsterRightWeapon_MetaData[] = {
+		{ "Category", "Attachment" },
 		{ "ModuleRelativePath", "Weapons/CWeaponBase.h" },
 	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_SocketName_WeaponHolster_MetaData[] = {
-		{ "Category", "CWeaponBase" },
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_EquipMontage_MetaData[] = {
+		{ "Category", "Animation" },
+		{ "ModuleRelativePath", "Weapons/CWeaponBase.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_EquipMontage_PlayRate_MetaData[] = {
+		{ "Category", "Animation" },
 		{ "ModuleRelativePath", "Weapons/CWeaponBase.h" },
 	};
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_Root;
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_SkillComponent;
 	static const UECodeGen_Private::FNamePropertyParams NewProp_SocketName_RightHand;
-	static const UECodeGen_Private::FNamePropertyParams NewProp_SocketName_LeftHand;
-	static const UECodeGen_Private::FNamePropertyParams NewProp_SocketName_WeaponHolster;
+	static const UECodeGen_Private::FNamePropertyParams NewProp_SocketName_HolsterRightWeapon;
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_EquipMontage;
+	static const UECodeGen_Private::FFloatPropertyParams NewProp_EquipMontage_PlayRate;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
@@ -71,15 +77,17 @@ struct Z_Construct_UClass_ACWeaponBase_Statics
 };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ACWeaponBase_Statics::NewProp_Root = { "Root", nullptr, (EPropertyFlags)0x00200800000a0009, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ACWeaponBase, Root), Z_Construct_UClass_USceneComponent_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Root_MetaData), NewProp_Root_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ACWeaponBase_Statics::NewProp_SkillComponent = { "SkillComponent", nullptr, (EPropertyFlags)0x00200800000a0009, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ACWeaponBase, SkillComponent), Z_Construct_UClass_UCSkillComponent_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_SkillComponent_MetaData), NewProp_SkillComponent_MetaData) };
-const UECodeGen_Private::FNamePropertyParams Z_Construct_UClass_ACWeaponBase_Statics::NewProp_SocketName_RightHand = { "SocketName_RightHand", nullptr, (EPropertyFlags)0x0020080000020001, UECodeGen_Private::EPropertyGenFlags::Name, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ACWeaponBase, SocketName_RightHand), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_SocketName_RightHand_MetaData), NewProp_SocketName_RightHand_MetaData) };
-const UECodeGen_Private::FNamePropertyParams Z_Construct_UClass_ACWeaponBase_Statics::NewProp_SocketName_LeftHand = { "SocketName_LeftHand", nullptr, (EPropertyFlags)0x0020080000020001, UECodeGen_Private::EPropertyGenFlags::Name, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ACWeaponBase, SocketName_LeftHand), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_SocketName_LeftHand_MetaData), NewProp_SocketName_LeftHand_MetaData) };
-const UECodeGen_Private::FNamePropertyParams Z_Construct_UClass_ACWeaponBase_Statics::NewProp_SocketName_WeaponHolster = { "SocketName_WeaponHolster", nullptr, (EPropertyFlags)0x0020080000020001, UECodeGen_Private::EPropertyGenFlags::Name, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ACWeaponBase, SocketName_WeaponHolster), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_SocketName_WeaponHolster_MetaData), NewProp_SocketName_WeaponHolster_MetaData) };
+const UECodeGen_Private::FNamePropertyParams Z_Construct_UClass_ACWeaponBase_Statics::NewProp_SocketName_RightHand = { "SocketName_RightHand", nullptr, (EPropertyFlags)0x0020080000010001, UECodeGen_Private::EPropertyGenFlags::Name, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ACWeaponBase, SocketName_RightHand), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_SocketName_RightHand_MetaData), NewProp_SocketName_RightHand_MetaData) };
+const UECodeGen_Private::FNamePropertyParams Z_Construct_UClass_ACWeaponBase_Statics::NewProp_SocketName_HolsterRightWeapon = { "SocketName_HolsterRightWeapon", nullptr, (EPropertyFlags)0x0020080000010001, UECodeGen_Private::EPropertyGenFlags::Name, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ACWeaponBase, SocketName_HolsterRightWeapon), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_SocketName_HolsterRightWeapon_MetaData), NewProp_SocketName_HolsterRightWeapon_MetaData) };
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ACWeaponBase_Statics::NewProp_EquipMontage = { "EquipMontage", nullptr, (EPropertyFlags)0x0020080000010001, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ACWeaponBase, EquipMontage), Z_Construct_UClass_UAnimMontage_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_EquipMontage_MetaData), NewProp_EquipMontage_MetaData) };
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_ACWeaponBase_Statics::NewProp_EquipMontage_PlayRate = { "EquipMontage_PlayRate", nullptr, (EPropertyFlags)0x0020080000010001, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ACWeaponBase, EquipMontage_PlayRate), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_EquipMontage_PlayRate_MetaData), NewProp_EquipMontage_PlayRate_MetaData) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_ACWeaponBase_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ACWeaponBase_Statics::NewProp_Root,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ACWeaponBase_Statics::NewProp_SkillComponent,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ACWeaponBase_Statics::NewProp_SocketName_RightHand,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ACWeaponBase_Statics::NewProp_SocketName_LeftHand,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ACWeaponBase_Statics::NewProp_SocketName_WeaponHolster,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ACWeaponBase_Statics::NewProp_SocketName_HolsterRightWeapon,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ACWeaponBase_Statics::NewProp_EquipMontage,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ACWeaponBase_Statics::NewProp_EquipMontage_PlayRate,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_ACWeaponBase_Statics::PropPointers) < 2048);
 UObject* (*const Z_Construct_UClass_ACWeaponBase_Statics::DependentSingletons[])() = {
@@ -119,14 +127,14 @@ ACWeaponBase::~ACWeaponBase() {}
 // End Class ACWeaponBase
 
 // Begin Registration
-struct Z_CompiledInDeferFile_FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Weapons_CWeaponBase_h_Statics
+struct Z_CompiledInDeferFile_FID_Users_Atents_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Weapons_CWeaponBase_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_ACWeaponBase, ACWeaponBase::StaticClass, TEXT("ACWeaponBase"), &Z_Registration_Info_UClass_ACWeaponBase, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ACWeaponBase), 497863052U) },
+		{ Z_Construct_UClass_ACWeaponBase, ACWeaponBase::StaticClass, TEXT("ACWeaponBase"), &Z_Registration_Info_UClass_ACWeaponBase, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ACWeaponBase), 88398106U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Weapons_CWeaponBase_h_674730797(TEXT("/Script/JJW_Project"),
-	Z_CompiledInDeferFile_FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Weapons_CWeaponBase_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_joejw_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Weapons_CWeaponBase_h_Statics::ClassInfo),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Atents_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Weapons_CWeaponBase_h_1321268255(TEXT("/Script/JJW_Project"),
+	Z_CompiledInDeferFile_FID_Users_Atents_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Weapons_CWeaponBase_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Atents_Desktop_2502_JJWCProject_JJW_Project_Source_JJW_Project_Weapons_CWeaponBase_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);
 // End Registration

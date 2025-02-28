@@ -11,6 +11,7 @@
     <None Include="..\..\Source\JJW_ProjectEditor.Target.cs">
       <Filter>Source</Filter>
     </None>
+    <None Include="..\..\.gitignore" />
     <Filter Include="Config">
       <UniqueIdentifier>{FA535FFB-25E1-3D20-B416-52F9BE21E06E}</UniqueIdentifier>
     </Filter>
@@ -50,17 +51,20 @@
     <ClCompile Include="..\..\Source\JJW_Project\Components\CMovementComponent.h">
       <Filter>Source\JJW_Project\Components</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\JJW_Project\Components\CStateComponent.cpp">
-      <Filter>Source\JJW_Project\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\JJW_Project\Components\CStateComponent.h">
-      <Filter>Source\JJW_Project\Components</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\JJW_Project\Components\CWeaponComponent.cpp">
       <Filter>Source\JJW_Project\Components</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\JJW_Project\Components\CWeaponComponent.h">
       <Filter>Source\JJW_Project\Components</Filter>
+    </ClCompile>
+    <Filter Include="Source\JJW_Project\Notifies">
+      <UniqueIdentifier>{12B3D626-210D-3A9D-8860-54DEAA431F26}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\JJW_Project\Notifies\AN_Attachment.cpp">
+      <Filter>Source\JJW_Project\Notifies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\JJW_Project\Notifies\AN_Attachment.h">
+      <Filter>Source\JJW_Project\Notifies</Filter>
     </ClCompile>
     <Filter Include="Source\JJW_Project\Player">
       <UniqueIdentifier>{3990E14F-4AB4-3042-BBB8-409AED2D22CA}</UniqueIdentifier>

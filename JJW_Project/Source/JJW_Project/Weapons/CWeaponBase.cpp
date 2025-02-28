@@ -1,6 +1,9 @@
 #include "CWeaponBase.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Animation/AnimMontage.h"
+#include "GameFramework/Character.h"
 #include "CSkillComponent.h"
+
 
 ACWeaponBase::ACWeaponBase()
 {
@@ -15,18 +18,26 @@ ACWeaponBase::ACWeaponBase()
 void ACWeaponBase::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	
 }
 
 void ACWeaponBase::Attack()
 {
-}
 
+}
 
 void ACWeaponBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void ACWeaponBase::Equip()
+{
+	ACharacter* ownerCharacter= Cast<ACharacter>(Owner);
+
+	if (EquipMontage)
+	{
+		ownerCharacter->PlayAnimMontage(EquipMontage, EquipMontage_PlayRate);
+	}
 }
 
