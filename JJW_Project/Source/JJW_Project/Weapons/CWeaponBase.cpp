@@ -11,19 +11,15 @@ ACWeaponBase::ACWeaponBase()
 
 	Root = CreateDefaultSubobject<USceneComponent>("Root");
 	SetRootComponent(Root);
-
-	SkillComponent = CreateDefaultSubobject<UCSkillComponent>("SkillComponent");
 }
 
 void ACWeaponBase::BeginPlay()
 {
 	Super::BeginPlay();
+
+	ACharacter* ownerCharacter = Cast<ACharacter>(Owner);
 }
 
-void ACWeaponBase::Attack()
-{
-
-}
 
 void ACWeaponBase::Tick(float DeltaTime)
 {
@@ -34,10 +30,5 @@ void ACWeaponBase::Tick(float DeltaTime)
 void ACWeaponBase::Equip()
 {
 	ACharacter* ownerCharacter= Cast<ACharacter>(Owner);
-
-	if (EquipMontage)
-	{
-		ownerCharacter->PlayAnimMontage(EquipMontage, EquipMontage_PlayRate);
-	}
 }
 
