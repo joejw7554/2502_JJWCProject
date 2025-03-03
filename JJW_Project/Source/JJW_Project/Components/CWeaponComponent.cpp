@@ -25,10 +25,9 @@ void UCWeaponComponent::BeginPlay()
 
 UCWeaponAsset* UCWeaponComponent::GetWeaponAsset(EWeaponType InType)
 {
-	
 	for (UCWeaponAsset* asset : WeaponAssets)
 	{
-		if (CurrentWeaponType == asset->GetWeaponType())
+		if (InType == asset->GetWeaponType())
 			return asset;
 	}
 	return nullptr;
