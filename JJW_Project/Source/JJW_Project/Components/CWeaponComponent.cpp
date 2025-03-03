@@ -23,16 +23,64 @@ void UCWeaponComponent::BeginPlay()
 
 }
 
-void UCWeaponComponent::EquipWeapon()
+UCWeaponAsset* UCWeaponComponent::GetWeaponAsset(EWeaponType InType)
+{
+	
+	for (UCWeaponAsset* asset : WeaponAssets)
+	{
+		if (CurrentWeaponType == asset->GetWeaponType())
+			return asset;
+	}
+	return nullptr;
+}
+
+UCEquipment* UCWeaponComponent::GetEquipment()
+{
+	return nullptr;
+}
+
+ACWeaponBase* UCWeaponComponent::GetWeapon()
+{
+	return nullptr;
+}
+
+void UCWeaponComponent::SetKatanaMode()
+{
+	SetMode(EWeaponType::Katana);
+}
+
+
+
+void UCWeaponComponent::SetMode(EWeaponType InType)
+{
+	if (CurrentWeaponType == InType)
+	{
+		//UnArmed
+		ChangeState(EStateType::UnArmed);
+	}
+	else if (IsUnArmed())
+	{
+		//asset->GetEquipment()->Equip()
+		//ChangeWeaponType();
+		ChangeState(EStateType::Armed);
+	}
+
+	UCWeaponAsset* asset = GetWeaponAsset(InType);
+	if (asset)
+	{
+		//asset->GetEquipment()->Equip();
+		ChangeWeaponType(InType);
+	}
+}
+
+void UCWeaponComponent::ChangeWeaponType(EWeaponType InType)
 {
 
 }
 
-void UCWeaponComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void UCWeaponComponent::ChangeState(EStateType InType)
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
+	CurrentState = InType;
 }
-
 
 

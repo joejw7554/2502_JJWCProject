@@ -17,18 +17,9 @@ void ACWeaponBase::BeginPlay()
 {
 	Super::BeginPlay();
 
-	ACharacter* ownerCharacter = Cast<ACharacter>(Owner);
+	OwnerCharacter = Cast<ACharacter>(GetOwner());
 }
 
 
-void ACWeaponBase::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
 
-}
-
-void ACWeaponBase::Equip()
-{
-	ACharacter* ownerCharacter= Cast<ACharacter>(Owner);
-}
 

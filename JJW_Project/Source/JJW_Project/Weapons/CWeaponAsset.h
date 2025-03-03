@@ -16,6 +16,9 @@ public:
 public:
 	void InitializeWeaponAsset(ACharacter* InOwner);
 
+	EWeaponType GetWeaponType() { return WeaponType; }
+	class UCEquipment* GetEquipment() { return Equipment? Equipment: nullptr; }
+
 private:
 	UPROPERTY(EditAnywhere)
 	EWeaponType WeaponType = EWeaponType::Max;
@@ -27,9 +30,12 @@ private:
 	TSubclassOf<class UCEquipment>EquipmentClass;
 
 	UPROPERTY(EditAnywhere)
-	FEquipmentData EquipmentData;
+	 FEquipmentData EquipmentData;
 
 private:
 	UPROPERTY()
 	class UCEquipment* Equipment;
+
+	UPROPERTY()
+	class ACWeaponBase* Weapon;
 };

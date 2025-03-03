@@ -14,6 +14,7 @@ public:
 
 	virtual void PostInitializeComponents() override;
 
+	virtual void InitializeWeapon(const struct FEquipmentData& InData) override;
 
 protected:
 	virtual void BeginPlay() override;

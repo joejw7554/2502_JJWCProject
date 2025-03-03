@@ -60,6 +60,8 @@ void UCMovementComponent::SprintAction(const FInputActionValue& Value)
 
 void UCMovementComponent::Dodge()
 {
+	Owner->SetActorRotation(Owner->GetLastMovementInputVector().Rotation(),ETeleportType::ResetPhysics);
+
 	if (AnimMontage_Dodge)
 		if (!Owner->GetMesh()->GetAnimInstance()->Montage_IsPlaying(AnimMontage_Dodge))
 			Owner->PlayAnimMontage(AnimMontage_Dodge, PlayRate_Dodge);

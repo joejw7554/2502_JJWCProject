@@ -3,13 +3,13 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "../Weapons/CWeaponBase.h"
+#include "../Weapons/CWeaponStructure.h"
 #include "CWeaponComponent.generated.h"
-
 
 UENUM()
 enum class EStateType :uint8
 {
-	UnArmed=0, Armed
+	UnArmed = 0, Armed
 };
 
 UCLASS()
@@ -19,22 +19,36 @@ class JJW_PROJECT_API UCWeaponComponent : public UActorComponent
 
 public:
 	UCWeaponComponent();
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 protected:
 	virtual void BeginPlay() override;
 
 public:
-	void EquipWeapon();
-
-protected:
+	FORCEINLINE bool IsUnArmed() { return CurrentState == EStateType::UnArmed; }
 
 private:
-	UPROPERTY(EditDefaultsOnly, Category="Weapon")
+	class UCWeaponAsset* GetWeaponAsset(EWeaponType InType);
+	class UCEquipment* GetEquipment();
+	class ACWeaponBase* GetWeapon();
+
+public:
+	void SetKatanaMode();
+
+private:
+	void SetMode(EWeaponType InType);
+	void ChangeWeaponType(EWeaponType InType);
+
+	void ChangeState(EStateType InType);
+	
+
+private:
+	UPROPERTY(EditDefaultsOnly, Category="Weapon Assets")
 	TArray<class UCWeaponAsset*> WeaponAssets;
 
 private:
 	ACharacter* OwnerCharacter;
+	
+	EWeaponType CurrentWeaponType = EWeaponType::Max;//
 
 	EStateType CurrentState= EStateType::UnArmed;
 };

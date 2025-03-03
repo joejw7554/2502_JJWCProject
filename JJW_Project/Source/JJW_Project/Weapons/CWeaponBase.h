@@ -16,9 +16,8 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
-	virtual void Tick(float DeltaTime) override;
-
-	void Equip();
+	virtual void InitializeWeapon(const struct FEquipmentData& InData)
+	{}
 
 	virtual void ShowWeapon() {}
 	virtual void HideWeapon() {}
@@ -26,5 +25,8 @@ public:
 protected:
 	UPROPERTY(VisibleAnywhere)
 	USceneComponent* Root;
+
+protected:
+	class ACharacter* OwnerCharacter;
 
 };

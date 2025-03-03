@@ -5,6 +5,8 @@
 #include "CWeaponStructure.generated.h"
 
 
+
+
 UENUM(BlueprintType)
 enum class EWeaponType : uint8
 {
@@ -32,11 +34,11 @@ public:
 	UPROPERTY(EditAnywhere)
 	FName RHandSocket;
 
-	UPROPERTY(EditAnywhere, Category="Optional")
-	FName LHandSocket;
-
 	UPROPERTY(EditAnywhere)
 	FName RHolsterSocket;
+
+	UPROPERTY(EditAnywhere, Category="Optional")
+	FName LHandSocket;
 
 	UPROPERTY(EditAnywhere, Category = "Optional")
 	FName LHolsterSocket;
