@@ -9,7 +9,7 @@ UCLASS()
 class JJW_PROJECT_API UCWeaponAsset : public UDataAsset
 {
 	GENERATED_BODY()
-	
+
 public:
 	UCWeaponAsset();
 
@@ -17,7 +17,9 @@ public:
 	void InitializeWeaponAsset(ACharacter* InOwner);
 
 	EWeaponType GetWeaponType() { return WeaponType; }
-	class UCEquipment* GetEquipment() { return Equipment? Equipment: nullptr; }
+	class UCEquipment* GetEquipment() { return Equipment; }
+	class ACWeaponBase* GetWeapon() { return Weapon; }
+
 
 private:
 	UPROPERTY(EditAnywhere)
@@ -30,7 +32,7 @@ private:
 	TSubclassOf<class UCEquipment>EquipmentClass;
 
 	UPROPERTY(EditAnywhere)
-	 FEquipmentData EquipmentData;
+	FEquipmentData EquipmentData;
 
 private:
 	UPROPERTY()

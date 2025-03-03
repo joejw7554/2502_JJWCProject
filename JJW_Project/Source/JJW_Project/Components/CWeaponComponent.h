@@ -9,7 +9,7 @@
 UENUM()
 enum class EStateType :uint8
 {
-	UnArmed = 0, Armed
+	UnArmed = 0, Armed, DoingAction
 };
 
 UCLASS()
@@ -36,8 +36,8 @@ public:
 
 private:
 	void SetMode(EWeaponType InType);
-	void ChangeWeaponType(EWeaponType InType);
 
+	void ChangeWeaponType(EWeaponType InType);
 	void ChangeState(EStateType InType);
 	
 

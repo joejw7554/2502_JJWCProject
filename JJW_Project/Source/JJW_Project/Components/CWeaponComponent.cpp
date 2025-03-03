@@ -35,12 +35,18 @@ UCWeaponAsset* UCWeaponComponent::GetWeaponAsset(EWeaponType InType)
 
 UCEquipment* UCWeaponComponent::GetEquipment()
 {
-	return nullptr;
+	UCEquipment* equipment = GetWeaponAsset(CurrentWeaponType)->GetEquipment();
+	if (!equipment) return nullptr;
+
+	return equipment;
 }
 
 ACWeaponBase* UCWeaponComponent::GetWeapon()
 {
-	return nullptr;
+	ACWeaponBase* weapon = GetWeaponAsset(CurrentWeaponType)->GetWeapon();
+	if (!weapon) return nullptr;
+
+	return weapon;
 }
 
 void UCWeaponComponent::SetKatanaMode()
@@ -69,6 +75,7 @@ void UCWeaponComponent::SetMode(EWeaponType InType)
 	{
 		//asset->GetEquipment()->Equip();
 		ChangeWeaponType(InType);
+		ChangeState(EStateType::Armed);
 	}
 }
 
