@@ -1,6 +1,7 @@
 #include "CWeaponComponent.h"
 #include "../Weapons/CWeaponBase.h"
 #include "../Weapons/CWeaponAsset.h"
+#include "../Weapons/CEquipment.h"
 #include "GameFramework/Character.h"
 
 UCWeaponComponent::UCWeaponComponent()
@@ -73,7 +74,7 @@ void UCWeaponComponent::SetMode(EWeaponType InType)
 	UCWeaponAsset* asset = GetWeaponAsset(InType);
 	if (asset)
 	{
-		//asset->GetEquipment()->Equip();
+		asset->GetEquipment()->CommonEquip();
 		ChangeWeaponType(InType);
 		ChangeState(EStateType::Armed);
 	}
@@ -81,12 +82,25 @@ void UCWeaponComponent::SetMode(EWeaponType InType)
 
 void UCWeaponComponent::ChangeWeaponType(EWeaponType InType)
 {
-
+	EWeaponType prevType = CurrentWeaponType;
+	CurrentWeaponType = InType;
+	
+	/////Work on HERE!
 }
 
 void UCWeaponComponent::ChangeState(EStateType InType)
 {
 	CurrentState = InType;
+}
+
+void UCWeaponComponent::Begin_Equip()
+{
+	GetEquipment()->Begin_Equip();
+}
+
+void UCWeaponComponent::End_Equip()
+{
+	GetEquipment()->End_Equip();
 }
 
 

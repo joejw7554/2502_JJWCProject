@@ -1,6 +1,7 @@
 #include "CEquipment.h"
 #include "Animation/AnimMontage.h"
 #include "GameFramework/Character.h"
+#include "../Components/CMovementComponent.h"
 
 
 void UCEquipment::InitializeEquipmentData(ACharacter* InOwner, const FEquipmentData& InData)
@@ -9,12 +10,31 @@ void UCEquipment::InitializeEquipmentData(ACharacter* InOwner, const FEquipmentD
 	Data = InData;
 }
 
-void UCEquipment::Equip()
+void UCEquipment::CommonEquip()
 {
-	OwnerCharacter->PlayAnimMontage(Data.EquipMontage, Data.Equip_PlayRate);
+	UCMovementComponent* Movement = OwnerCharacter->GetComponentByClass<UCMovementComponent>();
+	if (!Movement) return;
+
+	if (!Data.bCanMove)
+		Movement->DisableMovment();
+
+	if (!Data.bCanRotate)
+		Movement->DisableControlRotation();
+
 }
 
-void UCEquipment::UnEquip()
+void UCEquipment::Begin_Equip_Implementation()
 {
-	//Not sure if I should implement or not
+	OwnerCharacter->PlayAnimMontage(Data.EquipMontage, Data.Equip_PlayRate);
+	if (OnWeaponAttach.IsBound())
+		OnWeaponAttach.Broadcast();
 }
+
+void UCEquipment::End_Equip_Implementation()
+{
+	UCMovementComponent* Movement = OwnerCharacter->GetComponentByClass<UCMovementComponent>();
+
+	Movement->EnableMovement();
+	Movement->EnableControlRotation();
+}
+

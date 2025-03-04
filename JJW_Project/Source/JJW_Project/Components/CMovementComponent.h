@@ -25,6 +25,9 @@ public:
 	void EnableControlRotation();
 	void DisableControlRotation();
 
+	void EnableMovement();
+	void DisableMovment();
+
 	void SetWalkMode();
 	void SetSprintMode();
 
@@ -54,6 +57,8 @@ private:
 
 	//Montage
 private:
+	bool bCanMove = true;
+
 	
 
 };

@@ -39,6 +39,11 @@ private:
 
 	void ChangeWeaponType(EWeaponType InType);
 	void ChangeState(EStateType InType);
+
+private:
+	void Begin_Equip();
+
+	void End_Equip();
 	
 
 private:

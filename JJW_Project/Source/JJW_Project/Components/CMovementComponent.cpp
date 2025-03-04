@@ -30,6 +30,8 @@ void UCMovementComponent::BeginPlay()
 
 void UCMovementComponent::MoveAction(const FInputActionValue& Value)
 {
+	if (!bCanMove) return;
+
 	FVector2D val = Value.Get<FVector2D>();
 
 	FRotator yawRotator = FRotator(0.f, Owner->GetControlRotation().Yaw, 0.f);
@@ -77,6 +79,16 @@ void UCMovementComponent::DisableControlRotation()
 {
 	Owner->GetCharacterMovement()->bOrientRotationToMovement = true;
 	Owner->bUseControllerRotationYaw = false;
+}
+
+void UCMovementComponent::EnableMovement()
+{
+	bCanMove = true;
+}
+
+void UCMovementComponent::DisableMovment()
+{
+	bCanMove = false;
 }
 
 void UCMovementComponent::SetWalkMode()
