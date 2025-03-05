@@ -22,27 +22,38 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+	void SpawnWeapons(class UCWeaponAsset* asset);
+	void AttachWeaponToSocket(EWeaponType InWeaponType);
 
+
+	/////////////////////////
 public:
 	FORCEINLINE bool IsUnArmed() { return CurrentState == EStateType::UnArmed; }
 	FORCEINLINE bool IsArmed() { return CurrentState == EStateType::Armed; }
 
-private:
-	class UCWeaponAsset* GetWeaponAsset(EWeaponType InType);
 
+	//Player Key에따라 불릴 함수들
 public:
 	void SetKatanaMode();
 
 private:
-	void SetMode(EWeaponType InType);// 무기타입 바꾸기전 바꿀타입 명시하는 함수
-
-	void ChangeWeaponType(EWeaponType InType); //무기 타입 바꾸는용도
-	void ChangeState(EStateType InType); //상태 바꾸는용도
+	class UCWeaponAsset* GetWeaponAsset(EWeaponType InType);
 
 private:
+	void SetMode(EWeaponType InWeaponType);// 타입 바꾸기전 명시하는 함수들
+
+	void ChangeWeaponType(EWeaponType InWeaponType); //무기 타입 바꾸는용도
+	void ChangeState(EStateType InStateType); //
+
+
+	void EquipSetup();
+
+	//NotifyState의 Begin 과 End 에서 호출할 함수들
 	void Begin_Equip();
 	void End_Equip();
 	
+
+/// //////////////////////////////
 private:
 	UPROPERTY(EditDefaultsOnly, Category="Weapon Assets")
 	TArray<class UCWeaponAsset*> WeaponAssets;
@@ -53,4 +64,6 @@ private:
 	EWeaponType CurrentWeaponType = EWeaponType::Max;
 
 	EStateType CurrentState= EStateType::UnArmed;
+
+	class UCMovementComponent* MovementComp;
 };

@@ -16,17 +16,21 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
-	virtual void InitializeWeapon(const struct FEquipmentData& InData)
-	{}
-
-	virtual void ShowWeapon() {}
-	virtual void HideWeapon() {}
+	UMeshComponent* GetRightMesh() { return RightHandWeaponMesh ? RightHandWeaponMesh : nullptr; }
+	UMeshComponent* GetLeftMesh() { return LeftHandWeaponMesh ? LeftHandWeaponMesh : nullptr; }
+	ACharacter* GetWeaponOwner() { return OwnerCharacter; }
 
 protected:
 	UPROPERTY(VisibleAnywhere)
 	USceneComponent* Root;
 
-protected:
+	UPROPERTY(EditDefaultsOnly, Category = "Attachment")
+	UStaticMeshComponent* RightHandWeaponMesh;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Attachment")
+	UStaticMeshComponent* LeftHandWeaponMesh;
+
+private:
 	class ACharacter* OwnerCharacter;
 
 };

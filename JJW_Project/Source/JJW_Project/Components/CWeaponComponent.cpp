@@ -1,7 +1,11 @@
 #include "CWeaponComponent.h"
+
+#include "GameFramework/Character.h"
+#include "Animation/AnimMontage.h"
+
+#include "CMovementComponent.h"
 #include "../Weapons/CWeaponBase.h"
 #include "../Weapons/CWeaponAsset.h"
-#include "GameFramework/Character.h"
 
 UCWeaponComponent::UCWeaponComponent()
 {
@@ -12,18 +16,47 @@ UCWeaponComponent::UCWeaponComponent()
 void UCWeaponComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 	OwnerCharacter = Cast<ACharacter>(GetOwner());
 	if (!OwnerCharacter) return;
 
+	MovementComp = OwnerCharacter->GetComponentByClass<UCMovementComponent>();
+
+
 	for (UCWeaponAsset* asset : WeaponAssets)
 	{
-		//asset->GetEquipmentData().LHandSocket
+		if (asset)
+		{
+			SpawnWeapons(asset); // 스폰하고 무기 소켓에 붙여넣기 
+		}
 	}
 
-	//TODO: 기본으로 무기 소켓에 붙여넣기 
 	//활성화할 무기는 활성화모드	
 	//비활성화 해야할건 비활성화하기
+}
+
+void UCWeaponComponent::SpawnWeapons(UCWeaponAsset* asset)
+{
+	if (!OwnerCharacter) return;
+
+	FActorSpawnParameters params;
+	params.Owner = OwnerCharacter;
+	params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
+	ACWeaponBase* weapon = GetWorld()->SpawnActor<ACWeaponBase>(asset->GetWeaponClass(), params);
+	asset->SetWeapon(weapon);
+
+	if (asset->GetWeaponType() == EWeaponType::Katana)
+	{
+		weapon->GetLeftMesh()->AttachToComponent(OwnerCharacter->GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, asset->GetEquipmentData().LHolsterSocket);
+		weapon->GetRightMesh()->AttachToComponent(OwnerCharacter->GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, asset->GetEquipmentData().RHolsterSocket);
+		return;
+	}
+}
+
+void UCWeaponComponent::AttachWeaponToSocket(EWeaponType InWeaponType)
+{
+	//이걸 여기서 구현해 말아?
 }
 
 UCWeaponAsset* UCWeaponComponent::GetWeaponAsset(EWeaponType InType)
@@ -41,9 +74,11 @@ void UCWeaponComponent::SetKatanaMode()
 	SetMode(EWeaponType::Katana);
 }
 
-void UCWeaponComponent::SetMode(EWeaponType InType)
+void UCWeaponComponent::SetMode(EWeaponType InWeaponType)
 {
-	if (CurrentWeaponType == InType)
+	EWeaponType prevType = InWeaponType;
+
+	if (CurrentWeaponType == InWeaponType)
 	{
 		//현재 무기 장착해제
 		ChangeState(EStateType::UnArmed);
@@ -59,23 +94,36 @@ void UCWeaponComponent::SetMode(EWeaponType InType)
 
 		//현재무기 비활성화
 		//선택무기 활성화
-	UCWeaponAsset* asset = GetWeaponAsset(InType);
+	UCWeaponAsset* asset = GetWeaponAsset(InWeaponType);
 	if (asset)
 	{
-		ChangeWeaponType(InType);
+		ChangeWeaponType(InWeaponType);
 		ChangeState(EStateType::Armed);
 	}
 }
 
-void UCWeaponComponent::ChangeWeaponType(EWeaponType InType)
+void UCWeaponComponent::ChangeWeaponType(EWeaponType InWeaponType)
 {
-	EWeaponType prevType = CurrentWeaponType;
-	CurrentWeaponType = InType;
+	CurrentWeaponType = InWeaponType;
 }
 
-void UCWeaponComponent::ChangeState(EStateType InType)
+void UCWeaponComponent::ChangeState(EStateType InStateType)
 {
-	CurrentState = InType;
+	CurrentState = InStateType;
+}
+
+
+void UCWeaponComponent::EquipSetup()
+{
+	UCWeaponAsset* asset = GetWeaponAsset(CurrentWeaponType);
+
+	if (!asset->GetEquipmentData().bCanMove)
+		MovementComp->DisableMovment();
+
+	if (!asset->GetEquipmentData().bCanRotate)
+		MovementComp->DisableControlRotation();
+
+	OwnerCharacter->PlayAnimMontage(GetWeaponAsset(CurrentWeaponType)->GetEquipmentData().EquipMontage);
 }
 
 void UCWeaponComponent::Begin_Equip()
