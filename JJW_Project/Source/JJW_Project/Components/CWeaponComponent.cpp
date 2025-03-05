@@ -1,7 +1,6 @@
 #include "CWeaponComponent.h"
 #include "../Weapons/CWeaponBase.h"
 #include "../Weapons/CWeaponAsset.h"
-#include "../Weapons/CEquipment.h"
 #include "GameFramework/Character.h"
 
 UCWeaponComponent::UCWeaponComponent()
@@ -13,15 +12,18 @@ UCWeaponComponent::UCWeaponComponent()
 void UCWeaponComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
+	
 	OwnerCharacter = Cast<ACharacter>(GetOwner());
 	if (!OwnerCharacter) return;
 
 	for (UCWeaponAsset* asset : WeaponAssets)
 	{
-		asset->InitializeWeaponAsset(OwnerCharacter);
+		//asset->GetEquipmentData().LHandSocket
 	}
 
+	//TODO: 기본으로 무기 소켓에 붙여넣기 
+	//활성화할 무기는 활성화모드	
+	//비활성화 해야할건 비활성화하기
 }
 
 UCWeaponAsset* UCWeaponComponent::GetWeaponAsset(EWeaponType InType)
@@ -34,47 +36,32 @@ UCWeaponAsset* UCWeaponComponent::GetWeaponAsset(EWeaponType InType)
 	return nullptr;
 }
 
-UCEquipment* UCWeaponComponent::GetEquipment()
-{
-	UCEquipment* equipment = GetWeaponAsset(CurrentWeaponType)->GetEquipment();
-	if (!equipment) return nullptr;
-
-	return equipment;
-}
-
-ACWeaponBase* UCWeaponComponent::GetWeapon()
-{
-	ACWeaponBase* weapon = GetWeaponAsset(CurrentWeaponType)->GetWeapon();
-	if (!weapon) return nullptr;
-
-	return weapon;
-}
-
 void UCWeaponComponent::SetKatanaMode()
 {
 	SetMode(EWeaponType::Katana);
 }
 
-
-
 void UCWeaponComponent::SetMode(EWeaponType InType)
 {
 	if (CurrentWeaponType == InType)
 	{
-		//UnArmed
+		//현재 무기 장착해제
 		ChangeState(EStateType::UnArmed);
 	}
 	else if (IsUnArmed())
 	{
-		//asset->GetEquipment()->Equip()
-		//ChangeWeaponType();
+		//선택된 무기 모드 변경
+		//선택된 무기 장착
 		ChangeState(EStateType::Armed);
 	}
 
+	//현재무기와 같지도 않고 Unarmed가 아닐때의 경우:
+
+		//현재무기 비활성화
+		//선택무기 활성화
 	UCWeaponAsset* asset = GetWeaponAsset(InType);
 	if (asset)
 	{
-		asset->GetEquipment()->CommonEquip();
 		ChangeWeaponType(InType);
 		ChangeState(EStateType::Armed);
 	}
@@ -84,8 +71,6 @@ void UCWeaponComponent::ChangeWeaponType(EWeaponType InType)
 {
 	EWeaponType prevType = CurrentWeaponType;
 	CurrentWeaponType = InType;
-	
-	/////Work on HERE!
 }
 
 void UCWeaponComponent::ChangeState(EStateType InType)
@@ -95,12 +80,10 @@ void UCWeaponComponent::ChangeState(EStateType InType)
 
 void UCWeaponComponent::Begin_Equip()
 {
-	GetEquipment()->Begin_Equip();
 }
 
 void UCWeaponComponent::End_Equip()
 {
-	GetEquipment()->End_Equip();
 }
 
 

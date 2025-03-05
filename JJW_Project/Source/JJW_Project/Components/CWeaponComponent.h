@@ -25,27 +25,24 @@ protected:
 
 public:
 	FORCEINLINE bool IsUnArmed() { return CurrentState == EStateType::UnArmed; }
+	FORCEINLINE bool IsArmed() { return CurrentState == EStateType::Armed; }
 
 private:
 	class UCWeaponAsset* GetWeaponAsset(EWeaponType InType);
-	class UCEquipment* GetEquipment();
-	class ACWeaponBase* GetWeapon();
 
 public:
 	void SetKatanaMode();
 
 private:
-	void SetMode(EWeaponType InType);
+	void SetMode(EWeaponType InType);// 무기타입 바꾸기전 바꿀타입 명시하는 함수
 
-	void ChangeWeaponType(EWeaponType InType);
-	void ChangeState(EStateType InType);
+	void ChangeWeaponType(EWeaponType InType); //무기 타입 바꾸는용도
+	void ChangeState(EStateType InType); //상태 바꾸는용도
 
 private:
 	void Begin_Equip();
-
 	void End_Equip();
 	
-
 private:
 	UPROPERTY(EditDefaultsOnly, Category="Weapon Assets")
 	TArray<class UCWeaponAsset*> WeaponAssets;
@@ -53,7 +50,7 @@ private:
 private:
 	ACharacter* OwnerCharacter;
 	
-	EWeaponType CurrentWeaponType = EWeaponType::Max;//
+	EWeaponType CurrentWeaponType = EWeaponType::Max;
 
 	EStateType CurrentState= EStateType::UnArmed;
 };

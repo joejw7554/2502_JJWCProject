@@ -11,33 +11,22 @@ class JJW_PROJECT_API UCWeaponAsset : public UDataAsset
 	GENERATED_BODY()
 
 public:
-	UCWeaponAsset();
+	FORCEINLINE EWeaponType GetWeaponType() { return WeaponType; }
+	FORCEINLINE FEquipmentData GetEquipmentData() { return EquipmentData; }
 
-public:
-	void InitializeWeaponAsset(ACharacter* InOwner);
-
-	EWeaponType GetWeaponType() { return WeaponType; }
-	class UCEquipment* GetEquipment() { return Equipment; }
-	class ACWeaponBase* GetWeapon() { return Weapon; }
-
+	//무기타입
+	//실제 무기 BP
+	//EquipmentData
 
 private:
 	UPROPERTY(EditAnywhere)
 	EWeaponType WeaponType = EWeaponType::Max;
 
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<class ACWeaponBase> WeaponClass;
-
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<class UCEquipment>EquipmentClass;
+	TSubclassOf<class ACWeaponBase> Weapon;
 
 	UPROPERTY(EditAnywhere)
 	FEquipmentData EquipmentData;
 
 private:
-	UPROPERTY()
-	class UCEquipment* Equipment;
-
-	UPROPERTY()
-	class ACWeaponBase* Weapon;
 };

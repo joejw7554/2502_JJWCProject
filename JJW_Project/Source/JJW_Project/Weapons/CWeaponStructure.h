@@ -4,9 +4,6 @@
 #include "UObject/NoExportTypes.h"
 #include "CWeaponStructure.generated.h"
 
-
-
-
 UENUM(BlueprintType)
 enum class EWeaponType : uint8
 {
