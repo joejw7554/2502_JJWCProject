@@ -43,6 +43,11 @@ public:
 private:
 	class UCWeaponAsset* GetWeaponAsset(EWeaponType InType);
 
+	//애니메이션 관련 함수들
+	FORCEINLINE bool IsPlayingAnimAction();
+
+
+
 	//무기관련 함수들////////////////////////////////////////
 private:
 	void SetMode(EWeaponType InWeaponType);// 타입 바꾸기전 명시하는 함수들
@@ -50,13 +55,14 @@ private:
 	void ChangeWeaponType(EWeaponType InWeaponType); //무기 타입 바꾸는용도
 	void ChangeState(EStateType InStateType); 
 
-	void ActivateWeapon();
-	void DeActivateWeapon();
+	void ActivateWeapon(EWeaponType WeaponType);
+	void DeActivateWeapon(EWeaponType WeaponType);
 
 
 	///장착관련 함수들//////////////////////////////////////////////
 private:
 	void Equip();
+	void UnEquip();
 
 	//NotifyState의 Begin 과 End 에서 호출할 함수들
 public:
@@ -70,7 +76,7 @@ private:
 
 private:
 	ACharacter* OwnerCharacter;
-	
+
 	EWeaponType CurrentWeaponType = EWeaponType::Max;
 
 	EStateType CurrentState= EStateType::UnArmed;
