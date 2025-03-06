@@ -56,7 +56,32 @@ void UCWeaponComponent::SpawnWeapons(UCWeaponAsset* asset)
 
 void UCWeaponComponent::AttachWeaponToSocket(EWeaponType InWeaponType)
 {
-	//이걸 여기서 구현해 말아?
+	UCWeaponAsset* asset = GetWeaponAsset(InWeaponType);
+	if (!asset) return;
+	ACWeaponBase* weapon = asset->GetWeapon();
+	if (!weapon) return;
+
+	FName RHolsterSocket = asset->GetEquipmentData().RHolsterSocket;
+	FName LHolsterSocket = asset->GetEquipmentData().LHolsterSocket;
+	if (InWeaponType == EWeaponType::Katana)
+	{
+		weapon->GetLeftMesh()->AttachToComponent(OwnerCharacter->GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, RHolsterSocket);
+		weapon->GetRightMesh()->AttachToComponent(OwnerCharacter->GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, LHolsterSocket);
+	}
+}
+
+void UCWeaponComponent::AttachWeaponToHand(EWeaponType InWeaponType)
+{
+	UCWeaponAsset* asset = GetWeaponAsset(InWeaponType);
+	if (!asset) return;
+	ACWeaponBase* weapon = asset->GetWeapon();
+	if (!weapon) return;
+
+	if (InWeaponType == EWeaponType::Katana)
+	{
+		weapon->GetLeftMesh()->AttachToComponent(OwnerCharacter->GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, asset->GetEquipmentData().LHandSocket);
+		weapon->GetRightMesh()->AttachToComponent(OwnerCharacter->GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, asset->GetEquipmentData().RHandSocket);
+	}
 }
 
 UCWeaponAsset* UCWeaponComponent::GetWeaponAsset(EWeaponType InType)
@@ -78,27 +103,30 @@ void UCWeaponComponent::SetMode(EWeaponType InWeaponType)
 {
 	EWeaponType prevType = InWeaponType;
 
-	if (CurrentWeaponType == InWeaponType)
+	if (IsUnArmed())
 	{
-		//현재 무기 장착해제
-		ChangeState(EStateType::UnArmed);
+		UE_LOG(LogTemp, Warning, TEXT("UnArmed 상태입니다. 선택한 무기 장착"));
+		ChangeWeaponType(InWeaponType); 
+		ActivateWeapon();
+		Equip();
+		return;
 	}
-	else if (IsUnArmed())
+	else if (CurrentWeaponType == InWeaponType)
 	{
-		//선택된 무기 모드 변경
-		//선택된 무기 장착
-		ChangeState(EStateType::Armed);
+		UE_LOG(LogTemp, Warning, TEXT("현재 무기와 같은 무기입니다 장착해제."));
+		DeActivateWeapon();
+		return;
 	}
 
 	//현재무기와 같지도 않고 Unarmed가 아닐때의 경우:
+	UE_LOG(LogTemp, Warning, TEXT("다른 무기를 선택하였습니다."));
 
-		//현재무기 비활성화
-		//선택무기 활성화
 	UCWeaponAsset* asset = GetWeaponAsset(InWeaponType);
 	if (asset)
 	{
 		ChangeWeaponType(InWeaponType);
-		ChangeState(EStateType::Armed);
+		ActivateWeapon();
+		Equip();
 	}
 }
 
@@ -112,8 +140,47 @@ void UCWeaponComponent::ChangeState(EStateType InStateType)
 	CurrentState = InStateType;
 }
 
+void UCWeaponComponent::ActivateWeapon()
+{
+	if (CurrentWeaponType == EWeaponType::Katana)
+	{
+		UMeshComponent* RightMesh = GetWeaponAsset(CurrentWeaponType)->GetWeapon()->GetRightMesh();
+		UMeshComponent* LeftMesh = GetWeaponAsset(CurrentWeaponType)->GetWeapon()->GetLeftMesh();
 
-void UCWeaponComponent::EquipSetup()
+		if (!RightMesh && !LeftMesh) return;
+
+		RightMesh->SetVisibility(true);
+		LeftMesh->SetVisibility(true);
+
+	}
+	ChangeState(EStateType::Armed);
+}
+
+void UCWeaponComponent::DeActivateWeapon()
+{
+	if (CurrentWeaponType == EWeaponType::Katana)
+	{
+		UMeshComponent* RightMesh = GetWeaponAsset(CurrentWeaponType)->GetWeapon()->GetRightMesh();
+		UMeshComponent* LeftMesh = GetWeaponAsset(CurrentWeaponType)->GetWeapon()->GetLeftMesh();
+
+		USkeletalMeshComponent* OwnerMesh = OwnerCharacter->GetMesh();
+		FName RHolsterSocket = GetWeaponAsset(CurrentWeaponType)->GetEquipmentData().RHolsterSocket;
+		FName LHolsterSocket = GetWeaponAsset(CurrentWeaponType)->GetEquipmentData().LHolsterSocket;
+
+		if (!RightMesh && !LeftMesh) return;
+		if (!OwnerMesh) return;
+
+		RightMesh->SetVisibility(false);
+		LeftMesh->SetVisibility(false);
+		RightMesh->AttachToComponent(OwnerMesh, FAttachmentTransformRules::SnapToTargetIncludingScale, RHolsterSocket);
+		LeftMesh->AttachToComponent(OwnerMesh, FAttachmentTransformRules::SnapToTargetIncludingScale, LHolsterSocket);
+	}
+
+	ChangeState(EStateType::UnArmed);
+}
+
+
+void UCWeaponComponent::Equip()
 {
 	UCWeaponAsset* asset = GetWeaponAsset(CurrentWeaponType);
 
@@ -128,10 +195,20 @@ void UCWeaponComponent::EquipSetup()
 
 void UCWeaponComponent::Begin_Equip()
 {
+	AttachWeaponToHand(CurrentWeaponType);
 }
 
 void UCWeaponComponent::End_Equip()
 {
+	UCWeaponAsset* asset = GetWeaponAsset(CurrentWeaponType);
+
+	if (!asset->GetEquipmentData().bCanMove)
+		MovementComp->EnableMovement();
+
+	if (!asset->GetEquipmentData().bCanRotate)
+		MovementComp->EnableControlRotation();
+
+	ChangeState(EStateType::Armed);
 }
 
 

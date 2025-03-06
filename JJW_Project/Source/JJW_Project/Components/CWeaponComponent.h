@@ -24,6 +24,8 @@ protected:
 	virtual void BeginPlay() override;
 	void SpawnWeapons(class UCWeaponAsset* asset);
 	void AttachWeaponToSocket(EWeaponType InWeaponType);
+	void AttachWeaponToHand(EWeaponType InWeaponType);
+
 
 
 	/////////////////////////
@@ -32,28 +34,36 @@ public:
 	FORCEINLINE bool IsArmed() { return CurrentState == EStateType::Armed; }
 
 
-	//Player Key에따라 불릴 함수들
+	//종류별 무기 장착 함수들///////////////////////////////////////////
 public:
 	void SetKatanaMode();
+
+
 
 private:
 	class UCWeaponAsset* GetWeaponAsset(EWeaponType InType);
 
+	//무기관련 함수들////////////////////////////////////////
 private:
 	void SetMode(EWeaponType InWeaponType);// 타입 바꾸기전 명시하는 함수들
 
 	void ChangeWeaponType(EWeaponType InWeaponType); //무기 타입 바꾸는용도
-	void ChangeState(EStateType InStateType); //
+	void ChangeState(EStateType InStateType); 
+
+	void ActivateWeapon();
+	void DeActivateWeapon();
 
 
-	void EquipSetup();
+	///장착관련 함수들//////////////////////////////////////////////
+private:
+	void Equip();
 
 	//NotifyState의 Begin 과 End 에서 호출할 함수들
+public:
 	void Begin_Equip();
 	void End_Equip();
 	
 
-/// //////////////////////////////
 private:
 	UPROPERTY(EditDefaultsOnly, Category="Weapon Assets")
 	TArray<class UCWeaponAsset*> WeaponAssets;
