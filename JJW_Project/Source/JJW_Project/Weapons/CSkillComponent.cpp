@@ -13,10 +13,12 @@ void UCSkillComponent::BeginPlay()
 
 }
 
-
-void UCSkillComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void UCSkillComponent::PlayBaseAttackCombo()
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
 
 }
+
+
+
 

@@ -10,6 +10,11 @@ enum class EWeaponType : uint8
 	Katana = 0, Max
 };
 
+enum class SkillKey : uint8
+{
+	
+};
+
 USTRUCT()
 struct FEquipmentData
 {
@@ -51,16 +56,16 @@ public:
 	class UAnimMontage* AttackMontage;
 
 	UPROPERTY(EditAnywhere)
-	float Attack_PlayRate;
+	float Attack_PlayRate = 1.25f;
 
 	UPROPERTY(EditAnywhere)
-	float AttackDamage;
+	float AttackDamage = 10;
 
 	UPROPERTY(EditAnywhere)
-	bool bCanMove;
+	bool bCanMove = false;
 
 	UPROPERTY(EditAnywhere)
-	bool bCanRotate;
+	bool bCanRotate = true;
 };
 
 
