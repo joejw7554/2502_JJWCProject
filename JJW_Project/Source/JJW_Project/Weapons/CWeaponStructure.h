@@ -10,10 +10,7 @@ enum class EWeaponType : uint8
 	Katana = 0, Test,Max
 };
 
-enum class SkillKey : uint8
-{
-	
-};
+
 
 USTRUCT()
 struct FEquipmentData
@@ -46,27 +43,6 @@ public:
 	FName LHolsterSocket;
 };
 
-USTRUCT()
-struct FSkillData
-{
-	GENERATED_BODY()
-
-public:
-	UPROPERTY(EditAnywhere)
-	class UAnimMontage* AttackMontage;
-
-	UPROPERTY(EditAnywhere)
-	float Attack_PlayRate = 1.25f;
-
-	UPROPERTY(EditAnywhere)
-	float AttackDamage = 10;
-
-	UPROPERTY(EditAnywhere)
-	bool bCanMove = false;
-
-	UPROPERTY(EditAnywhere)
-	bool bCanRotate = true;
-};
 
 
 UCLASS()
