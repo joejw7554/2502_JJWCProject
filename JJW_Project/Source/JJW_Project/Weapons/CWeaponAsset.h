@@ -30,7 +30,7 @@ private:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<ACWeaponBase> WeaponClass;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(VisibleAnywhere)
 	ACWeaponBase* Weapon;
 
 	UPROPERTY(EditAnywhere)

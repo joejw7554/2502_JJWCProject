@@ -7,7 +7,7 @@
 UENUM(BlueprintType)
 enum class EWeaponType : uint8
 {
-	Katana = 0, Max
+	Katana = 0, Test,Max
 };
 
 enum class SkillKey : uint8

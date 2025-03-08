@@ -6,11 +6,8 @@
 #include "../Weapons/CWeaponStructure.h"
 #include "CWeaponComponent.generated.h"
 
-UENUM()
-enum class EStateType :uint8
-{
-	UnArmed = 0, Armed, DoingAction
-};
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FWeaponTypeChanged, EWeaponType, InPrevType, EWeaponType, InNewType);
+
 
 UCLASS()
 class JJW_PROJECT_API UCWeaponComponent : public UActorComponent
@@ -23,25 +20,27 @@ public:
 protected:
 	virtual void BeginPlay() override;
 	void SpawnWeapons(class UCWeaponAsset* asset);
-	void AttachWeaponToSocket(EWeaponType InWeaponType);
-	void AttachWeaponToHand(EWeaponType InWeaponType);
-
-
+	void AttachWeaponToSocket(EWeaponType WeaponType);
+	void AttachWeaponToHand(EWeaponType WeaponType);
 
 	/////////////////////////
 public:
-	FORCEINLINE bool IsUnArmed() { return CurrentState == EStateType::UnArmed; }
-	FORCEINLINE bool IsArmed() { return CurrentState == EStateType::Armed; }
+	FORCEINLINE bool IsUnArmed() { return CurrentWeaponType == EWeaponType::Max; }
 
+
+	FWeaponTypeChanged OnWeaponTypeChanged;
 
 	//종류별 무기 장착 함수들///////////////////////////////////////////
 public:
 	void SetKatanaMode();
+	void TestWeaponMode();
 
+private:
+	void SetUnarmedMode();
 
 
 private:
-	class UCWeaponAsset* GetWeaponAsset(EWeaponType InType);
+	class UCWeaponAsset* GetWeaponAsset(EWeaponType WeaponType);
 
 	//애니메이션 관련 함수들
 	FORCEINLINE bool IsPlayingAnimAction();
@@ -50,10 +49,9 @@ private:
 
 	//무기관련 함수들////////////////////////////////////////
 private:
-	void SetMode(EWeaponType InWeaponType);// 타입 바꾸기전 명시하는 함수들
+	void SetMode(EWeaponType WeaponType);// 타입 바꾸기전 명시하는 함수들
 
-	void ChangeWeaponType(EWeaponType InWeaponType); //무기 타입 바꾸는용도
-	void ChangeState(EStateType InStateType); 
+	void ChangeWeaponType(EWeaponType WeaponType); //무기 타입 바꾸는용도
 
 	void ActivateWeapon(EWeaponType WeaponType);
 	void DeActivateWeapon(EWeaponType WeaponType);
@@ -61,8 +59,8 @@ private:
 
 	///장착관련 함수들//////////////////////////////////////////////
 private:
-	void Equip();
-	void UnEquip();
+	void Equip(EWeaponType WeaponType);
+	void UnEquip(EWeaponType WeaponType);
 
 	//NotifyState의 Begin 과 End 에서 호출할 함수들
 public:
@@ -78,8 +76,6 @@ private:
 	ACharacter* OwnerCharacter;
 
 	EWeaponType CurrentWeaponType = EWeaponType::Max;
-
-	EStateType CurrentState= EStateType::UnArmed;
 
 	class UCMovementComponent* MovementComp;
 };
