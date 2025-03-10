@@ -8,7 +8,7 @@
 UENUM()
 enum class ESkillKey : uint8
 {
-	Attack = 0, Skill1, Skill2, Skill3, Skill4,
+	BasicCombo = 0, Q, W, E, R,
 };
 
 USTRUCT()
@@ -24,13 +24,16 @@ public:
 	float Attack_PlayRate = 1.25f;
 
 	UPROPERTY(EditAnywhere)
-	float AttackDamage = 10;
+	float BaseDamage = 10;
 
 	UPROPERTY(EditAnywhere)
 	bool bCanMove = false;
 
 	UPROPERTY(EditAnywhere)
 	bool bCanRotate = true;
+
+	UPROPERTY(EditAnywhere)
+	TArray<float> SectionDamageMultiplier;
 };
 
 USTRUCT()

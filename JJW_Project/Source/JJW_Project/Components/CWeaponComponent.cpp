@@ -7,6 +7,12 @@
 #include "../Weapons/CWeaponBase.h"
 #include "../Weapons/CWeaponAsset.h"
 
+#include "CSkill_Q.h"
+#include "CSkill_W.h"
+#include "CSkill_E.h"
+#include "CSkill_R.h"
+#include "CSkill_BasicCombo.h"
+
 UCWeaponComponent::UCWeaponComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
@@ -21,6 +27,7 @@ void UCWeaponComponent::BeginPlay()
 	if (!OwnerCharacter) return;
 
 	MovementComp = OwnerCharacter->GetComponentByClass<UCMovementComponent>();
+	if (!MovementComp) return;
 
 	for (UCWeaponAsset* asset : WeaponAssets)
 	{
@@ -38,14 +45,22 @@ void UCWeaponComponent::SpawnWeapons(UCWeaponAsset* asset)
 	params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
 	ACWeaponBase* weapon = GetWorld()->SpawnActor<ACWeaponBase>(asset->GetWeaponClass(), params);
+	if (!weapon) return; 
+
 	asset->SetWeapon(weapon);
+	asset->GetWeapon()->GetBasicCombo()->InitialzeSkillData(&(asset->GetWeaponSkillSet()), ESkillKey::BasicCombo);
+	asset->GetWeapon()->GetSkill_Q()->InitialzeSkillData(&(asset->GetWeaponSkillSet()), ESkillKey::Q);
+	asset->GetWeapon()->GetSkill_W()->InitialzeSkillData(&(asset->GetWeaponSkillSet()), ESkillKey::W);
+	asset->GetWeapon()->GetSkill_E()->InitialzeSkillData(&(asset->GetWeaponSkillSet()), ESkillKey::E);
+	asset->GetWeapon()->GetSkill_R()->InitialzeSkillData(&(asset->GetWeaponSkillSet()), ESkillKey::R);
 
 	weapon->GetRightMesh()->AttachToComponent(OwnerCharacter->GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, asset->GetEquipmentData().RHolsterSocket);
 
 	if (asset->GetWeaponType() == EWeaponType::Katana)
 	{
 		weapon->GetLeftMesh()->AttachToComponent(OwnerCharacter->GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, asset->GetEquipmentData().LHolsterSocket);
-	}
+	}	
+
 	DeActivateWeapon(asset->GetWeaponType());
 }
 

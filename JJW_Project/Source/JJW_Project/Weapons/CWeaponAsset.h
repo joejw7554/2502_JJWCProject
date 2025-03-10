@@ -19,6 +19,7 @@ public:
 	FORCEINLINE FEquipmentData GetEquipmentData() { return EquipmentData; }
 	FORCEINLINE void SetWeapon(ACWeaponBase* InWeapon) { Weapon = InWeapon; }
 	FORCEINLINE ACWeaponBase* GetWeapon() { return  Weapon; }
+	FORCEINLINE FWeaponSkillSet& GetWeaponSkillSet() { return WeaponSkillSet; }
 
 
 	//무기타입

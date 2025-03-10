@@ -2,6 +2,16 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Animation/AnimMontage.h"
 #include "GameFramework/Character.h"
+#include "Kismet/GameplayStatics.h"
+
+#include "CSkillStructure.h"
+
+#include "../Components/CSkill_Q.h"
+#include "../Components/CSkill_W.h"
+#include "../Components/CSkill_E.h"
+#include "../Components/CSkill_R.h"
+#include "../Components/CSkill_BasicCombo.h"
+#include "../Components/CWeaponComponent.h"
 
 
 ACWeaponBase::ACWeaponBase()
@@ -13,11 +23,20 @@ ACWeaponBase::ACWeaponBase()
 
 	RightHandWeaponMesh = CreateDefaultSubobject<UStaticMeshComponent>("RightHand_WeaponMesh");
 	RightHandWeaponMesh->SetupAttachment(Root);
-	RightHandWeaponMesh->SetCollisionProfileName("NoCollision"); //다시 NoCollision으로 바꾸기
+	RightHandWeaponMesh->SetCollisionProfileName("NoCollision"); 
 
 	LeftHandWeaponMesh = CreateDefaultSubobject<UStaticMeshComponent>("LeftHand_WeaponMesh");
 	LeftHandWeaponMesh->SetupAttachment(Root);
-	LeftHandWeaponMesh->SetCollisionProfileName("NoCollision"); //다시 NoCollision으로 바꾸기
+	LeftHandWeaponMesh->SetCollisionProfileName("NoCollision"); 
+
+	//SkillComponents
+	{
+		BasicCombo = CreateDefaultSubobject<UCSkill_BasicCombo>("BasicCombo");
+		Skill_Q = CreateDefaultSubobject<UCSkill_Q>("Skill_Q");
+		Skill_W = CreateDefaultSubobject<UCSkill_W>("Skill_W");
+		Skill_E = CreateDefaultSubobject<UCSkill_E>("Skill_E");
+		Skill_R = CreateDefaultSubobject<UCSkill_R>("Skill_R");
+	}
 }
 
 void ACWeaponBase::BeginPlay()
@@ -37,25 +56,16 @@ void ACWeaponBase::BeginPlay()
 	}
 }
 
+
 void ACWeaponBase::OnWeaponBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Weapon Overlap"));
+    UE_LOG(LogTemp, Warning, TEXT("Weapon Overlap"));
+    {
+        UE_LOG(LogTemp, Warning, TEXT("Weapon Overlap"));
 
-	if (OtherActor->ActorHasTag("Enemy"))
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Hit Enemy"));
-
-		if (OverlappedComponent == RightHandWeaponMesh)
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Right Hand Weapon hit Enemy"));
-		}
-		else if (OverlappedComponent == LeftHandWeaponMesh)
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Left Hand Weapon hit Enemy"));
-		}
-	}
+        if (OtherActor->ActorHasTag("Enemy"))
+        {
+            UE_LOG(LogTemp, Warning, TEXT("Hit Enemy"));
+        }
+    }
 }
-
-
-
-

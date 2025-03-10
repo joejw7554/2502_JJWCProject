@@ -4,6 +4,7 @@
 #include "Components/ActorComponent.h"
 #include "../Weapons/CWeaponBase.h"
 #include "../Weapons/CWeaponStructure.h"
+#include "../Weapons/CSkillStructure.h"
 #include "CWeaponComponent.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FWeaponTypeChanged, EWeaponType, InPrevType, EWeaponType, InNewType);
@@ -20,13 +21,13 @@ public:
 protected:
 	virtual void BeginPlay() override;
 	void SpawnWeapons(class UCWeaponAsset* asset);
+
 	void AttachWeaponToSocket(EWeaponType WeaponType);
 	void AttachWeaponToHand(EWeaponType WeaponType);
 
 	/////////////////////////
 public:
 	FORCEINLINE bool IsUnArmed() { return CurrentWeaponType == EWeaponType::Max; }
-
 
 	FWeaponTypeChanged OnWeaponTypeChanged;
 
