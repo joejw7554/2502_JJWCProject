@@ -100,5 +100,8 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	if (IA_TestWeapon)
 		enhancedInput->BindAction(IA_TestWeapon, ETriggerEvent::Started, Weapon, &UCWeaponComponent::TestWeaponMode);
 
+	if (IA_BasicAttackAction)
+		enhancedInput->BindAction(IA_BasicAttackAction, ETriggerEvent::Started, Weapon, &UCWeaponComponent::DoBasicAttack);
+
 }
 

@@ -17,6 +17,7 @@ void UCSkillComponentBase::InitialzeSkillData(const FWeaponSkillSet* InSkillSet,
 	if (InSkillSet)
 	{
 		const FSkillData* SkillDataPtr = InSkillSet->Skills.Find(InKey);
+
 		if (SkillDataPtr)
 		{
 			SkillData = SkillDataPtr;

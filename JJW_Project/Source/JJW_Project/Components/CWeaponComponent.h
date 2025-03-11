@@ -29,21 +29,29 @@ protected:
 public:
 	FORCEINLINE bool IsUnArmed() { return CurrentWeaponType == EWeaponType::Max; }
 
+
+public:
+	EWeaponType GetCurrentWeaponType() { return CurrentWeaponType; }
+
 	FWeaponTypeChanged OnWeaponTypeChanged;
 
-	//종류별 무기 장착 함수들///////////////////////////////////////////
+	//무기 관련함수들
 public:
 	void SetKatanaMode();
 	void TestWeaponMode();
+
+	void DoBasicAttack();
 
 private:
 	void SetUnarmedMode();
 
 
-private:
+public:
 	class UCWeaponAsset* GetWeaponAsset(EWeaponType WeaponType);
 
-	//애니메이션 관련 함수들
+
+private:
+	//애니메이션 관련 함수
 	FORCEINLINE bool IsPlayingAnimAction();
 
 

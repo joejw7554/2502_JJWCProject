@@ -6,6 +6,7 @@
 #include "CMovementComponent.h"
 #include "../Weapons/CWeaponBase.h"
 #include "../Weapons/CWeaponAsset.h"
+#include "Weapons/CSkillStructure.h"
 
 #include "CSkill_Q.h"
 #include "CSkill_W.h"
@@ -45,21 +46,35 @@ void UCWeaponComponent::SpawnWeapons(UCWeaponAsset* asset)
 	params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
 	ACWeaponBase* weapon = GetWorld()->SpawnActor<ACWeaponBase>(asset->GetWeaponClass(), params);
-	if (!weapon) return; 
+	if (!weapon) return;
 
 	asset->SetWeapon(weapon);
-	asset->GetWeapon()->GetBasicCombo()->InitialzeSkillData(&(asset->GetWeaponSkillSet()), ESkillKey::BasicCombo);
-	asset->GetWeapon()->GetSkill_Q()->InitialzeSkillData(&(asset->GetWeaponSkillSet()), ESkillKey::Q);
-	asset->GetWeapon()->GetSkill_W()->InitialzeSkillData(&(asset->GetWeaponSkillSet()), ESkillKey::W);
-	asset->GetWeapon()->GetSkill_E()->InitialzeSkillData(&(asset->GetWeaponSkillSet()), ESkillKey::E);
-	asset->GetWeapon()->GetSkill_R()->InitialzeSkillData(&(asset->GetWeaponSkillSet()), ESkillKey::R);
+	UCSkill_BasicCombo* basic = asset->GetWeapon()->GetBasicCombo();
+	UCSkill_Q* skillQ = asset->GetWeapon()->GetSkill_Q();
+	UCSkill_W* skillW = asset->GetWeapon()->GetSkill_W();
+	UCSkill_E* skillE = asset->GetWeapon()->GetSkill_E();
+	UCSkill_R* skillR = asset->GetWeapon()->GetSkill_R();
+
+	///////////////////////확인바람
+	if (basic)
+		basic->InitialzeSkillData(&(asset->GetWeaponSkillSet()), ESkillKey::BasicCombo);
+
+	if (skillQ)
+		skillQ->InitialzeSkillData(&(asset->GetWeaponSkillSet()), ESkillKey::Q);
+
+	if (skillW)
+		skillW->InitialzeSkillData(&(asset->GetWeaponSkillSet()), ESkillKey::W);
+
+	if (skillE)
+		skillE->InitialzeSkillData(&(asset->GetWeaponSkillSet()), ESkillKey::E);
+
+	if (skillR)
+		skillR->InitialzeSkillData(&(asset->GetWeaponSkillSet()), ESkillKey::R);
 
 	weapon->GetRightMesh()->AttachToComponent(OwnerCharacter->GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, asset->GetEquipmentData().RHolsterSocket);
 
 	if (asset->GetWeaponType() == EWeaponType::Katana)
-	{
 		weapon->GetLeftMesh()->AttachToComponent(OwnerCharacter->GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, asset->GetEquipmentData().LHolsterSocket);
-	}	
 
 	DeActivateWeapon(asset->GetWeaponType());
 }
@@ -132,6 +147,20 @@ void UCWeaponComponent::TestWeaponMode()
 // Enum  추가
 //InputAction 변수이름 변경
 //
+}
+
+void UCWeaponComponent::DoBasicAttack()
+{
+	if (IsUnArmed()) return;
+
+	if (IsPlayingAnimAction()) return;
+	UCWeaponAsset* asset = GetWeaponAsset(CurrentWeaponType);
+	if (!asset) return;
+
+	FWeaponSkillSet skillSet = asset->GetWeaponSkillSet();
+	ESkillKey key = ESkillKey::BasicCombo;
+
+	OwnerCharacter->PlayAnimMontage(skillSet.Skills[key].Montage, skillSet.Skills[key].PlayRate);
 }
 
 void UCWeaponComponent::SetUnarmedMode()

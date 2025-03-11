@@ -18,10 +18,10 @@ struct FSkillData
 
 public:
 	UPROPERTY(EditAnywhere)
-	class UAnimMontage* AttackMontage;
+	class UAnimMontage* Montage;
 
 	UPROPERTY(EditAnywhere)
-	float Attack_PlayRate = 1.25f;
+	float PlayRate = 1.25f;
 
 	UPROPERTY(EditAnywhere)
 	float BaseDamage = 10;
