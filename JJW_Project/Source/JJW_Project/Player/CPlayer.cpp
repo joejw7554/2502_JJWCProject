@@ -102,6 +102,5 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	if (IA_BasicAttackAction)
 		enhancedInput->BindAction(IA_BasicAttackAction, ETriggerEvent::Started, Weapon, &UCWeaponComponent::DoBasicAttack);
-
 }
 

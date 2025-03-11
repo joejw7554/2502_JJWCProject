@@ -52,6 +52,7 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Animation")
 	float PlayRate_Dodge = 1.5f;
 
+
 private:
 	ACharacter* Owner;
 

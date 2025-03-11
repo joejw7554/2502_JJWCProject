@@ -1,20 +1,30 @@
 #include "CPlayerAnim.h"
 #include "CPlayer.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Components/CWeaponComponent.h"
 
 
 
 void UCPlayerAnim::NativeInitializeAnimation()
 {
-	Owner = Cast<ACPlayer>(TryGetPawnOwner());
+	OwnerCharacter = Cast<ACharacter>(TryGetPawnOwner());
 
-	if (!Owner) return;
+	if (!OwnerCharacter) return;
 
-	Movement = Owner->GetCharacterMovement();
+	Movement = OwnerCharacter->GetCharacterMovement();
+
+	ACPlayer* player = Cast<ACPlayer>(OwnerCharacter);
+	if (!player) return;
+
+	player->GetWeaponComponent()->OnWeaponTypeChanged.AddDynamic(this, &UCPlayerAnim::OnWeaponTypeChanged);
 }
 
 void UCPlayerAnim::NativeUpdateAnimation(float DeltaSeconds)
 {
 	if (Movement)
 		Speed = Movement->Velocity.Size2D();
+}
+
+void UCPlayerAnim::OnWeaponTypeChanged(EWeaponType InPrevType, EWeaponType InNewType)
+{
 }

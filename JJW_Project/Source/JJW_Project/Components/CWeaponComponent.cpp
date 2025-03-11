@@ -55,7 +55,6 @@ void UCWeaponComponent::SpawnWeapons(UCWeaponAsset* asset)
 	UCSkill_E* skillE = asset->GetWeapon()->GetSkill_E();
 	UCSkill_R* skillR = asset->GetWeapon()->GetSkill_R();
 
-	///////////////////////확인바람
 	if (basic)
 		basic->InitialzeSkillData(&(asset->GetWeaponSkillSet()), ESkillKey::BasicCombo);
 
@@ -161,6 +160,23 @@ void UCWeaponComponent::DoBasicAttack()
 	ESkillKey key = ESkillKey::BasicCombo;
 
 	OwnerCharacter->PlayAnimMontage(skillSet.Skills[key].Montage, skillSet.Skills[key].PlayRate);
+
+}
+
+void UCWeaponComponent::DoSKillQ()
+{
+}
+
+void UCWeaponComponent::DoSKillW()
+{
+}
+
+void UCWeaponComponent::DoSKillE()
+{
+}
+
+void UCWeaponComponent::DoSKillR()
+{
 }
 
 void UCWeaponComponent::SetUnarmedMode()

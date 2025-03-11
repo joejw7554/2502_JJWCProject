@@ -19,10 +19,7 @@ void UCSkillComponentBase::InitialzeSkillData(const FWeaponSkillSet* InSkillSet,
 		const FSkillData* SkillDataPtr = InSkillSet->Skills.Find(InKey);
 
 		if (SkillDataPtr)
-		{
 			SkillData = SkillDataPtr;
-			UE_LOG(LogTemp, Warning, TEXT("%f"), SkillData->BaseDamage);
-		}
 		else
 			UE_LOG(LogTemp, Warning, TEXT("UCSkillComponentBase:: NullFound"), SkillData->BaseDamage);
 	}

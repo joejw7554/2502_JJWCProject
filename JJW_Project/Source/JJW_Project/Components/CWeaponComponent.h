@@ -29,7 +29,6 @@ protected:
 public:
 	FORCEINLINE bool IsUnArmed() { return CurrentWeaponType == EWeaponType::Max; }
 
-
 public:
 	EWeaponType GetCurrentWeaponType() { return CurrentWeaponType; }
 
@@ -41,6 +40,10 @@ public:
 	void TestWeaponMode();
 
 	void DoBasicAttack();
+	void DoSKillQ();
+	void DoSKillW();
+	void DoSKillE();
+	void DoSKillR();
 
 private:
 	void SetUnarmedMode();
@@ -49,12 +52,9 @@ private:
 public:
 	class UCWeaponAsset* GetWeaponAsset(EWeaponType WeaponType);
 
-
 private:
 	//애니메이션 관련 함수
 	FORCEINLINE bool IsPlayingAnimAction();
-
-
 
 	//무기관련 함수들////////////////////////////////////////
 private:

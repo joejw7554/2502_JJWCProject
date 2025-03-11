@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
+#include "Weapons/CWeaponStructure.h"
 #include "CPlayerAnim.generated.h"
 
 UCLASS()
@@ -15,13 +16,16 @@ public:
 
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 
+private:
+	UFUNCTION()
+	void OnWeaponTypeChanged(EWeaponType InPrevType, EWeaponType InNewType);
 
 protected:
 	UPROPERTY(VisibleAnywhere, Category="Player Property", BlueprintReadOnly)
 	float Speed;
 
 private:
-	class ACharacter* Owner;
+	class ACharacter* OwnerCharacter;
 
 	class UMovementComponent* Movement;
 
