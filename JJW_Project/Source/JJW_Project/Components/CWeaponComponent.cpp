@@ -4,8 +4,8 @@
 #include "Animation/AnimMontage.h"
 
 #include "CMovementComponent.h"
-#include "../Weapons/CWeaponBase.h"
-#include "../Weapons/CWeaponAsset.h"
+#include "Weapons/CWeaponBase.h"
+#include "Weapons/CWeaponAsset.h"
 #include "Weapons/CSkillStructure.h"
 
 #include "CSkill_Q.h"
