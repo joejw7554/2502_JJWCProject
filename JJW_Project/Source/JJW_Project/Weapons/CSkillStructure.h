@@ -31,9 +31,6 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	bool bCanRotate = true;
-
-	UPROPERTY(EditAnywhere)
-	TArray<float> SectionDamageMultiplier;
 };
 
 USTRUCT()

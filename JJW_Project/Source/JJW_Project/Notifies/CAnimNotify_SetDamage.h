@@ -17,7 +17,4 @@ private:
 
 	UPROPERTY(EditAnywhere, Category="Modifier|Skill")
 	ESkillKey SkillKey;
-
-	UPROPERTY(EditAnywhere, Category = "Modifier|Skill")
-	int SectionIndex;
 };
