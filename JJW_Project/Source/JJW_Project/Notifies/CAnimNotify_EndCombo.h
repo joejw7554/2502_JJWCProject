@@ -12,6 +12,6 @@ class JJW_PROJECT_API UCAnimNotify_EndCombo : public UAnimNotify
 private:
 	FString GetNotifyName_Implementation() const;
 
-	virtual void Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference);
+	virtual void Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference) override;
 	
 };

@@ -16,7 +16,9 @@ void UCAnimNotifyState_EnableCombo::NotifyBegin(USkeletalMeshComponent* MeshComp
 	if (!owner) return;
 
 	UCWeaponComponent* weaponComp = owner->GetComponentByClass<UCWeaponComponent>();
-	
+	if (!weaponComp) return;
+
+	weaponComp->SetEnableCombo(true);
 }
 
 void UCAnimNotifyState_EnableCombo::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference)
@@ -28,4 +30,7 @@ void UCAnimNotifyState_EnableCombo::NotifyEnd(USkeletalMeshComponent* MeshComp, 
 	if (!owner) return;
 
 	UCWeaponComponent* weaponComp = owner->GetComponentByClass<UCWeaponComponent>();
+	if (!weaponComp) return;
+
+	weaponComp->SetEnableCombo(false);
 }

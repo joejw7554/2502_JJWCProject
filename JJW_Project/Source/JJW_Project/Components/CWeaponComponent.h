@@ -47,8 +47,14 @@ public:
 
 private:
 	void SetUnarmedMode();
+	
 
+public:
+	void SetCurrentComboIndex(int8 Index) { CurrentComboIndex = Index; }
+	void IncreasementComboIndex() { ++CurrentComboIndex; }
+	void SetEnableCombo(bool bEnable) { bEnableCombo = bEnable; }
 
+	FName GetComboSectionName(int32 comboIndex);
 public:
 	class UCWeaponAsset* GetWeaponAsset(EWeaponType WeaponType);
 
@@ -64,6 +70,7 @@ private:
 
 	void ActivateWeapon(EWeaponType WeaponType);
 	void DeActivateWeapon(EWeaponType WeaponType);
+
 
 
 	///장착관련 함수들//////////////////////////////////////////////
@@ -87,4 +94,8 @@ private:
 	EWeaponType CurrentWeaponType = EWeaponType::Max;
 
 	class UCMovementComponent* MovementComp;
+
+	int8 CurrentComboIndex = 1;
+
+	bool bEnableCombo = false;
 };

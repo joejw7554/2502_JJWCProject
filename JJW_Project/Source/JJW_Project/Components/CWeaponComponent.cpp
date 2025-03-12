@@ -119,6 +119,21 @@ void UCWeaponComponent::AttachWeaponToHand(EWeaponType WeaponType)
 
 }
 
+FName UCWeaponComponent::GetComboSectionName(int32 comboIndex)
+{
+	switch (comboIndex)
+	{
+	case 2:
+		return "Section2";
+	case 3:
+		return "Section3";
+	case 4:
+		return "Section4";
+	default:
+		return NAME_None;
+	}
+}
+
 UCWeaponAsset* UCWeaponComponent::GetWeaponAsset(EWeaponType InType)
 {
 	for (UCWeaponAsset* asset : WeaponAssets)
@@ -152,15 +167,39 @@ void UCWeaponComponent::DoBasicAttack()
 {
 	if (IsUnArmed()) return;
 
-	if (IsPlayingAnimAction()) return;
+	//if (IsPlayingAnimAction()) return;
+
 	UCWeaponAsset* asset = GetWeaponAsset(CurrentWeaponType);
 	if (!asset) return;
 
 	FWeaponSkillSet skillSet = asset->GetWeaponSkillSet();
 	ESkillKey key = ESkillKey::BasicCombo;
+	UAnimMontage* montage = skillSet.Skills[key].Montage;
+	float playRate = skillSet.Skills[key].PlayRate;
 
-	OwnerCharacter->PlayAnimMontage(skillSet.Skills[key].Montage, skillSet.Skills[key].PlayRate);
+	UAnimInstance* animInstance = OwnerCharacter->GetMesh()->GetAnimInstance();
+	if (!animInstance) return;
 
+
+	if (!animInstance->Montage_IsPlaying(montage))
+	{
+		OwnerCharacter->PlayAnimMontage(montage, playRate);
+	}
+	else
+	{
+		if (bEnableCombo)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("ComboIndex : %d"), CurrentComboIndex);
+			if (CurrentComboIndex <= skillSet.Skills[key].MontageMaxSection)
+			{
+				FName nextSection = GetComboSectionName(CurrentComboIndex);
+				if (nextSection != NAME_None)
+				{
+					animInstance->Montage_JumpToSection(nextSection);
+				}
+			}
+		}
+	}
 }
 
 void UCWeaponComponent::DoSKillQ()
@@ -191,7 +230,7 @@ void UCWeaponComponent::SetMode(EWeaponType WeaponType)
 
 	EWeaponType prevType = WeaponType;
 
-	if (CurrentWeaponType==WeaponType)
+	if (CurrentWeaponType == WeaponType)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("현재 무기와 같은 무기입니다 장착해제."));
 		SetUnarmedMode();
@@ -244,7 +283,7 @@ void UCWeaponComponent::DeActivateWeapon(EWeaponType WeaponType)
 	if (WeaponType == EWeaponType::Katana)
 	{
 		UMeshComponent* LeftMesh = GetWeaponAsset(WeaponType)->GetWeapon()->GetLeftMesh();
-		if ( !LeftMesh) return;
+		if (!LeftMesh) return;
 
 		FName LHolsterSocket = GetWeaponAsset(WeaponType)->GetEquipmentData().LHolsterSocket;
 		LeftMesh->SetVisibility(false);

@@ -34,7 +34,4 @@ void UCAnimNotify_SetDamage::Notify(USkeletalMeshComponent* MeshComp, UAnimSeque
 	float Damage = weaponSkillSet.Skills[SkillKey].BaseDamage;
 
 	weapon->SetDamage(Damage);
-
-	UE_LOG(LogTemp, Warning, TEXT("Set Damage : %f"), Damage);
-
 }
