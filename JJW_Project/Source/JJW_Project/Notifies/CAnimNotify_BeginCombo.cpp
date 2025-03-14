@@ -20,5 +20,5 @@ void UCAnimNotify_BeginCombo::Notify(USkeletalMeshComponent* MeshComp, UAnimSequ
 	UCWeaponComponent* weaponComp = OwnerCharacter->GetComponentByClass<UCWeaponComponent>();
 	if (!weaponComp)return;
 
-	weaponComp->IncreasementComboIndex();
+	weaponComp->IncreaseComboIndex();
 }

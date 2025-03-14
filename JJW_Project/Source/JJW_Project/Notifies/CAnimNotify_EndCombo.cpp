@@ -20,6 +20,5 @@ void UCAnimNotify_EndCombo::Notify(USkeletalMeshComponent* MeshComp, UAnimSequen
 	UCWeaponComponent* weaponComp = OwnerCharacter->GetComponentByClass<UCWeaponComponent>();
 	if (!weaponComp)return;
 
-	weaponComp->SetCurrentComboIndex(1);
-
+	weaponComp->ResetComboIndex();
 }

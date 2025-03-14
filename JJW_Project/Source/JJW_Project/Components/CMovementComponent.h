@@ -27,8 +27,9 @@ public:
 	void EnableControlRotation();
 	void DisableControlRotation();
 
-	void EnableMovement();
-	void DisableMovment();
+	FORCEINLINE void EnableMovement() { bCanMove = true; }
+	FORCEINLINE void DisableMovment() { bCanMove = false; }
+	FORCEINLINE bool CanMove() { return bCanMove; }
 
 	void SetWalkMode();
 	void SetSprintMode();
@@ -36,7 +37,7 @@ public:
 private:
 	void SetMoveSpeed(float Value);
 
-	bool CheckDistance();
+	bool IsArrivedAtDestination(FVector CurrentLocation, FVector TargetLocation);
 	void MoveToDestination();
 
 private:
@@ -66,10 +67,11 @@ private:
 	//Montage
 private:
 	bool bCanMove = true;
+	bool bIsRootMotionMoving = false;
 
 	FVector LastInputLocation;
 
-	float Tolerance = 20.f;
+	float Tolerance = 40.f;
 
 	
 

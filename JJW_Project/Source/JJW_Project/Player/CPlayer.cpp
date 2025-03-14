@@ -106,7 +106,10 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 		enhancedInput->BindAction(IA_TestWeapon, ETriggerEvent::Started, Weapon, &UCWeaponComponent::TestWeaponMode);
 
 	if (IA_BasicAttackAction)
-		enhancedInput->BindAction(IA_BasicAttackAction, ETriggerEvent::Started, Weapon, &UCWeaponComponent::DoBasicAttack);
+		enhancedInput->BindActionValueLambda(IA_BasicAttackAction, ETriggerEvent::Started, [this](const FInputActionValue& value)
+			{
+				Weapon->DoSkill(ESkillKey::BasicCombo);
+			});
 
 }
 

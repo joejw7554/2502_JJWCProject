@@ -31,9 +31,6 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	bool bCanRotate = true;
-
-	UPROPERTY(EditAnywhere)
-	int8 MontageMaxSection = 1;
 };
 
 USTRUCT()

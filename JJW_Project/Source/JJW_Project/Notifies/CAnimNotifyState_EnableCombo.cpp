@@ -1,6 +1,7 @@
 #include "CAnimNotifyState_EnableCombo.h"
 #include "Player/CPlayer.h"
 #include "Components/CWeaponComponent.h"
+#include "GameFramework/Character.h"
 
 FString UCAnimNotifyState_EnableCombo::GetNotifyName_Implementation() const
 {
@@ -12,13 +13,13 @@ void UCAnimNotifyState_EnableCombo::NotifyBegin(USkeletalMeshComponent* MeshComp
 	if (!MeshComp) return;
 	if (!MeshComp->GetOwner()) return;
 
-	ACPlayer* owner =Cast<ACPlayer>(MeshComp->GetOwner());
-	if (!owner) return;
+	ACharacter* ownerCharacter = Cast<ACharacter>(MeshComp->GetOwner());
+	if (!ownerCharacter) return;
 
-	UCWeaponComponent* weaponComp = owner->GetComponentByClass<UCWeaponComponent>();
+	UCWeaponComponent* weaponComp = ownerCharacter->GetComponentByClass<UCWeaponComponent>();
 	if (!weaponComp) return;
 
-	weaponComp->SetEnableCombo(true);
+	weaponComp->SetEnableCombo();
 }
 
 void UCAnimNotifyState_EnableCombo::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference)
@@ -26,11 +27,12 @@ void UCAnimNotifyState_EnableCombo::NotifyEnd(USkeletalMeshComponent* MeshComp, 
 	if (!MeshComp) return;
 	if (!MeshComp->GetOwner()) return;
 
-	ACPlayer* owner = Cast<ACPlayer>(MeshComp->GetOwner());
-	if (!owner) return;
+	ACharacter* ownerCharacter = Cast<ACharacter>(MeshComp->GetOwner());
 
-	UCWeaponComponent* weaponComp = owner->GetComponentByClass<UCWeaponComponent>();
+	if (!ownerCharacter) return;
+
+	UCWeaponComponent* weaponComp = ownerCharacter->GetComponentByClass<UCWeaponComponent>();
 	if (!weaponComp) return;
 
-	weaponComp->SetEnableCombo(false);
+	weaponComp->SetDisableCombo();
 }

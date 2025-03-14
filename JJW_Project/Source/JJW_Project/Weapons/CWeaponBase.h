@@ -17,14 +17,14 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
-	UMeshComponent* GetRightMesh() { return RightHandWeaponMesh ? RightHandWeaponMesh : nullptr; }
-	UMeshComponent* GetLeftMesh() { return LeftHandWeaponMesh ? LeftHandWeaponMesh : nullptr; }
+	FORCEINLINE UMeshComponent* GetRightMesh() { return RightHandWeaponMesh ? RightHandWeaponMesh : nullptr; }
+	FORCEINLINE UMeshComponent* GetLeftMesh() { return LeftHandWeaponMesh ? LeftHandWeaponMesh : nullptr; }
 
-	class UCSkill_BasicCombo* GetBasicCombo() { return BasicCombo; }
-	class UCSkill_Q* GetSkill_Q() { return Skill_Q; }
-	class UCSkill_W* GetSkill_W() { return Skill_W; }
-	class UCSkill_E* GetSkill_E() { return Skill_E; }
-	class UCSkill_R* GetSkill_R() { return Skill_R; }
+	FORCEINLINE class UCSkill_BasicCombo* GetBasicCombo() { return BasicCombo; }
+	FORCEINLINE class UCSkill_Q* GetSkill_Q() { return Skill_Q; }
+	FORCEINLINE class UCSkill_W* GetSkill_W() { return Skill_W; }
+	FORCEINLINE class UCSkill_E* GetSkill_E() { return Skill_E; }
+	FORCEINLINE class UCSkill_R* GetSkill_R() { return Skill_R; }
 
 protected:
 	friend class UCAnimNotify_SetDamage;

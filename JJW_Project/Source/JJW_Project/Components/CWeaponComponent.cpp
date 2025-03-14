@@ -119,22 +119,7 @@ void UCWeaponComponent::AttachWeaponToHand(EWeaponType WeaponType)
 
 }
 
-FName UCWeaponComponent::GetComboSectionName(int32 comboIndex)
-{
-	switch (comboIndex)
-	{
-	case 2:
-		return "Section2";
-	case 3:
-		return "Section3";
-	case 4:
-		return "Section4";
-	case 5:
-		return "Section5";
-	default:
-		return NAME_None;
-	}
-}
+
 
 UCWeaponAsset* UCWeaponComponent::GetWeaponAsset(EWeaponType InType)
 {
@@ -144,6 +129,13 @@ UCWeaponAsset* UCWeaponComponent::GetWeaponAsset(EWeaponType InType)
 			return asset;
 	}
 	return nullptr;
+}
+
+ACWeaponBase* UCWeaponComponent::GetCurrentWeapon()
+{
+	UCWeaponAsset* asset = GetWeaponAsset(CurrentWeaponType);
+
+	return asset->GetWeapon();
 }
 
 bool UCWeaponComponent::IsPlayingAnimAction()
@@ -165,59 +157,33 @@ void UCWeaponComponent::TestWeaponMode()
 //
 }
 
-void UCWeaponComponent::DoBasicAttack()
+void UCWeaponComponent::DoSkill(ESkillKey InKey)
 {
 	if (IsUnArmed()) return;
 
-	//if (IsPlayingAnimAction()) return;
+	ACWeaponBase* weapon = GetCurrentWeapon();
 
-	UCWeaponAsset* asset = GetWeaponAsset(CurrentWeaponType);
-	if (!asset) return;
+	UCMovementComponent* movementComp = OwnerCharacter->GetComponentByClass<UCMovementComponent>();
+	if (!movementComp) return;
 
-	FWeaponSkillSet skillSet = asset->GetWeaponSkillSet();
-	ESkillKey key = ESkillKey::BasicCombo;
-	UAnimMontage* montage = skillSet.Skills[key].Montage;
-	float playRate = skillSet.Skills[key].PlayRate;
-
-	UAnimInstance* animInstance = OwnerCharacter->GetMesh()->GetAnimInstance();
-	if (!animInstance) return;
-
-
-	if (!animInstance->Montage_IsPlaying(montage))
+	movementComp->DisableMovment();
+	
+	switch (InKey)
 	{
-		OwnerCharacter->PlayAnimMontage(montage, playRate);
+	case ESkillKey::BasicCombo:
+		weapon->GetBasicCombo()->PerformSkill(bEnableCombo, CurrentComboIndex);
+		break;
+	case ESkillKey::Q:
+		break;
+	case ESkillKey::W:
+		break;
+	case ESkillKey::E:
+		break;
+	case ESkillKey::R:
+		break;
+	default:
+		break;
 	}
-	else
-	{
-		if (bEnableCombo)
-		{
-			UE_LOG(LogTemp, Warning, TEXT("ComboIndex : %d"), CurrentComboIndex);
-			if (CurrentComboIndex <= skillSet.Skills[key].MontageMaxSection)
-			{
-				FName nextSection = GetComboSectionName(CurrentComboIndex);
-				if (nextSection != NAME_None)
-				{
-					animInstance->Montage_JumpToSection(nextSection);
-				}
-			}
-		}
-	}
-}
-
-void UCWeaponComponent::DoSKillQ()
-{
-}
-
-void UCWeaponComponent::DoSKillW()
-{
-}
-
-void UCWeaponComponent::DoSKillE()
-{
-}
-
-void UCWeaponComponent::DoSKillR()
-{
 }
 
 void UCWeaponComponent::SetUnarmedMode()
@@ -313,9 +279,6 @@ void UCWeaponComponent::Equip(EWeaponType WeaponType)
 	if (!asset->GetEquipmentData().bCanMove)
 		MovementComp->DisableMovment();
 
-	if (!asset->GetEquipmentData().bCanRotate)
-		MovementComp->DisableControlRotation();
-
 	OwnerCharacter->PlayAnimMontage(GetWeaponAsset(CurrentWeaponType)->GetEquipmentData().EquipMontage);
 	ActivateWeapon(CurrentWeaponType);
 }
@@ -339,11 +302,6 @@ void UCWeaponComponent::End_Equip()
 {
 	UCWeaponAsset* asset = GetWeaponAsset(CurrentWeaponType);
 
-	if (!asset->GetEquipmentData().bCanMove)
-		MovementComp->EnableMovement();
-
-	if (!asset->GetEquipmentData().bCanRotate)
-		MovementComp->EnableControlRotation();
 }
 
 

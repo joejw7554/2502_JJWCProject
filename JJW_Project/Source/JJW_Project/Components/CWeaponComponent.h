@@ -39,24 +39,22 @@ public:
 	void SetKatanaMode();
 	void TestWeaponMode();
 
-	void DoBasicAttack();
-	void DoSKillQ();
-	void DoSKillW();
-	void DoSKillE();
-	void DoSKillR();
+	void DoSkill(ESkillKey InKey);
 
 private:
 	void SetUnarmedMode();
 	
 
 public:
-	void SetCurrentComboIndex(int8 Index) { CurrentComboIndex = Index; }
-	void IncreasementComboIndex() { ++CurrentComboIndex; }
-	void SetEnableCombo(bool bEnable) { bEnableCombo = bEnable; }
+	void ResetComboIndex() { CurrentComboIndex = 1; }
+	void IncreaseComboIndex() { ++CurrentComboIndex; }
+	void SetEnableCombo() { bEnableCombo = true; }
+	void SetDisableCombo() { bEnableCombo = false; }
 
-	FName GetComboSectionName(int32 comboIndex);
 public:
 	class UCWeaponAsset* GetWeaponAsset(EWeaponType WeaponType);
+
+	FORCEINLINE class ACWeaponBase* GetCurrentWeapon();
 
 private:
 	//애니메이션 관련 함수

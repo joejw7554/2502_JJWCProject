@@ -15,8 +15,11 @@ void UCMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
 
 	if (!OwnerCharacter) return;
 
-	if (CheckDistance() &&bCanMove)
+	if (bCanMove)
 		MoveToDestination();
+	
+	if (IsArrivedAtDestination(OwnerCharacter->GetActorLocation(), LastInputLocation))
+		DisableMovment();
 }
 
 void UCMovementComponent::MoveToDestination()
@@ -25,9 +28,9 @@ void UCMovementComponent::MoveToDestination()
 	OwnerCharacter->AddMovementInput(direction, 1);
 }
 
-bool UCMovementComponent::CheckDistance()
+bool UCMovementComponent::IsArrivedAtDestination(FVector CurrentLocation, FVector TargetLocation)
 {
-	return FVector::Dist(OwnerCharacter->GetActorLocation(), LastInputLocation) > Tolerance;
+	return FVector::DistXY(CurrentLocation, TargetLocation) < Tolerance;
 }
 
 
@@ -54,11 +57,12 @@ void UCMovementComponent::MoveAction(const FInputActionValue& Value)
 {
 	if (!PlayerController) return;
 	if (!OwnerCharacter) return;
+	if (OwnerCharacter->GetMesh()->GetAnimInstance()->IsAnyMontagePlaying()) return;
 
 	FHitResult hitResult;
 	PlayerController->GetHitResultUnderCursor(ECC_Visibility, true, hitResult);
-
 	LastInputLocation = hitResult.Location;
+	EnableMovement();
 }
 
 void UCMovementComponent::LookAction(const FInputActionValue& Value)
@@ -82,10 +86,11 @@ void UCMovementComponent::SprintAction(const FInputActionValue& Value)
 
 void UCMovementComponent::Dodge()
 {
+	if (OwnerCharacter->GetMesh()->GetAnimInstance()->IsAnyMontagePlaying()) return;
+
 	OwnerCharacter->SetActorRotation(OwnerCharacter->GetLastMovementInputVector().Rotation(), ETeleportType::ResetPhysics);
 
 	if (AnimMontage_Dodge)
-		if (!OwnerCharacter->GetMesh()->GetAnimInstance()->IsAnyMontagePlaying())
 			OwnerCharacter->PlayAnimMontage(AnimMontage_Dodge, PlayRate_Dodge);
 }
 
@@ -99,16 +104,6 @@ void UCMovementComponent::DisableControlRotation()
 {
 	OwnerCharacter->GetCharacterMovement()->bOrientRotationToMovement = true;
 	OwnerCharacter->bUseControllerRotationYaw = false;
-}
-
-void UCMovementComponent::EnableMovement()
-{
-	bCanMove = true;
-}
-
-void UCMovementComponent::DisableMovment()
-{
-	bCanMove = false;
 }
 
 void UCMovementComponent::SetWalkMode()

@@ -21,6 +21,13 @@ protected:
 public:
 	FORCEINLINE const FSkillData* GetSkillData() { return SkillData; } 
 
+	////////
+public:
+	void PerformSkill(bool bEnableCombo, int8 InComboIndex);
+private:
+	FName GetComboSectionName(int32 comboIndex);
+
+
 public:
 	virtual void InitialzeSkillData(const FWeaponSkillSet* InSkillSet, ESkillKey InKey);
 
