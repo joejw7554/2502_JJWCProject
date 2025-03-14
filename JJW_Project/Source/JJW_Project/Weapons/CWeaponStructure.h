@@ -7,7 +7,7 @@
 UENUM(BlueprintType)
 enum class EWeaponType : uint8
 {
-	Katana = 0, Test,Max
+	Katana = 0, Max
 };
 
 
@@ -23,12 +23,6 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	float Equip_PlayRate;
-
-	UPROPERTY(EditAnywhere)
-	bool bCanMove;
-
-	UPROPERTY(EditAnywhere)
-	bool bCanRotate;
 
 	UPROPERTY(EditAnywhere)
 	FName RHandSocket;

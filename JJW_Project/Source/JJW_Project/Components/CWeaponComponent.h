@@ -31,6 +31,7 @@ public:
 
 public:
 	EWeaponType GetCurrentWeaponType() { return CurrentWeaponType; }
+	class ACWeaponBase* GetWeaponFromAsset();
 
 	FWeaponTypeChanged OnWeaponTypeChanged;
 
@@ -50,10 +51,11 @@ public:
 	void IncreaseComboIndex() { ++CurrentComboIndex; }
 	void SetEnableCombo() { bEnableCombo = true; }
 	void SetDisableCombo() { bEnableCombo = false; }
+	void EnableWeaponCollision();
+	void DisableWeaponCollision();
 
 public:
 	class UCWeaponAsset* GetWeaponAsset(EWeaponType WeaponType);
-
 	FORCEINLINE class ACWeaponBase* GetCurrentWeapon();
 
 private:

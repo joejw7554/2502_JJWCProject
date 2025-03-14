@@ -23,11 +23,11 @@ ACWeaponBase::ACWeaponBase()
 
 	RightHandWeaponMesh = CreateDefaultSubobject<UStaticMeshComponent>("RightHand_WeaponMesh");
 	RightHandWeaponMesh->SetupAttachment(Root);
-	RightHandWeaponMesh->SetCollisionProfileName("NoCollision"); 
+	RightHandWeaponMesh->SetCollisionProfileName("NoCollision");
 
 	LeftHandWeaponMesh = CreateDefaultSubobject<UStaticMeshComponent>("LeftHand_WeaponMesh");
 	LeftHandWeaponMesh->SetupAttachment(Root);
-	LeftHandWeaponMesh->SetCollisionProfileName("NoCollision"); 
+	LeftHandWeaponMesh->SetCollisionProfileName("NoCollision");
 
 	//SkillComponents
 	{
@@ -57,13 +57,11 @@ void ACWeaponBase::BeginPlay()
 
 void ACWeaponBase::OnWeaponBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-    UE_LOG(LogTemp, Warning, TEXT("Weapon Overlap"));
-    {
-        UE_LOG(LogTemp, Warning, TEXT("Weapon Overlap"));
+	UE_LOG(LogTemp, Warning, TEXT("Weapon Overlap"));
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Weapon Overlap"));
 
-        if (OtherActor->ActorHasTag("Enemy"))
-        {
-            UE_LOG(LogTemp, Warning, TEXT("Hit Enemy"));
-        }
-    }
+		if (OtherActor->ActorHasTag("Enemy"))
+			UGameplayStatics::ApplyDamage(OtherActor, Damage, nullptr, this, nullptr);
+	}
 }

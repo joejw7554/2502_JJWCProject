@@ -31,7 +31,7 @@ void UCAnimNotify_SetDamage::Notify(USkeletalMeshComponent* MeshComp, UAnimSeque
 	if (!weapon) return;
 
 	FWeaponSkillSet weaponSkillSet = currentWeaponAsset->GetWeaponSkillSet();
-	float Damage = weaponSkillSet.Skills[SkillKey].BaseDamage;
+	float Damage = weaponSkillSet.Skills[SkillKey].BaseDamage * DamageModifier;
 
 	weapon->SetDamage(Damage);
 }

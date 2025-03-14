@@ -36,6 +36,7 @@ void UCSkillComponentBase::PerformSkill(bool bEnableCombo, int8 InComboIndex,  A
 	UAnimInstance* animInstance = ownerCharacter->GetMesh()->GetAnimInstance();
 	if (!animInstance) return;
 
+
 	if (animInstance->Montage_IsPlaying(montage))
 	{
 		if (bEnableCombo)

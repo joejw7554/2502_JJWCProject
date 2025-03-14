@@ -17,14 +17,11 @@ public:
 	FORCEINLINE EWeaponType GetWeaponType() { return WeaponType; }
 	FORCEINLINE TSubclassOf<ACWeaponBase> GetWeaponClass() { return WeaponClass; }
 	FORCEINLINE FEquipmentData GetEquipmentData() { return EquipmentData; }
-	FORCEINLINE void SetWeapon(ACWeaponBase* InWeapon) { Weapon = InWeapon; }
-	FORCEINLINE ACWeaponBase* GetWeapon() { return  Weapon; }
 	FORCEINLINE FWeaponSkillSet& GetWeaponSkillSet() { return WeaponSkillSet; }
 
+	FORCEINLINE ACWeaponBase* GetWeapon() { return  Weapon; }
 
-	//무기타입
-	//실제 무기 BP
-	//EquipmentData
+	FORCEINLINE void SetWeapon(ACWeaponBase* InWeapon) { Weapon = InWeapon; }
 
 private:
 	UPROPERTY(EditAnywhere)

@@ -18,6 +18,7 @@ UCWeaponComponent::UCWeaponComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
 
+	WeaponAssets.Reserve((int8)EWeaponType::Max);
 }
 
 void UCWeaponComponent::BeginPlay()
@@ -120,7 +121,25 @@ void UCWeaponComponent::AttachWeaponToHand(EWeaponType WeaponType)
 
 }
 
+void UCWeaponComponent::EnableWeaponCollision()
+{
+	ACWeaponBase* weapon = GetCurrentWeapon();
+	if (!weapon) return;
 
+	weapon->GetRightMesh()->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+	if (CurrentWeaponType == EWeaponType::Katana)
+		weapon->GetLeftMesh()->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+}
+
+void UCWeaponComponent::DisableWeaponCollision()
+{
+	ACWeaponBase* weapon = GetCurrentWeapon();
+	if (!weapon) return;
+
+	weapon->GetRightMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	if (CurrentWeaponType == EWeaponType::Katana)
+		weapon->GetLeftMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+}
 
 UCWeaponAsset* UCWeaponComponent::GetWeaponAsset(EWeaponType InType)
 {
@@ -149,7 +168,7 @@ void UCWeaponComponent::SetKatanaMode()
 	SetMode(EWeaponType::Katana);
 }
 
-void UCWeaponComponent::TestWeaponMode()
+void UCWeaponComponent::TestWeaponMode() //////////////NEED TO IMPLEMENTED
 {
 	//TODO:
 //PlayerWeaponComponent 에 Asset추가
@@ -166,8 +185,6 @@ void UCWeaponComponent::DoSkill(ESkillKey InKey)
 
 	UCMovementComponent* movementComp = OwnerCharacter->GetComponentByClass<UCMovementComponent>();
 	if (!movementComp) return;
-	movementComp->DisableMovment();
-	
 	
 	if (!OwnerCharacter) return;
 	switch (InKey)
@@ -258,6 +275,7 @@ void UCWeaponComponent::DeActivateWeapon(EWeaponType WeaponType)
 		FName LHolsterSocket = GetWeaponAsset(WeaponType)->GetEquipmentData().LHolsterSocket;
 		LeftMesh->SetVisibility(false);
 		LeftMesh->AttachToComponent(OwnerMesh, FAttachmentTransformRules::SnapToTargetIncludingScale, LHolsterSocket);
+		LeftMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	}
 
 	UMeshComponent* RightMesh = GetWeaponAsset(WeaponType)->GetWeapon()->GetRightMesh();
@@ -266,7 +284,7 @@ void UCWeaponComponent::DeActivateWeapon(EWeaponType WeaponType)
 	FName RHolsterSocket = GetWeaponAsset(WeaponType)->GetEquipmentData().RHolsterSocket;
 	RightMesh->AttachToComponent(OwnerMesh, FAttachmentTransformRules::SnapToTargetIncludingScale, RHolsterSocket);
 	RightMesh->SetVisibility(false);
-
+	RightMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
 	ChangeWeaponType(EWeaponType::Max); ////??
 }
@@ -274,15 +292,16 @@ void UCWeaponComponent::DeActivateWeapon(EWeaponType WeaponType)
 
 void UCWeaponComponent::Equip(EWeaponType WeaponType)
 {
+	if (IsPlayingAnimAction()) return;
+
 	ChangeWeaponType(WeaponType);
 
 	UCWeaponAsset* asset = GetWeaponAsset(CurrentWeaponType);
 
-	if (!asset->GetEquipmentData().bCanMove)
-		MovementComp->DisableMovment();
-
 	OwnerCharacter->PlayAnimMontage(GetWeaponAsset(CurrentWeaponType)->GetEquipmentData().EquipMontage);
 	ActivateWeapon(CurrentWeaponType);
+
+	MovementComp->DisableMovment();
 }
 
 void UCWeaponComponent::UnEquip(EWeaponType WeaponType)
@@ -293,9 +312,7 @@ void UCWeaponComponent::UnEquip(EWeaponType WeaponType)
 void UCWeaponComponent::Begin_Equip()
 {
 	UCWeaponAsset* asset = GetWeaponAsset(CurrentWeaponType);
-
-	if (!asset->GetEquipmentData().bCanMove)
-		MovementComp->DisableMovment();
+	MovementComp->DisableMovment();
 
 	AttachWeaponToHand(CurrentWeaponType);
 }
@@ -303,7 +320,7 @@ void UCWeaponComponent::Begin_Equip()
 void UCWeaponComponent::End_Equip()
 {
 	UCWeaponAsset* asset = GetWeaponAsset(CurrentWeaponType);
-
+	MovementComp->EnableMovement();
 }
 
 

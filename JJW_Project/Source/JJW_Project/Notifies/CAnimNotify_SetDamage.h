@@ -17,4 +17,7 @@ private:
 
 	UPROPERTY(EditAnywhere, Category="Modifier|Skill")
 	ESkillKey SkillKey;
+
+	UPROPERTY(EditAnywhere, Category = "Modifier|Skill")
+	float DamageModifier = 1.f;
 };
