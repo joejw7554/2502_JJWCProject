@@ -42,8 +42,6 @@ ACWeaponBase::ACWeaponBase()
 void ACWeaponBase::BeginPlay()
 {
 	Super::BeginPlay();
-	OwnerCharacter = Cast<ACharacter>(GetOwner());
-
 
 	if (RightHandWeaponMesh)
 	{

@@ -13,17 +13,18 @@ void UCMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	if (!OwnerCharacter) return;
-
-	if (bCanMove)
+	if (bCanMove == true)
 		MoveToDestination();
+
 	
-	if (IsArrivedAtDestination(OwnerCharacter->GetActorLocation(), LastInputLocation))
-		DisableMovment();
 }
 
 void UCMovementComponent::MoveToDestination()
 {
+	if (IsArrivedAtDestination(OwnerCharacter->GetActorLocation(), LastInputLocation))
+		DisableMovment();
+
+	if (!OwnerCharacter) return;
 	FVector direction = (LastInputLocation - OwnerCharacter->GetActorLocation()).GetSafeNormal();
 	OwnerCharacter->AddMovementInput(direction, 1);
 }
@@ -46,10 +47,7 @@ void UCMovementComponent::BeginPlay()
 
 	if (!PlayerController) return;
 
-	PlayerController->PlayerCameraManager->ViewPitchMin = PitchAngleLimit.X;
-	PlayerController->PlayerCameraManager->ViewPitchMax = PitchAngleLimit.Y;
 	PlayerController->bShowMouseCursor = true;
-
 	OwnerCharacter->GetCharacterMovement()->RotationRate = FRotator(0, 540.f, 0);
 }
 
@@ -57,6 +55,7 @@ void UCMovementComponent::MoveAction(const FInputActionValue& Value)
 {
 	if (!PlayerController) return;
 	if (!OwnerCharacter) return;
+	if (!PlayerController) return;
 	if (OwnerCharacter->GetMesh()->GetAnimInstance()->IsAnyMontagePlaying()) return;
 
 	FHitResult hitResult;
@@ -82,7 +81,6 @@ void UCMovementComponent::SprintAction(const FInputActionValue& Value)
 	else
 		SetWalkMode();
 }
-
 
 void UCMovementComponent::Dodge()
 {

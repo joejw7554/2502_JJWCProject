@@ -23,7 +23,8 @@ public:
 
 	////////
 public:
-	void PerformSkill(bool bEnableCombo, int8 InComboIndex);
+	void PerformSkill(bool bEnableCombo, int8 InComboIndex,  class ACharacter* InWeaponOwner);
+
 private:
 	FName GetComboSectionName(int32 comboIndex);
 
@@ -34,5 +35,4 @@ public:
 protected:
 	const FSkillData* SkillData;
 
-	class ACWeaponBase* ComponentOwner;
 };

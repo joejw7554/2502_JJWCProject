@@ -43,6 +43,7 @@ void UCWeaponComponent::SpawnWeapons(UCWeaponAsset* asset)
 
 	FActorSpawnParameters params;
 	params.Owner = OwnerCharacter;
+	params.Instigator = OwnerCharacter;
 	params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
 	ACWeaponBase* weapon = GetWorld()->SpawnActor<ACWeaponBase>(asset->GetWeaponClass(), params);
@@ -165,13 +166,14 @@ void UCWeaponComponent::DoSkill(ESkillKey InKey)
 
 	UCMovementComponent* movementComp = OwnerCharacter->GetComponentByClass<UCMovementComponent>();
 	if (!movementComp) return;
-
 	movementComp->DisableMovment();
 	
+	
+	if (!OwnerCharacter) return;
 	switch (InKey)
 	{
 	case ESkillKey::BasicCombo:
-		weapon->GetBasicCombo()->PerformSkill(bEnableCombo, CurrentComboIndex);
+		weapon->GetBasicCombo()->PerformSkill(bEnableCombo, CurrentComboIndex, OwnerCharacter);
 		break;
 	case ESkillKey::Q:
 		break;
