@@ -16,12 +16,6 @@ ACPlayer::ACPlayer()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
-	DefaultSetting();
-
-}
-
-void ACPlayer::DefaultSetting()
-{
 	GetMesh()->SetRelativeLocation(FVector(0, 0, -90));
 	GetMesh()->SetRelativeRotation(FRotator(0, -90, 0));
 
@@ -47,6 +41,7 @@ void ACPlayer::DefaultSetting()
 
 	GetCharacterMovement()->MaxWalkSpeed = 600.f;
 	GetCharacterMovement()->RotationRate = FRotator(0, 720, 0);
+
 }
 
 void ACPlayer::BeginPlay()

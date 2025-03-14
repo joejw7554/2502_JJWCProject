@@ -15,8 +15,6 @@ class JJW_PROJECT_API ACPlayer : public ACharacter
 public:
 	ACPlayer();
 
-	void DefaultSetting();
-
 public:
 	virtual void Tick(float DeltaTime) override;
 
