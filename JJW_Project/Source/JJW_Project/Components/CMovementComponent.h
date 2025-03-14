@@ -12,14 +12,16 @@ class JJW_PROJECT_API UCMovementComponent : public UActorComponent
 
 public:
 	UCMovementComponent();
+	void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 protected:
 	virtual void BeginPlay() override;
 
+
 public:
+	void LookAction(const struct FInputActionValue& Value);
+	void SprintAction(const struct FInputActionValue& Value);
 	void MoveAction(const struct FInputActionValue& Value);
-	void LookAction(const FInputActionValue& Value);
-	void SprintAction(const FInputActionValue& Value);
 	void Dodge();
 
 	void EnableControlRotation();
@@ -33,6 +35,9 @@ public:
 
 private:
 	void SetMoveSpeed(float Value);
+
+	bool CheckDistance();
+	void MoveToDestination();
 
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Camera Property")
@@ -54,11 +59,17 @@ private:
 
 
 private:
-	ACharacter* Owner;
+	ACharacter* OwnerCharacter;
+
+	APlayerController* PlayerController;
 
 	//Montage
 private:
 	bool bCanMove = true;
+
+	FVector LastInputLocation;
+
+	float Tolerance = 20.f;
 
 	
 

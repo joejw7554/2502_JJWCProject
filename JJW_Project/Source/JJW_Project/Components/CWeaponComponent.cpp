@@ -129,6 +129,8 @@ FName UCWeaponComponent::GetComboSectionName(int32 comboIndex)
 		return "Section3";
 	case 4:
 		return "Section4";
+	case 5:
+		return "Section5";
 	default:
 		return NAME_None;
 	}
@@ -325,6 +327,11 @@ void UCWeaponComponent::UnEquip(EWeaponType WeaponType)
 
 void UCWeaponComponent::Begin_Equip()
 {
+	UCWeaponAsset* asset = GetWeaponAsset(CurrentWeaponType);
+
+	if (!asset->GetEquipmentData().bCanMove)
+		MovementComp->DisableMovment();
+
 	AttachWeaponToHand(CurrentWeaponType);
 }
 

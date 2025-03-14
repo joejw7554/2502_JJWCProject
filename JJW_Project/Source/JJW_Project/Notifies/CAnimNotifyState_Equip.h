@@ -10,7 +10,7 @@ class JJW_PROJECT_API UCAnimNotifyState_Equip : public UAnimNotifyState
 	GENERATED_BODY()
 	
 private:
-	FString GetNotifyName_Implementation();
+	FString GetNotifyName_Implementation() const;
 
 	virtual void NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float TotalDuration, const FAnimNotifyEventReference& EventReference) override;
 	virtual void NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference) override;

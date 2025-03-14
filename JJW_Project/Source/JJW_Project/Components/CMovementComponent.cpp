@@ -6,7 +6,28 @@
 
 UCMovementComponent::UCMovementComponent()
 {
-	PrimaryComponentTick.bCanEverTick = false;
+	PrimaryComponentTick.bCanEverTick = true;
+}
+
+void UCMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	if (!OwnerCharacter) return;
+
+	if (CheckDistance() &&bCanMove)
+		MoveToDestination();
+}
+
+void UCMovementComponent::MoveToDestination()
+{
+	FVector direction = (LastInputLocation - OwnerCharacter->GetActorLocation()).GetSafeNormal();
+	OwnerCharacter->AddMovementInput(direction, 1);
+}
+
+bool UCMovementComponent::CheckDistance()
+{
+	return FVector::Dist(OwnerCharacter->GetActorLocation(), LastInputLocation) > Tolerance;
 }
 
 
@@ -14,40 +35,38 @@ void UCMovementComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Owner = Cast<ACPlayer>(GetOwner());
+	OwnerCharacter = Cast<ACPlayer>(GetOwner());
 
-	if (!Owner) return;
+	if (!OwnerCharacter) return;
 
-	APlayerController* playerController = Owner->GetController<APlayerController>();
+	PlayerController = OwnerCharacter->GetController<APlayerController>();
 
-	if (!playerController) return;
+	if (!PlayerController) return;
 
-	playerController->PlayerCameraManager->ViewPitchMin = PitchAngleLimit.X;
-	playerController->PlayerCameraManager->ViewPitchMax = PitchAngleLimit.Y;
+	PlayerController->PlayerCameraManager->ViewPitchMin = PitchAngleLimit.X;
+	PlayerController->PlayerCameraManager->ViewPitchMax = PitchAngleLimit.Y;
+	PlayerController->bShowMouseCursor = true;
 
-	Owner->GetCharacterMovement()->RotationRate = FRotator(0, 540.f, 0);
+	OwnerCharacter->GetCharacterMovement()->RotationRate = FRotator(0, 540.f, 0);
 }
 
 void UCMovementComponent::MoveAction(const FInputActionValue& Value)
 {
-	if (!bCanMove) return;
+	if (!PlayerController) return;
+	if (!OwnerCharacter) return;
 
-	FVector2D val = Value.Get<FVector2D>();
+	FHitResult hitResult;
+	PlayerController->GetHitResultUnderCursor(ECC_Visibility, true, hitResult);
 
-	FRotator yawRotator = FRotator(0.f, Owner->GetControlRotation().Yaw, 0.f);
-	FVector forward = FQuat(yawRotator).GetForwardVector();
-	FVector right = FQuat(yawRotator).GetRightVector();
-
-	Owner->AddMovementInput(forward, val.Y);
-	Owner->AddMovementInput(right, val.X);
+	LastInputLocation = hitResult.Location;
 }
 
 void UCMovementComponent::LookAction(const FInputActionValue& Value)
 {
 	FVector2D val = Value.Get<FVector2D>();
 
-	Owner->AddControllerYawInput(val.X);
-	Owner->AddControllerPitchInput(-val.Y);
+	OwnerCharacter->AddControllerYawInput(val.X);
+	OwnerCharacter->AddControllerPitchInput(-val.Y);
 }
 
 void UCMovementComponent::SprintAction(const FInputActionValue& Value)
@@ -60,25 +79,26 @@ void UCMovementComponent::SprintAction(const FInputActionValue& Value)
 		SetWalkMode();
 }
 
+
 void UCMovementComponent::Dodge()
 {
-	Owner->SetActorRotation(Owner->GetLastMovementInputVector().Rotation(), ETeleportType::ResetPhysics);
+	OwnerCharacter->SetActorRotation(OwnerCharacter->GetLastMovementInputVector().Rotation(), ETeleportType::ResetPhysics);
 
 	if (AnimMontage_Dodge)
-		if (!Owner->GetMesh()->GetAnimInstance()->IsAnyMontagePlaying())
-			Owner->PlayAnimMontage(AnimMontage_Dodge, PlayRate_Dodge);
+		if (!OwnerCharacter->GetMesh()->GetAnimInstance()->IsAnyMontagePlaying())
+			OwnerCharacter->PlayAnimMontage(AnimMontage_Dodge, PlayRate_Dodge);
 }
 
 void UCMovementComponent::EnableControlRotation()
 {
-	Owner->GetCharacterMovement()->bOrientRotationToMovement = false;
-	Owner->bUseControllerRotationYaw = true;
+	OwnerCharacter->GetCharacterMovement()->bOrientRotationToMovement = false;
+	OwnerCharacter->bUseControllerRotationYaw = true;
 }
 
 void UCMovementComponent::DisableControlRotation()
 {
-	Owner->GetCharacterMovement()->bOrientRotationToMovement = true;
-	Owner->bUseControllerRotationYaw = false;
+	OwnerCharacter->GetCharacterMovement()->bOrientRotationToMovement = true;
+	OwnerCharacter->bUseControllerRotationYaw = false;
 }
 
 void UCMovementComponent::EnableMovement()
@@ -103,6 +123,6 @@ void UCMovementComponent::SetSprintMode()
 
 void UCMovementComponent::SetMoveSpeed(float Value)
 {
-	Owner->GetCharacterMovement()->MaxWalkSpeed = Value;
+	OwnerCharacter->GetCharacterMovement()->MaxWalkSpeed = Value;
 }
 

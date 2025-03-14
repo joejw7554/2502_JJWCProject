@@ -1,7 +1,7 @@
 #include "CAnimNotifyState_Equip.h"
 #include "../Components/CWeaponComponent.h"
 
-FString UCAnimNotifyState_Equip::GetNotifyName_Implementation()
+FString UCAnimNotifyState_Equip::GetNotifyName_Implementation() const
 {
 	return FString("Equip");
 }
@@ -15,6 +15,7 @@ void UCAnimNotifyState_Equip::NotifyBegin(USkeletalMeshComponent* MeshComp, UAni
 
 	UCWeaponComponent* weaponComp= MeshComp->GetOwner()->GetComponentByClass<UCWeaponComponent>();
 	if (!weaponComp) return;
+
 	
 	weaponComp->Begin_Equip();
 }
