@@ -31,7 +31,7 @@ public:
 
 public:
 	EWeaponType GetCurrentWeaponType() { return CurrentWeaponType; }
-	class ACWeaponBase* GetWeaponFromAsset();
+	class ACWeaponBase* GetCurrentWeapon();
 
 	FWeaponTypeChanged OnWeaponTypeChanged;
 
@@ -56,7 +56,6 @@ public:
 
 public:
 	class UCWeaponAsset* GetWeaponAsset(EWeaponType WeaponType);
-	FORCEINLINE class ACWeaponBase* GetCurrentWeapon();
 
 private:
 	//애니메이션 관련 함수

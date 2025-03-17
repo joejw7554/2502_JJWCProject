@@ -334,12 +334,14 @@ void UCWeaponComponent::Begin_Equip()
 	MovementComp->DisableMovment();
 
 	AttachWeaponToHand(CurrentWeaponType);
+
 }
 
 void UCWeaponComponent::End_Equip()
 {
 	UCWeaponAsset* asset = GetWeaponAsset(CurrentWeaponType);
-	MovementComp->EnableMovement();
+	MovementComp->DisableMovment();
+
 }
 
 
