@@ -126,9 +126,9 @@ void UCWeaponComponent::EnableWeaponCollision()
 	ACWeaponBase* weapon = GetCurrentWeapon();
 	if (!weapon) return;
 
-	weapon->GetRightMesh()->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+	weapon->GetRightMesh()->SetCollisionProfileName("OverlapAllDynamic");
 	if (CurrentWeaponType == EWeaponType::Katana)
-		weapon->GetLeftMesh()->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+		weapon->GetLeftMesh()->SetCollisionProfileName("OverlapAllDynamic");
 }
 
 void UCWeaponComponent::DisableWeaponCollision()
@@ -136,9 +136,10 @@ void UCWeaponComponent::DisableWeaponCollision()
 	ACWeaponBase* weapon = GetCurrentWeapon();
 	if (!weapon) return;
 
-	weapon->GetRightMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	weapon->GetRightMesh()->SetCollisionProfileName("NoCollision");
 	if (CurrentWeaponType == EWeaponType::Katana)
-		weapon->GetLeftMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		weapon->GetLeftMesh()->SetCollisionProfileName("NoCollision");
+
 }
 
 UCWeaponAsset* UCWeaponComponent::GetWeaponAsset(EWeaponType InType)
@@ -182,23 +183,41 @@ void UCWeaponComponent::DoSkill(ESkillKey InKey)
 	if (IsUnArmed()) return;
 
 	ACWeaponBase* weapon = GetCurrentWeapon();
+	if (!OwnerCharacter) return;
+	if (!weapon) return;
 
 	UCMovementComponent* movementComp = OwnerCharacter->GetComponentByClass<UCMovementComponent>();
 	if (!movementComp) return;
-	
-	if (!OwnerCharacter) return;
-	switch (InKey)
+
+	movementComp->DisableMovment();
+
+	ESkillKey PrevSkill = CurrentSkillKey;
+
+	if (PrevSkill != InKey)
+		ResetComboIndex();
+
+	CurrentSkillKey = InKey;
+
+	switch (CurrentSkillKey)
 	{
 	case ESkillKey::BasicCombo:
 		weapon->GetBasicCombo()->PerformSkill(bEnableCombo, CurrentComboIndex, OwnerCharacter);
 		break;
+
 	case ESkillKey::Q:
+		weapon->GetSkill_Q()->PerformSkill(bEnableCombo, CurrentComboIndex, OwnerCharacter);
 		break;
+
 	case ESkillKey::W:
+		weapon->GetSkill_W()->PerformSkill(bEnableCombo, CurrentComboIndex, OwnerCharacter);
 		break;
+
 	case ESkillKey::E:
+		weapon->GetSkill_E()->PerformSkill(bEnableCombo, CurrentComboIndex, OwnerCharacter);
 		break;
+
 	case ESkillKey::R:
+		weapon->GetSkill_R()->PerformSkill(bEnableCombo, CurrentComboIndex, OwnerCharacter);
 		break;
 	default:
 		break;

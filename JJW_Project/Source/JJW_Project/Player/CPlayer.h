@@ -57,6 +57,18 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	class UInputAction* IA_BasicAttackAction;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	class UInputAction* IA_SKill_Q;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	class UInputAction* IA_SKill_W;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	class UInputAction* IA_SKill_E;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	class UInputAction* IA_SKill_R;
+
 	UPROPERTY(VisibleAnywhere)
 	class USpringArmComponent* SpringArm;
 

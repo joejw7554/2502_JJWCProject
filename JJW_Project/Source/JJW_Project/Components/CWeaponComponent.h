@@ -97,5 +97,6 @@ private:
 
 	int8 CurrentComboIndex = 1;
 
+	ESkillKey CurrentSkillKey;
 	bool bEnableCombo = false;
 };

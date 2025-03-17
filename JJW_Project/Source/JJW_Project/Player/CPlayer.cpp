@@ -111,5 +111,28 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 				Weapon->DoSkill(ESkillKey::BasicCombo);
 			});
 
+	if (IA_SKill_Q)
+		enhancedInput->BindActionValueLambda(IA_SKill_Q, ETriggerEvent::Started, [this](const FInputActionValue& value)
+			{
+				Weapon->DoSkill(ESkillKey::Q);
+			});
+
+	if (IA_SKill_W)
+		enhancedInput->BindActionValueLambda(IA_SKill_W, ETriggerEvent::Started, [this](const FInputActionValue& value)
+			{
+				Weapon->DoSkill(ESkillKey::W);
+			});
+
+	if(IA_SKill_E)
+		enhancedInput->BindActionValueLambda(IA_SKill_E, ETriggerEvent::Started, [this](const FInputActionValue& value)
+			{
+				Weapon->DoSkill(ESkillKey::E);
+			});
+
+	if (IA_SKill_R)
+		enhancedInput->BindActionValueLambda(IA_SKill_R, ETriggerEvent::Started, [this](const FInputActionValue& value)
+			{
+				Weapon->DoSkill(ESkillKey::R);
+			});
 }
 
