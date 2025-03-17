@@ -5,7 +5,7 @@
 
 #include "CWeaponBase.generated.h"
 
-UCLASS(Abstract)
+UCLASS(Abstract, NotPlaceable)
 class JJW_PROJECT_API ACWeaponBase : public AActor
 {
 	GENERATED_BODY()

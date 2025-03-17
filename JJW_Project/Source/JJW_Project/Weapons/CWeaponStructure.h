@@ -10,8 +10,6 @@ enum class EWeaponType : uint8
 	Katana = 0, Max
 };
 
-
-
 USTRUCT()
 struct FEquipmentData
 {

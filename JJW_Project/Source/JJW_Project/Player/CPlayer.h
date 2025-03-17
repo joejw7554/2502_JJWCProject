@@ -23,6 +23,7 @@ public:
 
 public: //Getter
 	FORCEINLINE UCWeaponComponent* GetWeaponComponent() { return Weapon; }
+	FORCEINLINE float GetCurrentHealthPercent() { return CurrentHealth/MaxHealth; }
 
 
 protected:
@@ -81,4 +82,10 @@ private:
 
 	UPROPERTY(VisibleAnywhere)
 	UCWeaponComponent* Weapon;
+
+	UPROPERTY(EditAnywhere)
+	float MaxHealth = 100.f;
+
+	UPROPERTY(EditAnywhere)
+	float CurrentHealth = MaxHealth;
 };
