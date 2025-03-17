@@ -78,6 +78,9 @@ protected:
 
 private:
 	UPROPERTY(VisibleAnywhere)
+	FRotator CursorTargetRotation;
+
+	UPROPERTY(VisibleAnywhere)
 	UCMovementComponent* Movement;
 
 	UPROPERTY(VisibleAnywhere)

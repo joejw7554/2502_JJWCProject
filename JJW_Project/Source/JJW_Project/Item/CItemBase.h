@@ -4,17 +4,17 @@
 #include "GameFramework/Actor.h"
 #include "CItemBase.generated.h"
 
-UCLASS(Abstract, NotPlaceable)
+UCLASS(Abstract, NotBlueprintable)
 class JJW_PROJECT_API ACItemBase : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	ACItemBase();
-	//virtual void Tick(float DeltaTime) override;
 
 protected:
 	virtual void BeginPlay() override;
+	virtual void UseItem();
 
 protected:
 	UPROPERTY(VisibleAnywhere)

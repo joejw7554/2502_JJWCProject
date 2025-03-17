@@ -4,6 +4,7 @@
 
 #include "Weapons/CWeaponBase.h"
 #include "Weapons/CSkillStructure.h"
+#include "CMovementComponent.h"
 
 UCSkillComponentBase::UCSkillComponentBase()
 {
@@ -18,23 +19,15 @@ void UCSkillComponentBase::PerformSkill(bool bEnableCombo, int8 InComboIndex,  A
 {
 	if (!SkillData) return;
 	if (!InWeaponOwner)return;
-	
-	APlayerController* controller = Cast<APlayerController>(InWeaponOwner->GetController());
-	if (!controller) return;
-
-	FHitResult hitResult;
-	controller->GetHitResultUnderCursor(ECC_Visibility, true, hitResult);
-	FVector lookDirection = (hitResult.ImpactPoint - InWeaponOwner->GetActorLocation()).GetSafeNormal();
-	FRotator lookRotation = FRotationMatrix::MakeFromXY(lookDirection, FVector::UpVector).Rotator();
-	lookRotation.Pitch = 0.f;
-	lookRotation.Roll = 0.f;
 
 	UAnimMontage* montage = SkillData->Montage;
 	float playRate = SkillData->PlayRate;
 
-	ACharacter* ownerCharacter = Cast<ACharacter>(GetOwner()->Owner);
-	UAnimInstance* animInstance = ownerCharacter->GetMesh()->GetAnimInstance();
+	UAnimInstance* animInstance = InWeaponOwner->GetMesh()->GetAnimInstance();
 	if (!animInstance) return;
+
+	UCMovementComponent* movementComp = InWeaponOwner->GetComponentByClass<UCMovementComponent>();
+	if (!movementComp) return;
 
 
 	if (animInstance->Montage_IsPlaying(montage))
@@ -45,15 +38,17 @@ void UCSkillComponentBase::PerformSkill(bool bEnableCombo, int8 InComboIndex,  A
 			if (nextSection != NAME_None)
 			{
 				animInstance->Montage_JumpToSection(nextSection);
-				InWeaponOwner->SetActorRotation(lookRotation);
+				movementComp->RotateActorToCusorDirection();
+
 			}
 		}
 	}
 	else
 	{
-		ownerCharacter->PlayAnimMontage(montage, playRate);
-		InWeaponOwner->SetActorRotation(lookRotation);
+		InWeaponOwner->PlayAnimMontage(montage, playRate);
+		movementComp->RotateActorToCusorDirection();
 	}
+
 }
 
 FName UCSkillComponentBase::GetComboSectionName(int32 comboIndex)

@@ -2,10 +2,9 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-
 #include "CWeaponBase.generated.h"
 
-UCLASS(Abstract, NotPlaceable)
+UCLASS(Abstract, NotBlueprintable)
 class JJW_PROJECT_API ACWeaponBase : public AActor
 {
 	GENERATED_BODY()

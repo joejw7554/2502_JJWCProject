@@ -4,8 +4,19 @@
 #include "UObject/NoExportTypes.h"
 #include "CItemStructure.generated.h"
 
+UENUM(BlueprintType)
+enum class EItemType : uint8
+{
+	HP_Potion 	UMETA(DisplayName = "HP Portion"),
+	DamageBoost UMETA(DisplayName = "Damage Boost"),
+	ArmorBoost 	UMETA(DisplayName = "Armor Boost"),
+	SpeedBoost 	UMETA(DisplayName = "Speed Boost"),
+	Max UMETA(Hidden)
+};
+
+
 USTRUCT()
-struct FItemStructure : public FTableRowBase
+struct FItemStructure
 {
 	GENERATED_BODY()
 
@@ -20,7 +31,7 @@ public:
 	FString Description;
 
 	UPROPERTY(EditAnywhere) //인벤토리에서 찾을떄 숫자로 비교할꺼임
-	int32 ItemID;
+	uint8 ItemID;
 
 	UPROPERTY(EditAnywhere)
 	int32 Price;
@@ -29,16 +40,26 @@ public:
 	int32 MaxStack;
 
 	UPROPERTY(EditAnywhere)
-	bool bIsStackable;
+	bool bStackable;
 
 	UPROPERTY(EditAnywhere)
-	bool bIsConsumable;
+	bool bConsumable;
 
 	UPROPERTY(EditAnywhere)
-	bool bIsUsable;
+	TSubclassOf<class ACItemBase> ItemClass;
 
-	/*UPROPERTY(EditAnywhere)
-	TSubclassOf<class ACItemBase> ItemClass;*/
+	FItemStructure()
+	{
+		Thumbnail = nullptr;
+		Name = FString(TEXT("None"));
+		Description = FString(TEXT("None"));
+		ItemID = 0;
+		Price = 0;
+		MaxStack = 0;
+		bStackable = false;
+		bConsumable = false;
+		ItemClass = nullptr;
+	}
 };
 
 UCLASS()

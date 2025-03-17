@@ -24,8 +24,12 @@ public:
 	void MoveAction(const struct FInputActionValue& Value);
 	void Dodge();
 
+	void RotateActorToCusorDirection();
+
 	void EnableControlRotation();
 	void DisableControlRotation();
+
+	FORCEINLINE FRotator GetCursorTargetRotation() { return CursorTargetRotation; }
 
 	FORCEINLINE void EnableMovement() { bCanMove = true; }
 	FORCEINLINE void DisableMovment() { bCanMove = false; }
@@ -39,6 +43,8 @@ private:
 
 	bool IsArrivedAtDestination(FVector CurrentLocation, FVector TargetLocation);
 	void MoveToDestination();
+
+	void CalculateCursorDirection();
 
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Camera Property")
@@ -58,7 +64,6 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Animation")
 	float PlayRate_Dodge = 1.5f;
 
-
 private:
 	ACharacter* OwnerCharacter;
 
@@ -66,6 +71,8 @@ private:
 
 	//Montage
 private:
+	FRotator CursorTargetRotation;
+
 	bool bCanMove = true;
 	bool bIsRootMotionMoving = false;
 

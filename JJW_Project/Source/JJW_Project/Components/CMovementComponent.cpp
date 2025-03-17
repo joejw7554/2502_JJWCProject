@@ -16,8 +16,10 @@ void UCMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
 	if (bCanMove == true)
 		MoveToDestination();
 
-	
+	CalculateCursorDirection();
 }
+
+
 
 void UCMovementComponent::MoveToDestination()
 {
@@ -27,6 +29,21 @@ void UCMovementComponent::MoveToDestination()
 	if (!OwnerCharacter) return;
 	FVector direction = (LastInputLocation - OwnerCharacter->GetActorLocation()).GetSafeNormal();
 	OwnerCharacter->AddMovementInput(direction, 1);
+}
+
+void UCMovementComponent::CalculateCursorDirection()
+{
+	APlayerController* controller = Cast<APlayerController>(OwnerCharacter->GetController());
+	if (!controller) return;
+
+	FHitResult hitResult;
+	controller->GetHitResultUnderCursor(ECC_Visibility, true, hitResult);
+	FVector cursorDirection = (hitResult.ImpactPoint - OwnerCharacter->GetActorLocation()).GetSafeNormal();
+	FRotator cursorTowardRotation = FRotationMatrix::MakeFromXY(cursorDirection, FVector::UpVector).Rotator();
+	cursorTowardRotation.Pitch = 0.f;
+	cursorTowardRotation.Roll = 0.f;
+
+	CursorTargetRotation = cursorTowardRotation;
 }
 
 bool UCMovementComponent::IsArrivedAtDestination(FVector CurrentLocation, FVector TargetLocation)
@@ -84,12 +101,25 @@ void UCMovementComponent::SprintAction(const FInputActionValue& Value)
 
 void UCMovementComponent::Dodge()
 {
+	if (!OwnerCharacter) return;
+
 	if (OwnerCharacter->GetMesh()->GetAnimInstance()->IsAnyMontagePlaying()) return;
 
-	OwnerCharacter->SetActorRotation(OwnerCharacter->GetLastMovementInputVector().Rotation(), ETeleportType::ResetPhysics);
+	ACPlayer* player = Cast<ACPlayer>(OwnerCharacter);
+	if (!player) return;
+
+	RotateActorToCusorDirection();
 
 	if (AnimMontage_Dodge)
 			OwnerCharacter->PlayAnimMontage(AnimMontage_Dodge, PlayRate_Dodge);
+
+	DisableMovment();
+}
+
+void UCMovementComponent::RotateActorToCusorDirection()
+{
+	FRotator RotateTarget = CursorTargetRotation;
+	OwnerCharacter->SetActorRotation(RotateTarget, ETeleportType::ResetPhysics);
 }
 
 void UCMovementComponent::EnableControlRotation()

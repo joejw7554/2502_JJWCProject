@@ -73,10 +73,10 @@ void ACPlayer::InitializePlayerEnhnacedInput()
 	}
 }
 
+
 void ACPlayer::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
