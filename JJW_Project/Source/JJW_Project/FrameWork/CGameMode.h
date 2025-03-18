@@ -12,6 +12,9 @@ class JJW_PROJECT_API ACGameMode : public AGameModeBase
 public:
 	ACGameMode();
 
+public:
+	FORCEINLINE class UCItemFactoryComponent* GetItemFactory() { return ItemFactoryComponent; }
+
 protected:
 	UPROPERTY(VisibleAnywhere)
 	class UCItemFactoryComponent* ItemFactoryComponent;

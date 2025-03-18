@@ -11,7 +11,7 @@ UCItemFactoryComponent::UCItemFactoryComponent()
 
 }
 
-ACItemBase* UCItemFactoryComponent::GetItem(const uint8 ID, FVector InLocation, FRotator InRotation)
+ACItemBase* UCItemFactoryComponent::GetDropItem(const uint8 ID, FVector InLocation, FRotator InRotation)
 {
 	if (!ItemTable) return nullptr;
 
@@ -24,6 +24,7 @@ ACItemBase* UCItemFactoryComponent::GetItem(const uint8 ID, FVector InLocation, 
 		if (data->ItemID == ID)
 			return GetWorld()->SpawnActor<ACItemBase>(data->ItemClass, InLocation, InRotation);
 	}
+
 
 	return nullptr;
 }

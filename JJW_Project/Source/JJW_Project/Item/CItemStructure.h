@@ -52,6 +52,23 @@ public:
 	}
 };
 
+
+USTRUCT()
+struct FItemDropTable : public FTableRowBase
+{
+	GENERATED_BODY()
+
+public:
+	UPROPERTY(EditAnywhere)
+	uint8 ItemID;
+
+	UPROPERTY(EditAnywhere)
+	uint8 SpawnCount;
+
+	UPROPERTY(EditAnywhere, meta = (ClampMin = "0.1", ClampMax = "1.0"))
+	float ItemDropRate;
+};
+
 UCLASS()
 class JJW_PROJECT_API UCItemStructure : public UObject
 {

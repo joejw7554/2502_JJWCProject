@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Item/CItemStructure.h"
 #include "CEnemyBase.generated.h"
 
 UCLASS()
@@ -16,13 +17,14 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
-public:	
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+protected:
+	UFUNCTION(BlueprintCallable)
+	virtual void DropItem();
 
 
 private:
 	UPROPERTY(EditAnywhere, Category="Item")
-	TArray<uint8> DropItemList;
+	UDataTable* DropTable;
 
 private:
 };
