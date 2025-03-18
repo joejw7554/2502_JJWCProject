@@ -1,4 +1,5 @@
 #include "FrameWork/CGameMode.h"
+#include "Components/CItemFactoryComponent.h"
 
 ACGameMode::ACGameMode()
 {
@@ -8,4 +9,6 @@ ACGameMode::ACGameMode()
 	{
 		DefaultPawnClass = playerClass.Class;
 	}
+
+	ItemFactoryComponent = CreateDefaultSubobject<UCItemFactoryComponent>("ItemFactoryComponent");
 }

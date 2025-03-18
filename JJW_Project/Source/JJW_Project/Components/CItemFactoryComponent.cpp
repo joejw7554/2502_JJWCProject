@@ -5,22 +5,28 @@ UCItemFactoryComponent::UCItemFactoryComponent()
 {
 	PrimaryComponentTick.bCanEverTick = false;
 
+	ConstructorHelpers::FObjectFinder<UDataTable> itemTable(L"/Script/Engine.DataTable'/Game/Blueprints/Items/DT_ItemTable.DT_ItemTable'");
+	if (itemTable.Succeeded())
+		ItemTable = itemTable.Object;
+
 }
 
-ACItemBase* UCItemFactoryComponent::GetItem(EItemType InType)
+ACItemBase* UCItemFactoryComponent::GetItem(const uint8 ID, FVector InLocation, FRotator InRotation)
 {
-	ACItemBase* ItemToSpawn = nullptr;
+	if (!ItemTable) return nullptr;
 
-	if (ItemList.Contains(InType))
+	const TMap<FName, uint8*> row = ItemTable->GetRowMap();
+
+	for (TPair<FName, uint8*> pair : row)
 	{
-		FItemStructure ItemStructure = ItemList[InType];
-		ItemToSpawn = GetWorld()->SpawnActor<ACItemBase>(ItemStructure.ItemClass);
-		return ItemToSpawn;
+		FItemStructure* data = (FItemStructure*)pair.Value;
+
+		if (data->ItemID == ID)
+			return GetWorld()->SpawnActor<ACItemBase>(data->ItemClass, InLocation, InRotation);
 	}
 
 	return nullptr;
 }
-
 
 void UCItemFactoryComponent::BeginPlay()
 {

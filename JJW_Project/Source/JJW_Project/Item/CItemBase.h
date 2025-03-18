@@ -4,7 +4,7 @@
 #include "GameFramework/Actor.h"
 #include "CItemBase.generated.h"
 
-UCLASS(Abstract, NotBlueprintable)
+UCLASS(Abstract)
 class JJW_PROJECT_API ACItemBase : public AActor
 {
 	GENERATED_BODY()

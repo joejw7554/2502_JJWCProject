@@ -14,7 +14,7 @@ ACItemBase::ACItemBase()
 
 	ItemCollision = CreateDefaultSubobject<UBoxComponent>("ItemCollision");
 	ItemCollision->SetupAttachment(ItemMesh);
-	ItemCollision->SetBoxExtent(FVector(50.0f, 50.0f, 50.0f));
+	ItemCollision->SetBoxExtent(FVector(100.f, 100.f,100.f));
 }
 
 void ACItemBase::BeginPlay()

@@ -12,5 +12,7 @@ class JJW_PROJECT_API ACGameMode : public AGameModeBase
 public:
 	ACGameMode();
 
-	
+protected:
+	UPROPERTY(VisibleAnywhere)
+	class UCItemFactoryComponent* ItemFactoryComponent;
 };

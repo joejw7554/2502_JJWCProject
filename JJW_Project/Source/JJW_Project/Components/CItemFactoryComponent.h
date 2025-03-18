@@ -6,7 +6,7 @@
 #include "CItemFactoryComponent.generated.h"
 
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS()
 class JJW_PROJECT_API UCItemFactoryComponent : public UActorComponent
 {
 	GENERATED_BODY()
@@ -17,12 +17,14 @@ public:
 
 
 public:	
-	class ACItemBase* GetItem(EItemType InType);
+	UFUNCTION(BlueprintCallable)
+	class ACItemBase* GetItem(const uint8 ID, FVector InLocation, FRotator InRotation);
 
 
 protected:
 	virtual void BeginPlay() override;
 
 private:
-	TMap<EItemType, FItemStructure> ItemList;
+	UPROPERTY(EditAnywhere)
+	UDataTable* ItemTable;
 };
