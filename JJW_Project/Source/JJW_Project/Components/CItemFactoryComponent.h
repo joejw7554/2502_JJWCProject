@@ -15,9 +15,7 @@ public:
 	UCItemFactoryComponent();
 	//virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-
 public:	
-	UFUNCTION(BlueprintCallable)
 	class ACItemBase* GetItem(const uint8 ID, FVector InLocation, FRotator InRotation);
 
 

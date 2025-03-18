@@ -20,8 +20,6 @@ ACItemBase::ACItemBase()
 void ACItemBase::BeginPlay()
 {
 	Super::BeginPlay();
-	
-
 
 }
 
