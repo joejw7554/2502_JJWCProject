@@ -19,7 +19,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 	class ACItemBase* GetDropItem(const uint8 ID, FVector InLocation, FRotator InRotation);
 
-
 protected:
 	virtual void BeginPlay() override;
 

@@ -25,7 +25,6 @@ ACItemBase* UCItemFactoryComponent::GetDropItem(const uint8 ID, FVector InLocati
 			return GetWorld()->SpawnActor<ACItemBase>(data->ItemClass, InLocation, InRotation);
 	}
 
-
 	return nullptr;
 }
 

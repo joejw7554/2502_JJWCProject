@@ -33,15 +33,12 @@ void ACEnemyBase::DropItem()
 	{
 		FItemDropTable* data = (FItemDropTable*)pair.Value;
 
-		UE_LOG(LogTemp, Warning, TEXT("%f"), data->ItemDropRate);
-		UE_LOG(LogTemp, Warning, TEXT("%d"), data->SpawnCount);
-
 		for (int32 i = 0; i < data->SpawnCount; ++i)
 		{
 			float random = FMath::FRandRange(0.0f, 1.0f);
 
 			if (random <= data->ItemDropRate) 
-			ACItemBase* item = gameMode->GetItemFactory()->GetDropItem(data->ItemID, GetActorLocation()+FVector(0,i*100.f,0), FRotator::ZeroRotator);
+			ACItemBase* item = gameMode->GetItemFactory()->GetDropItem(data->ItemID,GetActorLocation() + FVector(0, 0, 50.f), FRotator::ZeroRotator);
 		}
 	}
 }
