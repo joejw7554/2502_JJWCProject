@@ -6,6 +6,7 @@
 #include "Item/CItemBase.h"
 #include "Components/CItemFactoryComponent.h"
 #include "Components/SkeletalMeshComponent.h"
+
 ACEnemyBase::ACEnemyBase()
 {
 	PrimaryActorTick.bCanEverTick = false;
@@ -28,7 +29,11 @@ void ACEnemyBase::DropItem()
 	ACGameMode* gameMode = Cast<ACGameMode>(GetWorld()->GetAuthGameMode());
 	if (!gameMode) return;
 
-	gameMode->GetItemFactory()->CreateDropItem(EnemyType, GetActorLocation());
+	float radius = GetCapsuleComponent()->GetUnscaledCapsuleRadius();
+	FVector capsuleLocation = GetCapsuleComponent()->GetComponentLocation();
+	float capsuleRadius = GetCapsuleComponent()->GetUnscaledCapsuleRadius();
+
+	gameMode->GetItemFactory()->CreateDropItem(EnemyType, capsuleLocation, capsuleRadius);
 }
 
 void ACEnemyBase::Dead()
@@ -43,7 +48,6 @@ void ACEnemyBase::OnEnemyTakeAnyDamage(AActor* DamagedActor, float Damage, const
 
 	if (IsDead())
 	{
-		UE_LOG(LogTemp, Warning, TEXT("CurrentHealth: %f"), CurrentHealth);
 		DropItem();
 		Dead();
 	}

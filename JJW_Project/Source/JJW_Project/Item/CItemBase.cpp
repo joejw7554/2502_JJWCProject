@@ -14,14 +14,19 @@ ACItemBase::ACItemBase()
 	ItemMesh->SetCollisionProfileName("Custom");
 	ItemMesh->SetCollisionObjectType(ECollisionChannel::ECC_WorldStatic);
 	ItemMesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldStatic, ECollisionResponse::ECR_Ignore);
+	ItemMesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
+	ItemMesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Ignore);
+
 	ItemMesh->SetSimulatePhysics(true);
 	ItemMesh->SetNotifyRigidBodyCollision(true);
+	ItemMesh->BodyInstance.bLockYTranslation = false;
+	ItemMesh->BodyInstance.bLockXTranslation = false;
+
 
 	ItemCollision = CreateDefaultSubobject<UBoxComponent>("ItemCollision");
 	ItemCollision->SetupAttachment(ItemMesh);
 	ItemCollision->SetBoxExtent(FVector(100.f, 100.f,100.f));
 	ItemCollision->SetCollisionProfileName("OverlapAllDynamic");
-
 }
 
 void ACItemBase::Tick(float DeltaTime)
@@ -38,10 +43,6 @@ void ACItemBase::BeginPlay()
 	Super::BeginPlay();
 
 	ItemMesh->OnComponentHit.AddDynamic(this, &ACItemBase::OnItemHit);
-
-	FVector ranomDirection =FMath::VRandCone(FVector::UpVector, 30.f);
-
-	ItemMesh->AddImpulse(ranomDirection * ForceAmount, NAME_None, true);
 }
 
 void ACItemBase::UseItem()
@@ -60,7 +61,6 @@ void ACItemBase::OnItemHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPr
 {
 	if (!OtherActor->ActorHasTag("Player") && !OtherActor->ActorHasTag("Enemy"))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("%s"), *OtherActor->GetActorLabel());
 		bHitFloor = true;
 		ItemMesh->SetSimulatePhysics(false);
 		ItemMesh->SetCollisionProfileName("NoCollision");

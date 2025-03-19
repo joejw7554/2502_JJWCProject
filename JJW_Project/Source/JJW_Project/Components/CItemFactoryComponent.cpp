@@ -16,7 +16,7 @@ UCItemFactoryComponent::UCItemFactoryComponent()
 
 }
 
-void UCItemFactoryComponent::CreateDropItem(const EEnemyType InType, const FVector& InLocation)
+void UCItemFactoryComponent::CreateDropItem(const EEnemyType InType, FVector InLocation, float InLocationVariation)
 {
 	if (!DataManager) return;
 
@@ -39,13 +39,19 @@ void UCItemFactoryComponent::CreateDropItem(const EEnemyType InType, const FVect
 					if (dropRate <= dropData->DropRate)
 					{
 						ACItemBase* item = GetWorld()->SpawnActor<ACItemBase>(itemData->ItemClass, InLocation, FRotator::ZeroRotator);
+						float randomX = FMath::FRandRange(-InLocationVariation, InLocationVariation);
+						float randomY = FMath::FRandRange(-InLocationVariation, InLocationVariation);
+						InLocation.X += randomX;
+						InLocation.Y += randomY;
 						item->SetActorLocation(InLocation);
 					}
 				}
 				break;
 			}
 
+
 		}
+
 	}
 }
 

@@ -17,7 +17,7 @@ public:
 	//virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 public:	
-	void CreateDropItem(const EEnemyType InType, const FVector& InLocation);
+	void CreateDropItem(const EEnemyType InType, FVector InLocation, float InLocationVariation);
 
 protected:
 	virtual void BeginPlay() override;

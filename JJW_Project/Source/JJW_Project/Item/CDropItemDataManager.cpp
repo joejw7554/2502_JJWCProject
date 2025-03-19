@@ -16,7 +16,6 @@ UDataTable* ACDropItemDataManager::GetDropTable(EEnemyType InType)
 	UDataTable* dropTable = EnemyDropItemTable[InType];
 	if (!dropTable) return nullptr;
 
-	UE_LOG(LogTemp, Warning, TEXT("GetDropTable Success"));
 	return dropTable;
 }
 
