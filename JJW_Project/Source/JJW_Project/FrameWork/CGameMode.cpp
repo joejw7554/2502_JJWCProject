@@ -11,4 +11,5 @@ ACGameMode::ACGameMode()
 	}
 
 	ItemFactoryComponent = CreateDefaultSubobject<UCItemFactoryComponent>("ItemFactoryComponent");
+
 }

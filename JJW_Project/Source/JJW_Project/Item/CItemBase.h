@@ -32,6 +32,9 @@ protected:
 	class UBoxComponent* ItemCollision;
 
 	UPROPERTY(EditDefaultsOnly)
+	float ForceAmount = 800.f;
+
+	UPROPERTY(EditDefaultsOnly)
 	float WaveHeight = 150.f;
 
 	bool bHitFloor=false;

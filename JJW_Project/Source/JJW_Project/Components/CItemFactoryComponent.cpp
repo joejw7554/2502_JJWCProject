@@ -1,5 +1,6 @@
 #include "Components/CItemFactoryComponent.h"
 #include "Item/CItemBase.h"
+#include "Item/CDropItemDataManager.h"
 
 UCItemFactoryComponent::UCItemFactoryComponent()
 {
@@ -9,26 +10,58 @@ UCItemFactoryComponent::UCItemFactoryComponent()
 	if (itemTable.Succeeded())
 		ItemTable = itemTable.Object;
 
+	ConstructorHelpers::FClassFinder<ACDropItemDataManager> dataManagerClass(L"/Script/Engine.Blueprint'/Game/Blueprints/Items/BP_CDropItemDataManager.BP_CDropItemDataManager_C'");
+	if (dataManagerClass.Succeeded())
+		DataManagerClass = dataManagerClass.Class;
+
 }
 
-ACItemBase* UCItemFactoryComponent::GetDropItem(const uint8 ID, FVector InLocation, FRotator InRotation)
+void UCItemFactoryComponent::CreateDropItem(const EEnemyType InType, const FVector& InLocation)
 {
-	if (!ItemTable) return nullptr;
+	if (!DataManager) return;
 
-	const TMap<FName, uint8*> row = ItemTable->GetRowMap();
+	const TMap<FName, uint8*> itemTableRow = ItemTable->GetRowMap();
+	const TMap<FName, uint8*> dropTableRow = DataManager->GetDropTable(InType)->GetRowMap();
 
-	for (TPair<FName, uint8*> pair : row)
+	for (TPair<FName, uint8*> pair : itemTableRow)
 	{
-		FItemStructure* data = (FItemStructure*)pair.Value;
+		for (TPair<FName, uint8*> dropPair : dropTableRow)
+		{
+			FItemStructure* itemData = (FItemStructure*)pair.Value;
+			FItemDropTable* dropData = (FItemDropTable*)dropPair.Value;
 
-		if (data->ItemID == ID)
-			return GetWorld()->SpawnActor<ACItemBase>(data->ItemClass, InLocation, InRotation);
+			if (itemData->ItemID == dropData->ItemID)
+			{
+				int8 count = dropData->SpawnCount;
+				for (int i = 0; i < count; i++)
+				{
+					float dropRate = FMath::FRandRange(0.0f, 1.0f);
+					if (dropRate <= dropData->DropRate)
+					{
+						ACItemBase* item = GetWorld()->SpawnActor<ACItemBase>(itemData->ItemClass, InLocation, FRotator::ZeroRotator);
+						item->SetActorLocation(InLocation);
+					}
+				}
+				break;
+			}
+
+		}
 	}
-
-	return nullptr;
 }
 
 void UCItemFactoryComponent::BeginPlay()
 {
 	Super::BeginPlay();
+
+	if (!DataManagerClass) return;
+
+	for (AActor* actor : GetWorld()->GetCurrentLevel()->Actors)
+	{
+		if (actor->IsA(DataManagerClass))
+		{
+			if (actor) 
+			DataManager = Cast<ACDropItemDataManager>(actor);
+			break;
+		}
+	}
 }

@@ -16,6 +16,8 @@ ACPlayer::ACPlayer()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
+	Tags.Add("Player");
+
 	GetMesh()->SetRelativeLocation(FVector(0, 0, -90));
 	GetMesh()->SetRelativeRotation(FRotator(0, -90, 0));
 

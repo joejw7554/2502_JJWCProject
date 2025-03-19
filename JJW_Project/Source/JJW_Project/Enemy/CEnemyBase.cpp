@@ -1,7 +1,10 @@
 #include "Enemy/CEnemyBase.h"
+
+#include "Components/CapsuleComponent.h"
+
 #include "Framework/CGameMode.h"
-#include "Components/CItemFactoryComponent.h"
 #include "Item/CItemBase.h"
+#include "Components/CItemFactoryComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 ACEnemyBase::ACEnemyBase()
 {
@@ -9,36 +12,39 @@ ACEnemyBase::ACEnemyBase()
 
 	Tags.Add("Enemy");
 
-	GetMesh()->SetRelativeLocation(FVector(0,0,-90));
+	GetMesh()->SetRelativeLocation(FVector(0, 0, -90));
 	GetMesh()->SetRelativeRotation(FRotator(0, -90, 0));
 }
 
 void ACEnemyBase::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	OnTakeAnyDamage.AddDynamic(this, &ACEnemyBase::OnEnemyTakeAnyDamage);
 }
 
 void ACEnemyBase::DropItem()
 {
-	if (!DropTable) return;
-
 	ACGameMode* gameMode = Cast<ACGameMode>(GetWorld()->GetAuthGameMode());
 	if (!gameMode) return;
 
-	const TMap<FName, uint8*> map= DropTable->GetRowMap();
-	if (map.IsEmpty()) return;
+	gameMode->GetItemFactory()->CreateDropItem(EnemyType, GetActorLocation());
+}
 
-	for (const TPair<FName, uint8*>& pair : map)
+void ACEnemyBase::Dead()
+{
+	GetCapsuleComponent()->SetGenerateOverlapEvents(false);
+	Destroy();
+}
+
+void ACEnemyBase::OnEnemyTakeAnyDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
+{
+	CurrentHealth = FMath::Clamp(CurrentHealth - Damage, 0.f, MaxHealth);
+
+	if (IsDead())
 	{
-		FItemDropTable* data = (FItemDropTable*)pair.Value;
-
-		for (int32 i = 0; i < data->SpawnCount; ++i)
-		{
-			float random = FMath::FRandRange(0.0f, 1.0f);
-
-			if (random <= data->ItemDropRate) 
-			ACItemBase* item = gameMode->GetItemFactory()->GetDropItem(data->ItemID,GetActorLocation() + FVector(0, 0, 50.f), FRotator::ZeroRotator);
-		}
+		UE_LOG(LogTemp, Warning, TEXT("CurrentHealth: %f"), CurrentHealth);
+		DropItem();
+		Dead();
 	}
 }

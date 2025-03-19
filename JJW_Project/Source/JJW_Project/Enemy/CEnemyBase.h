@@ -5,6 +5,12 @@
 #include "Item/CItemStructure.h"
 #include "CEnemyBase.generated.h"
 
+UENUM(BlueprintType)
+enum class EEnemyType : uint8
+{
+	Normal, MAX
+};
+
 UCLASS()
 class JJW_PROJECT_API ACEnemyBase : public ACharacter
 {
@@ -18,13 +24,22 @@ protected:
 	virtual void BeginPlay() override;
 
 protected:
-	UFUNCTION(BlueprintCallable)
 	virtual void DropItem();
+	virtual void Dead();
 
+	bool IsDead() { return CurrentHealth <= 0 ? true : false; }
+
+	UFUNCTION()
+	void OnEnemyTakeAnyDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser);
 
 private:
-	UPROPERTY(EditAnywhere, Category="Item")
-	UDataTable* DropTable;
+	UPROPERTY(EditDefaultsOnly)
+	EEnemyType EnemyType= EEnemyType::Normal;
 
 private:
+	UPROPERTY(EditDefaultsOnly)
+	float MaxHealth = 100.f;
+
+	UPROPERTY()
+	float CurrentHealth = MaxHealth;
 };

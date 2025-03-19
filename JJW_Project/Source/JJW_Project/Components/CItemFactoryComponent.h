@@ -3,6 +3,7 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "Item/CItemStructure.h"
+#include "Enemy/CEnemyBase.h"
 #include "CItemFactoryComponent.generated.h"
 
 
@@ -16,8 +17,7 @@ public:
 	//virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 public:	
-	UFUNCTION(BlueprintCallable)
-	class ACItemBase* GetDropItem(const uint8 ID, FVector InLocation, FRotator InRotation);
+	void CreateDropItem(const EEnemyType InType, const FVector& InLocation);
 
 protected:
 	virtual void BeginPlay() override;
@@ -25,4 +25,11 @@ protected:
 private:
 	UPROPERTY(EditAnywhere)
 	UDataTable* ItemTable;
+
+private:
+	UPROPERTY(EditDefaultsOnly)
+	class ACDropItemDataManager* DataManager;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<class ACDropItemDataManager> DataManagerClass;
 };

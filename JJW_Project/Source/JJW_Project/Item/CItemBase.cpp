@@ -11,7 +11,9 @@ ACItemBase::ACItemBase()
 
 	ItemMesh= CreateDefaultSubobject<UStaticMeshComponent>("ItemMesh");
 	SetRootComponent(ItemMesh);
-	ItemMesh->SetCollisionProfileName("BlockAllDynamic");
+	ItemMesh->SetCollisionProfileName("Custom");
+	ItemMesh->SetCollisionObjectType(ECollisionChannel::ECC_WorldStatic);
+	ItemMesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldStatic, ECollisionResponse::ECR_Ignore);
 	ItemMesh->SetSimulatePhysics(true);
 	ItemMesh->SetNotifyRigidBodyCollision(true);
 
@@ -36,6 +38,10 @@ void ACItemBase::BeginPlay()
 	Super::BeginPlay();
 
 	ItemMesh->OnComponentHit.AddDynamic(this, &ACItemBase::OnItemHit);
+
+	FVector ranomDirection =FMath::VRandCone(FVector::UpVector, 30.f);
+
+	ItemMesh->AddImpulse(ranomDirection * ForceAmount, NAME_None, true);
 }
 
 void ACItemBase::UseItem()
@@ -46,19 +52,18 @@ void ACItemBase::UseItem()
 void ACItemBase::ItemWave(float InDeltaTime)
 {
 	ElapsedTime += InDeltaTime;
-	float Zlocation = (-(FMath::Cos(ElapsedTime) -1) / 2) * WaveHeight;
-	SetActorLocation(FVector(GetActorLocation().X, GetActorLocation().Y, Zlocation));
-	UE_LOG(LogTemp, Warning, TEXT("%f"), Zlocation);
+	float Zlocation = ((FMath::Sin(ElapsedTime) + 1) *0.5) * WaveHeight +25.f;
+	ItemMesh->SetRelativeLocation(FVector(GetActorLocation().X, GetActorLocation().Y, Zlocation));
 }
 
 void ACItemBase::OnItemHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-	if (!OtherActor->ActorHasTag("Player"))
+	if (!OtherActor->ActorHasTag("Player") && !OtherActor->ActorHasTag("Enemy"))
 	{
+		UE_LOG(LogTemp, Warning, TEXT("%s"), *OtherActor->GetActorLabel());
 		bHitFloor = true;
 		ItemMesh->SetSimulatePhysics(false);
 		ItemMesh->SetCollisionProfileName("NoCollision");
-		UE_LOG(LogTemp, Warning, TEXT("HitFloor"));
 	}
 }
 

@@ -66,7 +66,7 @@ public:
 	uint8 SpawnCount;
 
 	UPROPERTY(EditAnywhere, meta = (ClampMin = "0.1", ClampMax = "1.0"))
-	float ItemDropRate;
+	float DropRate;
 };
 
 UCLASS()
