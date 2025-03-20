@@ -33,10 +33,14 @@ protected:
 private:
 	void InitializePlayerEnhnacedInput();
 
+	void PickupItem();
+
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	class UInputMappingContext* InputMappingContext;
 
+
+	//Movement Action///////////////////////////////
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	class UInputAction* IA_MoveAction;
 
@@ -49,12 +53,15 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	class UInputAction* IA_DodgeAction;
 
+
+	//WeaponEquip Action//////////////////////////////////
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	class UInputAction* IA_KatanaAction;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	class UInputAction* IA_TestWeapon;
 
+	// Attack Function/////////////////////////////////////
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	class UInputAction* IA_BasicAttackAction;
 
@@ -69,6 +76,10 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	class UInputAction* IA_SKill_R;
+
+	//Utility Action//////////////////////////////////////
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	class UInputAction* IA_PickupAction;
 
 	UPROPERTY(VisibleAnywhere)
 	class USpringArmComponent* SpringArm;

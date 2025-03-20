@@ -10,6 +10,8 @@ ACItemBase::ACItemBase()
 	//ItemMesh로 충돌을 체크하고 충돌이 감지되면 FMath::Cos 로 웨이브 움직임을 줄꺼다
 
 	ItemMesh= CreateDefaultSubobject<UStaticMeshComponent>("ItemMesh");
+	Tags.Add("Item");
+
 	SetRootComponent(ItemMesh);
 	ItemMesh->SetCollisionProfileName("Custom");
 	ItemMesh->SetCollisionObjectType(ECollisionChannel::ECC_WorldStatic);
@@ -21,12 +23,6 @@ ACItemBase::ACItemBase()
 	ItemMesh->SetNotifyRigidBodyCollision(true);
 	ItemMesh->BodyInstance.bLockYTranslation = false;
 	ItemMesh->BodyInstance.bLockXTranslation = false;
-
-
-	ItemCollision = CreateDefaultSubobject<UBoxComponent>("ItemCollision");
-	ItemCollision->SetupAttachment(ItemMesh);
-	ItemCollision->SetBoxExtent(FVector(100.f, 100.f,100.f));
-	ItemCollision->SetCollisionProfileName("OverlapAllDynamic");
 }
 
 void ACItemBase::Tick(float DeltaTime)
@@ -60,9 +56,6 @@ void ACItemBase::OnItemHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPr
 	{
 		bHitFloor = true;
 		ItemMesh->SetSimulatePhysics(false);
-		ItemMesh->SetCollisionProfileName("NoCollision");
-		UE_LOG(LogTemp, Warning, TEXT("Item Spawned"));
-		UE_LOG(LogTemp, Warning, TEXT("Item ID : %d"), ItemData.ItemID);
 	}
 }
 

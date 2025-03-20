@@ -30,10 +30,6 @@ protected:
 
 	UPROPERTY(VisibleAnywhere)
 	class UStaticMeshComponent* ItemMesh;
-
-	UPROPERTY(VisibleAnywhere)
-	class UBoxComponent* ItemCollision;
-
 	UPROPERTY(EditDefaultsOnly)
 	float ForceAmount = 800.f;
 

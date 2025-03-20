@@ -9,8 +9,8 @@
 #include "GameFrameWork/SpringArmComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
-
 #include  "Animation/AnimMontage.h"
+#include "Kismet/KismetSystemLibrary.h"
 
 ACPlayer::ACPlayer()
 {
@@ -75,6 +75,24 @@ void ACPlayer::InitializePlayerEnhnacedInput()
 	}
 }
 
+void ACPlayer::PickupItem()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Pickup Item"));
+
+	FHitResult hitResult;
+	UKismetSystemLibrary::SphereTraceSingle(GetWorld(), GetActorLocation(), GetActorLocation() + GetActorForwardVector() * 10, 150, ETraceTypeQuery::TraceTypeQuery1, false, TArray<AActor*>{this}, EDrawDebugTrace::ForDuration, hitResult, true);
+
+	if (!hitResult.GetActor()) return;
+
+	UE_LOG(LogTemp, Warning, TEXT("Hit Actor : %s"), *hitResult.GetActor()->GetActorLabel());
+
+	if (hitResult.GetActor()->ActorHasTag("Item"))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Pickup Item"));
+		UE_LOG(LogTemp, Warning, TEXT("Item Name : %s"), *hitResult.GetActor()->GetActorLabel());
+	}
+}
+
 
 void ACPlayer::Tick(float DeltaTime)
 {
@@ -136,5 +154,8 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 			{
 				Weapon->DoSkill(ESkillKey::R);
 			});
+
+	if (IA_PickupAction)
+		enhancedInput->BindAction(IA_PickupAction, ETriggerEvent::Started, this, &ACPlayer::PickupItem);
 }
 
