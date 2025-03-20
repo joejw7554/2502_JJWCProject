@@ -1,4 +1,5 @@
 #include "Inventory/CInventoryComponent.h"
+#include "CInventorySlot.h"
 
 UCInventoryComponent::UCInventoryComponent()
 {
@@ -10,5 +11,6 @@ void UCInventoryComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
+	UCInventorySlot* slot = CreateDefaultSubobject<UCInventorySlot>("InventorySlot");
 	
 }

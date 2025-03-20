@@ -2,20 +2,23 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "CItemStructure.h"
 #include "CItemBase.generated.h"
 
 UCLASS(Abstract)
 class JJW_PROJECT_API ACItemBase : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	ACItemBase();
 	virtual void Tick(float DeltaTime) override;
 
+	void InitializeItemData(const FItemStructure InItemData) { ItemData = InItemData; }
+
 protected:
 	virtual void BeginPlay() override;
-	virtual void UseItem();
+	virtual void UseItem() {} //이거 인터페이스로 뺼 생각 해봐야함 잡템은 사용이 불가능하잖아? 그럼 인터페이스로 빼서 사용가능한 아이템만 사용하게끔 해야할지도?
 	void ItemWave(float InDeltaTime);
 
 	UFUNCTION()
@@ -37,7 +40,11 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	float WaveHeight = 150.f;
 
-	bool bHitFloor=false;
+	bool bHitFloor = false;
 
 	float ElapsedTime = 0.f;
+
+private:
+	UPROPERTY()
+	FItemStructure ItemData;
 };

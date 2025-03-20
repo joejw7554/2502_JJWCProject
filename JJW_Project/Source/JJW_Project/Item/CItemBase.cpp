@@ -43,11 +43,8 @@ void ACItemBase::BeginPlay()
 	Super::BeginPlay();
 
 	ItemMesh->OnComponentHit.AddDynamic(this, &ACItemBase::OnItemHit);
-}
 
-void ACItemBase::UseItem()
-{
-
+	
 }
 
 void ACItemBase::ItemWave(float InDeltaTime)
@@ -64,6 +61,8 @@ void ACItemBase::OnItemHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPr
 		bHitFloor = true;
 		ItemMesh->SetSimulatePhysics(false);
 		ItemMesh->SetCollisionProfileName("NoCollision");
+		UE_LOG(LogTemp, Warning, TEXT("Item Spawned"));
+		UE_LOG(LogTemp, Warning, TEXT("Item ID : %d"), ItemData.ItemID);
 	}
 }
 

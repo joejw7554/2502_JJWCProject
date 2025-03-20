@@ -17,5 +17,12 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
-		
+
+private:
+	UPROPERTY(VisibleAnywhere)
+	TArray<class UCInventorySlot*> InventorySlots;	
+
+	UPROPERTY(EditDefaultsOnly)
+	uint8 InventoryMaxSize = 10;
+
 };

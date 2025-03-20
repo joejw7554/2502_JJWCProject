@@ -15,5 +15,4 @@ public:
 private:
 	UPROPERTY(VisibleAnywhere)
 	class UCInventoryComponent* InventoryComponent;
-	
 };

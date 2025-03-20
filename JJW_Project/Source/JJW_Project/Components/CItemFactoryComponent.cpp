@@ -39,17 +39,20 @@ void UCItemFactoryComponent::CreateDropItem(const EEnemyType InType, FVector InL
 					if (dropRate <= dropData->DropRate)
 					{
 						ACItemBase* item = GetWorld()->SpawnActor<ACItemBase>(itemData->ItemClass, InLocation, FRotator::ZeroRotator);
-						float randomX = FMath::FRandRange(-InLocationVariation, InLocationVariation);
-						float randomY = FMath::FRandRange(-InLocationVariation, InLocationVariation);
-						InLocation.X += randomX;
-						InLocation.Y += randomY;
-						item->SetActorLocation(InLocation);
+						item->InitializeItemData(*itemData);
+
+						//Set Random Location within the Character's CapsuleComponent Range
+						{
+							float randomX = FMath::FRandRange(-InLocationVariation, InLocationVariation);
+							float randomY = FMath::FRandRange(-InLocationVariation, InLocationVariation);
+							InLocation.X += randomX;
+							InLocation.Y += randomY;
+							item->SetActorLocation(InLocation);
+						}
 					}
 				}
 				break;
 			}
-
-
 		}
 
 	}
