@@ -12,6 +12,11 @@
 #include  "Animation/AnimMontage.h"
 #include "Kismet/KismetSystemLibrary.h"
 
+#include "CPlayerState.h"
+#include "Item/CItemBase.h"
+#include "Inventory/CInventoryComponent.h"
+
+
 ACPlayer::ACPlayer()
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -52,9 +57,11 @@ void ACPlayer::BeginPlay()
 
 	InitializePlayerEnhnacedInput();
 
-	if (Movement)
-		Movement->DisableControlRotation();
+	if (!Movement) return;
+	Movement->DisableControlRotation();
 
+	CPlayerState = Cast<ACPlayerState>(GetPlayerState());
+	if (!CPlayerState) return;
 }
 
 void ACPlayer::InitializePlayerEnhnacedInput()
@@ -83,13 +90,22 @@ void ACPlayer::PickupItem()
 	UKismetSystemLibrary::SphereTraceSingle(GetWorld(), GetActorLocation(), GetActorLocation() + GetActorForwardVector() * 10, 150, ETraceTypeQuery::TraceTypeQuery1, false, TArray<AActor*>{this}, EDrawDebugTrace::ForDuration, hitResult, true);
 
 	if (!hitResult.GetActor()) return;
-
-	UE_LOG(LogTemp, Warning, TEXT("Hit Actor : %s"), *hitResult.GetActor()->GetActorLabel());
+	if (!CPlayerState) return;
 
 	if (hitResult.GetActor()->ActorHasTag("Item"))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Pickup Item"));
-		UE_LOG(LogTemp, Warning, TEXT("Item Name : %s"), *hitResult.GetActor()->GetActorLabel());
+		if (ACItemBase* item = Cast<ACItemBase>(hitResult.GetActor()))
+		{
+			FItemStructure* itemData = &item->GetItemData();
+			if (CPlayerState->GetInventoryComponent()->AddItemToInventory(itemData))
+			{
+				hitResult.GetActor()->Destroy();
+			}
+			else
+			{
+				UE_LOG(LogTemp, Warning, TEXT("ACPlayer::Inventory is Full"));
+			}
+		}
 	}
 }
 

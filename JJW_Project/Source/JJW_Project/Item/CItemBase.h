@@ -14,7 +14,8 @@ public:
 	ACItemBase();
 	virtual void Tick(float DeltaTime) override;
 
-	void InitializeItemData(const FItemStructure InItemData) { ItemData = InItemData; }
+	void InitializeItemData(FItemStructure InItemData) { ItemData = InItemData; }
+	FItemStructure& GetItemData() { return ItemData; }
 
 protected:
 	virtual void BeginPlay() override;

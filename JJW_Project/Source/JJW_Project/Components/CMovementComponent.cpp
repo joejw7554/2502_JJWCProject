@@ -122,11 +122,11 @@ void UCMovementComponent::RotateActorToCusorDirection()
 	OwnerCharacter->SetActorRotation(RotateTarget, ETeleportType::ResetPhysics);
 }
 
-void UCMovementComponent::EnableControlRotation()
-{
-	OwnerCharacter->GetCharacterMovement()->bOrientRotationToMovement = false;
-	OwnerCharacter->bUseControllerRotationYaw = true;
-}
+//void UCMovementComponent::EnableControlRotation()
+//{
+//	OwnerCharacter->GetCharacterMovement()->bOrientRotationToMovement = false;
+//	OwnerCharacter->bUseControllerRotationYaw = true;
+//}
 
 void UCMovementComponent::DisableControlRotation()
 {

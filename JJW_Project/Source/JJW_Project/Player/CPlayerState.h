@@ -12,6 +12,8 @@ class JJW_PROJECT_API ACPlayerState : public APlayerState
 public:
 	ACPlayerState();
 
+	class UCInventoryComponent* GetInventoryComponent() { return InventoryComponent; }
+
 private:
 	UPROPERTY(VisibleAnywhere)
 	class UCInventoryComponent* InventoryComponent;

@@ -26,7 +26,7 @@ public:
 
 	void RotateActorToCusorDirection();
 
-	void EnableControlRotation();
+	//void EnableControlRotation();
 	void DisableControlRotation();
 
 	FORCEINLINE FRotator GetCursorTargetRotation() { return CursorTargetRotation; }

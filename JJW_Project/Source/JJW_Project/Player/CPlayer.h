@@ -102,4 +102,7 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	float CurrentHealth = MaxHealth;
+
+	UPROPERTY(EditAnywhere)
+	class ACPlayerState* CPlayerState;
 };
