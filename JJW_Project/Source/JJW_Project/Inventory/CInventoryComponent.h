@@ -19,7 +19,7 @@ public:
 
 	bool CheckInventoryFull();
 
-	
+	UCInventorySlot* GetInventorySlot(TEnumAsByte<EInvenSlotOrder> InSlotOrder) { return InventorySlots[InSlotOrder]; }
 
 protected:
 	virtual void BeginPlay() override;

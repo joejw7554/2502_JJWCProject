@@ -8,7 +8,8 @@ UCLASS()
 class JJW_PROJECT_API UCUI_InventorySlot : public UUserWidget
 {
 	GENERATED_BODY()
-	
+public:
+	void InitializeSlotWidget(class UCInventorySlot* InSlot);
 
 protected:
 	virtual void NativePreConstruct() override;
@@ -20,5 +21,8 @@ private:
 
 	UPROPERTY(meta=(BindWidget))
 	class UTextBlock* ItemQuantityText;
+
+	UPROPERTY()
+	class UCInventorySlot* InventorySlot;
 
 };

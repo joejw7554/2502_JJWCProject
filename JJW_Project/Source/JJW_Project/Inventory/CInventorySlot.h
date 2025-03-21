@@ -5,6 +5,8 @@
 #include "../Item/CItemStructure.h"
 #include "CInventorySlot.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FSlotUpdate);
+
 UENUM(BlueprintType)
 enum EInvenSlotOrder : uint8
 {
@@ -39,7 +41,12 @@ public:
 	void InitializeSlotData(FItemStructure* InData);
 	void ClearSlotData();
 
+//protected:
+//	void RefreshSlotData();
 
+
+public:
+	FSlotUpdate OnSlotUpdate;
 
 private:
 	FItemStructure* ItemData;

@@ -10,8 +10,10 @@ class JJW_PROJECT_API UCUI_Inventory : public UUserWidget
 	GENERATED_BODY()
 	
 
-private:
-	UPROPERTY(meta=(BindWidget))
-	class UWrapBox* InventoryWrapBox;
+protected:
+	virtual void NativeConstruct() override;
 
+protected:
+	UPROPERTY(meta = (BindWidget))
+	class UUniformGridPanel* SlotGridPanel;
 };

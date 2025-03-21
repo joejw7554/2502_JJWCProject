@@ -3,6 +3,16 @@
 #include "Components/Image.h"
 
 
+
+
+void UCUI_InventorySlot::InitializeSlotWidget(UCInventorySlot* InSlot)
+{
+	if (!InSlot) return;
+
+	InventorySlot = InSlot;
+
+}
+
 void UCUI_InventorySlot::NativePreConstruct()
 {
 	Super::NativePreConstruct();
