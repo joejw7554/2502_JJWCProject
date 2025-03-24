@@ -15,7 +15,8 @@
 #include "CPlayerState.h"
 #include "Item/CItemBase.h"
 #include "Inventory/CInventoryComponent.h"
-
+#include "Framework/CHUD.h"
+#include "UI/CUI_MainHUD.h"
 
 ACPlayer::ACPlayer()
 {
@@ -62,6 +63,11 @@ void ACPlayer::BeginPlay()
 
 	CPlayerState = Cast<ACPlayerState>(GetPlayerState());
 	if (!CPlayerState) return;
+
+	HUD = GetWorld()->GetFirstPlayerController()->GetHUD<ACHUD>();
+	if (!HUD) return;
+
+	if (HUD) UE_LOG(LogTemp, Warning, TEXT("HUD is not nullptr"));
 }
 
 void ACPlayer::InitializePlayerEnhnacedInput()
@@ -109,17 +115,12 @@ void ACPlayer::PickupItem()
 	}
 }
 
-void ACPlayer::OpenInventoryMenu()
+void ACPlayer::ToggleInventoryMenu()
 {
-	APlayerController* playerController = Cast<APlayerController>(GetController());
-	if (!playerController) return;
-
-	
+	if (!HUD) return;
+	HUD->ToggleInventory();
 }
 
-void ACPlayer::CloseInventoryMenu()
-{
-}
 
 
 void ACPlayer::Tick(float DeltaTime)
@@ -187,6 +188,6 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 		enhancedInput->BindAction(IA_PickupAction, ETriggerEvent::Started, this, &ACPlayer::PickupItem);
 
 	if (IA_InventoryAction)
-		enhancedInput->BindAction(IA_InventoryAction, ETriggerEvent::Started, this, &ACPlayer::OpenInventoryMenu);
+		enhancedInput->BindAction(IA_InventoryAction, ETriggerEvent::Started, this, &ACPlayer::ToggleInventoryMenu);
 }
 

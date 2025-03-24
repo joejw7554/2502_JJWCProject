@@ -1,5 +1,6 @@
 #include "FrameWork/CGameMode.h"
 #include "Components/CItemFactoryComponent.h"
+#include "FrameWork/CHUD.h"
 
 ACGameMode::ACGameMode()
 {
@@ -12,6 +13,10 @@ ACGameMode::ACGameMode()
 	if(playerStateClass.Succeeded())
 		PlayerStateClass = playerStateClass.Class;
 
-	ItemFactoryComponent = CreateDefaultSubobject<UCItemFactoryComponent>("ItemFactoryComponent");
+	ConstructorHelpers::FClassFinder<ACHUD> hudClass(L"/Script/Engine.Blueprint'/Game/Blueprints/Framework/BP_CHUD.BP_CHUD_C'");
+	if (hudClass.Succeeded())
+		HUDClass = hudClass.Class;
 
+
+	ItemFactoryComponent = CreateDefaultSubobject<UCItemFactoryComponent>("ItemFactoryComponent");
 }

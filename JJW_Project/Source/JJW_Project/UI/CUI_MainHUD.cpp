@@ -1,6 +1,17 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "UI/CUI_MainHUD.h"
-#include "Blueprint/UserWidget.h"
+#include "UI/CUI_Inventory.h"
 
+void UCUI_MainHUD::ToggleInventoryUI(bool bShow)
+{
+	if (!InventoryWidget) return;
+
+	if(bShow)
+	{
+		InventoryWidget->SetVisibility(ESlateVisibility::Visible);
+	}
+	else
+	{
+		InventoryWidget->SetVisibility(ESlateVisibility::Hidden);
+	}
+	
+}

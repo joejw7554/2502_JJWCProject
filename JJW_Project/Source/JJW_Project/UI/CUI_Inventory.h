@@ -9,6 +9,8 @@ class JJW_PROJECT_API UCUI_Inventory : public UUserWidget
 {
 	GENERATED_BODY()
 	
+public:
+	void ToggleInventory();
 
 protected:
 	virtual void NativeConstruct() override;

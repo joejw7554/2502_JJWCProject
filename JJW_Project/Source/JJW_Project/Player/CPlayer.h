@@ -37,8 +37,7 @@ private:
 
 	void PickupItem();
 
-	void OpenInventoryMenu();
-	void CloseInventoryMenu();
+	void ToggleInventoryMenu();
 
 
 public:
@@ -115,6 +114,9 @@ private:
 	UPROPERTY(EditAnywhere)
 	float CurrentHealth = MaxHealth;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY()
 	class ACPlayerState* CPlayerState;
+
+	UPROPERTY()
+	class ACHUD* HUD;
 };
