@@ -16,4 +16,8 @@ protected:
 protected:
 	UPROPERTY(meta = (BindWidget))
 	class UUniformGridPanel* SlotGridPanel;
+
+	UPROPERTY()
+	TArray<class UCUI_InventorySlot*> InventorySlots;
+	
 };

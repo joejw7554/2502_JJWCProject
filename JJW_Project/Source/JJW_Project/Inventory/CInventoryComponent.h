@@ -28,6 +28,7 @@ protected:
 private:
 	UCInventorySlot* FindEmptySlot();
 
+
 private:
 	UPROPERTY(VisibleAnywhere)
 	TMap<TEnumAsByte<EInvenSlotOrder>, class UCInventorySlot*> InventorySlots;

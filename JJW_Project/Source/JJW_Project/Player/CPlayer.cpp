@@ -109,6 +109,18 @@ void ACPlayer::PickupItem()
 	}
 }
 
+void ACPlayer::OpenInventoryMenu()
+{
+	APlayerController* playerController = Cast<APlayerController>(GetController());
+	if (!playerController) return;
+
+	
+}
+
+void ACPlayer::CloseInventoryMenu()
+{
+}
+
 
 void ACPlayer::Tick(float DeltaTime)
 {
@@ -173,5 +185,8 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	if (IA_PickupAction)
 		enhancedInput->BindAction(IA_PickupAction, ETriggerEvent::Started, this, &ACPlayer::PickupItem);
+
+	if (IA_InventoryAction)
+		enhancedInput->BindAction(IA_InventoryAction, ETriggerEvent::Started, this, &ACPlayer::OpenInventoryMenu);
 }
 

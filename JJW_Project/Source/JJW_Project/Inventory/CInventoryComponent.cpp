@@ -15,6 +15,7 @@ UCInventoryComponent::UCInventoryComponent()
 		{
 			slot->ClearSlotData();
 			InventorySlots.Add(static_cast<EInvenSlotOrder>(i), slot);
+			slot->InitializeSlot(i);
 		}
 	}
 }
@@ -30,7 +31,9 @@ bool UCInventoryComponent::AddItemToInventory(FItemStructure* InItemData)
 	for (const TPair<TEnumAsByte<EInvenSlotOrder>, UCInventorySlot*>& slot : InventorySlots)
 	{
 		//TMap에 같은 아이템이 있는지 없는지 확인한다
+
 		current = slot.Value->GetItemData();
+
 		if (current->ItemID == InItemData->ItemID)
 		{
 			//같은 아이템이 있다면 그 해당 셀의 현재갯수를 업데이트한다
@@ -46,7 +49,8 @@ bool UCInventoryComponent::AddItemToInventory(FItemStructure* InItemData)
 				emptySlot = FindEmptySlot();
 				if (emptySlot)
 				{
-					emptySlot->InitializeSlotData(InItemData);
+					emptySlot->SetItemInSlot(InItemData);
+
 					bSuccess = true;
 					break;
 				}
@@ -63,7 +67,8 @@ bool UCInventoryComponent::AddItemToInventory(FItemStructure* InItemData)
 			emptySlot = FindEmptySlot();
 			if (emptySlot)
 			{
-				emptySlot->InitializeSlotData(InItemData);
+				emptySlot->SetItemInSlot(InItemData);
+
 				bSuccess = true;
 			}
 			else

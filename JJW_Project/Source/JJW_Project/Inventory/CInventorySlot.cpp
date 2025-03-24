@@ -1,11 +1,15 @@
 #include "Inventory/CInventorySlot.h"
 
-
-void UCInventorySlot::InitializeSlotData(FItemStructure* InData)
+void UCInventorySlot::SetItemInSlot(FItemStructure* InData, int32 Count)
 {
 	ItemData = InData;
 	MaxStackCount = InData->MaxStack;
-	CurrentStackCount = 1;
+	CurrentStackCount = Count;
+}
+
+void UCInventorySlot::InitializeSlot(int32 InSlotIndex)
+{
+	SlotIndex = InSlotIndex;
 }
 
 void UCInventorySlot::ClearSlotData()

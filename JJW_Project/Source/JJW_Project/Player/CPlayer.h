@@ -7,6 +7,8 @@
 
 #include "CPlayer.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FInventoryUpdate);
+
 UCLASS()
 class JJW_PROJECT_API ACPlayer : public ACharacter
 {
@@ -23,7 +25,7 @@ public:
 
 public: //Getter
 	FORCEINLINE UCWeaponComponent* GetWeaponComponent() { return Weapon; }
-	FORCEINLINE float GetCurrentHealthPercent() { return CurrentHealth/MaxHealth; }
+	FORCEINLINE float GetCurrentHealthPercent() { return CurrentHealth / MaxHealth; }
 
 
 protected:
@@ -34,6 +36,13 @@ private:
 	void InitializePlayerEnhnacedInput();
 
 	void PickupItem();
+
+	void OpenInventoryMenu();
+	void CloseInventoryMenu();
+
+
+public:
+	FInventoryUpdate OnInventoryUpdate;
 
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
@@ -80,6 +89,9 @@ protected:
 	//Utility Action//////////////////////////////////////
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	class UInputAction* IA_PickupAction;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	class UInputAction* IA_InventoryAction;
 
 	UPROPERTY(VisibleAnywhere)
 	class USpringArmComponent* SpringArm;

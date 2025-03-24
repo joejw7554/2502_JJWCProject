@@ -32,17 +32,20 @@ public:
 	FItemStructure* GetItemData() { return ItemData; }
 	int32 GetMaxStackCount() { return MaxStackCount; }
 	int32 GetCurrentStackCount() { return CurrentStackCount; }
+	int32 GetSlotIndex() { return SlotIndex; }
 
 	void IncreaseStackCount() { CurrentStackCount++; }
 	void DecreaseStackCount() { CurrentStackCount--; }
 	bool IsEmpty() { return ItemData == nullptr; }
 
-
-	void InitializeSlotData(FItemStructure* InData);
+	void SetItemInSlot(FItemStructure* InData ,int32 Count=1);
+	void InitializeSlot(int32 InSlotIndex);
 	void ClearSlotData();
 
-//protected:
-//	void RefreshSlotData();
+protected:
+	void RefreshSlotData();
+
+private:
 
 
 public:
@@ -54,4 +57,6 @@ private:
 	int32 MaxStackCount = 0;
 
 	int32 CurrentStackCount = 0;
+
+	int32 SlotIndex = 0;
 };
