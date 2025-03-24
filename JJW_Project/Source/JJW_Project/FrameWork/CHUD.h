@@ -13,12 +13,11 @@ class JJW_PROJECT_API ACHUD : public AHUD
 
 public:
 	UCUI_MainHUD* GetMainHUD() { return UI_MainHUD; }
-	FORCEINLINE void ToggleInventory() {
-		if(!UI_MainHUD)
-		UE_LOG(LogTemp, Warning, TEXT("UI_MainHUD is not NULL"));
 
-		UI_MainHUD->GetInventoryWidget()->ToggleInventory();
-	
+	FORCEINLINE void ToggleInventory() 
+	{
+		if (!UI_MainHUD) return;
+		UI_MainHUD->ToggleInventoryUI();
 	}
 
 protected:

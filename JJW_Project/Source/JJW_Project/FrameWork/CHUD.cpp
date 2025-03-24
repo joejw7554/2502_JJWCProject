@@ -10,6 +10,5 @@ void ACHUD::BeginPlay()
 
 	UI_MainHUD = CreateWidget<UCUI_MainHUD>(GetWorld(), UI_MainHUDClass);
 	UI_MainHUD->AddToViewport();
-	UI_MainHUD->ToggleInventoryUI(false);
 }
 

@@ -13,12 +13,17 @@ class JJW_PROJECT_API UCUI_MainHUD : public UUserWidget
 	GENERATED_BODY()
 	
 public:
-	void ToggleInventoryUI(bool bShow);
-	UCUI_Inventory* GetInventoryWidget() { return InventoryWidget; }
+	FORCEINLINE void ToggleInventoryUI()
+	{
+		if (!GetInventoryWidget()) return;
+		GetInventoryWidget()->ToggleInventory();
+	}
+
+	UCUI_Inventory* GetInventoryWidget() { return InventoryWidgetUI; }
 
 
 private:
 	UPROPERTY(meta = (BindWidget))
-	 UCUI_Inventory* InventoryWidget;
+	 UCUI_Inventory* InventoryWidgetUI;
 
 };

@@ -1,5 +1,8 @@
 #include "UI/CUI_Inventory.h"
+
 #include "Components/UniformGridPanel.h"
+#include "Components/Button.h"
+
 #include "Player/CPlayerState.h"
 #include "Inventory/CInventorySlot.h"
 #include "Inventory/CInventoryComponent.h"
@@ -7,20 +10,20 @@
 
 void UCUI_Inventory::ToggleInventory()
 {
-	if(IsVisible())
-	{
+	if (IsVisible())
 		SetVisibility(ESlateVisibility::Hidden);
-	}
 	else
-	{
 		SetVisibility(ESlateVisibility::Visible);
-	}
 }
 
 void UCUI_Inventory::NativeConstruct()
 {
 	Super::NativeConstruct();
-	
+
+	SetVisibility(ESlateVisibility::Hidden);
+
+	CloseButton->OnClicked.AddDynamic(this, &UCUI_Inventory::ToggleInventory);
+
 	UWorld* world = GetWorld();
 	if (!world)return;
 
@@ -45,5 +48,7 @@ void UCUI_Inventory::NativeConstruct()
 
 		InventorySlots.Add(UI_slot);
 	}
+
+
 }
 

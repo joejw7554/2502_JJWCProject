@@ -10,6 +10,7 @@ class JJW_PROJECT_API UCUI_Inventory : public UUserWidget
 	GENERATED_BODY()
 	
 public:
+	UFUNCTION()
 	void ToggleInventory();
 
 protected:
@@ -18,6 +19,9 @@ protected:
 protected:
 	UPROPERTY(meta = (BindWidget))
 	class UUniformGridPanel* SlotGridPanel;
+
+	UPROPERTY(meta = (BindWidget))
+	class UButton* CloseButton;
 
 	UPROPERTY()
 	TArray<class UCUI_InventorySlot*> InventorySlots;
