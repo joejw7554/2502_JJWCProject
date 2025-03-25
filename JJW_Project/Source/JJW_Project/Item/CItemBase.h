@@ -25,6 +25,7 @@ protected:
 	UFUNCTION()
 	void OnItemHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
+	//Default Properties
 protected:
 	UPROPERTY(VisibleAnywhere)
 	USceneComponent* Root;
@@ -40,6 +41,11 @@ protected:
 	bool bHitFloor = false;
 
 	float ElapsedTime = 0.f;
+	
+	//Common Properties
+protected:
+	UPROPERTY(EditDefaultsOnly, Category="Item Property")
+	float EffectiveValue = 1.f;
 
 private:
 	UPROPERTY()
