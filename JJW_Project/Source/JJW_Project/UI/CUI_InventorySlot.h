@@ -17,8 +17,10 @@ public:
 	UFUNCTION()
 	void OnSlotUpdate(class UCInventorySlot* InSlot);
 
+	UFUNCTION()
+	void OnSlotClear(class UCInventorySlot* InSlot);
+
 protected:
-	virtual void NativePreConstruct() override;
 	virtual void NativeConstruct() override;
 
 private:
@@ -39,7 +41,6 @@ private:
 	UPROPERTY(meta = (BindWidget))
 	class UButton* SlotButton;
 
-	UPROPERTY()
 	class UCInventorySlot* InventorySlot;
 
 	int32 SlotIndex = 0;

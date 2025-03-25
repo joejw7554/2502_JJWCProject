@@ -14,6 +14,9 @@ public:
 
 	class UCInventoryComponent* GetInventoryComponent() { return InventoryComponent; }
 
+protected:
+	virtual void BeginPlay() override;
+
 private:
 	UPROPERTY(VisibleAnywhere)
 	class UCInventoryComponent* InventoryComponent;

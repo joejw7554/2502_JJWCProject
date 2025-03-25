@@ -8,15 +8,11 @@
 #include "CInventoryComponent.generated.h"
 
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnSlotUpdate, UCInventorySlot*, InSlot);
 
 UCLASS()
 class JJW_PROJECT_API UCInventoryComponent : public UActorComponent
 {
 	GENERATED_BODY()
-
-public: 
-	FOnSlotUpdate OnSlotUpdate;
 
 public:	
 	UCInventoryComponent();
@@ -28,18 +24,23 @@ public:
 
 	UCInventorySlot* GetInventorySlot(TEnumAsByte<EInvenSlotOrder> InSlotOrder) { return InventorySlots[InSlotOrder]; }
 
+public:
+	void ResetInventory(class ACPlayer* OwnerCharacter);
+
 protected:
 	virtual void BeginPlay() override;
 
 private:
 	UCInventorySlot* FindEmptySlot();
 
-
+	
 private:
 	UPROPERTY(VisibleAnywhere)
 	TMap<TEnumAsByte<EInvenSlotOrder>, UCInventorySlot*> InventorySlots;
 
 	UPROPERTY(EditDefaultsOnly)
 	uint8 InventoryMaxSize = 10;
+
+	class ACPlayer* Owner;
 
 };

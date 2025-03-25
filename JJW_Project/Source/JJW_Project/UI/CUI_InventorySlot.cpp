@@ -3,14 +3,13 @@
 #include "Components/Image.h"
 #include "Inventory/CInventorySlot.h"
 
-
-
-
 void UCUI_InventorySlot::InitializeSlotWidget(int32 InSlotIndex, UCInventorySlot* InSlot)
 {
 	if (!InSlot) return;
 	SlotIndex = InSlotIndex;
 	InventorySlot = InSlot;
+	InventorySlot->OnSlotUpdate.AddDynamic(this, &UCUI_InventorySlot::OnSlotUpdate);
+	InventorySlot->OnSlotClear.AddDynamic(this, &UCUI_InventorySlot::OnSlotClear);
 }
 
 void UCUI_InventorySlot::OnSlotUpdate(UCInventorySlot* InSlot)
@@ -18,13 +17,16 @@ void UCUI_InventorySlot::OnSlotUpdate(UCInventorySlot* InSlot)
 	if (!InSlot) return;
 
 	ItemThumnail->SetBrushFromTexture(InSlot->GetItemData()->Thumbnail);
+	ItemThumnail->SetColorAndOpacity(FLinearColor(1.f, 1.f, 1.f, 1.f));
 	ItemQuantityText->SetText(FText::FromString(FString::FromInt(InSlot->GetCurrentStackCount())));
+	ItemQuantityText->SetVisibility(ESlateVisibility::Visible);
 }
 
-void UCUI_InventorySlot::NativePreConstruct()
+void UCUI_InventorySlot::OnSlotClear(UCInventorySlot* InSlot)
 {
-	Super::NativePreConstruct();
-
+	ItemThumnail->SetBrushFromTexture(nullptr);
+	ItemThumnail->SetColorAndOpacity(FLinearColor(0.f,0.f, 0.f, 1.f));
+	ItemQuantityText->SetVisibility(ESlateVisibility::Hidden);
 }
 
 void UCUI_InventorySlot::NativeConstruct()
@@ -32,11 +34,11 @@ void UCUI_InventorySlot::NativeConstruct()
 	Super::NativeConstruct();
 
 	SlotButton->OnClicked.AddDynamic(this, &UCUI_InventorySlot::LeftMouseButtonClicked);
+	ItemQuantityText->SetVisibility(ESlateVisibility::Hidden);
 }
 
 FReply UCUI_InventorySlot::NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
 {
-//Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
 
 	if (InMouseEvent.GetEffectingButton() == EKeys::RightMouseButton)
 	{
@@ -55,5 +57,11 @@ void UCUI_InventorySlot::LeftMouseButtonClicked()
 void UCUI_InventorySlot::RightMouseButtonClicked()
 {
 	UE_LOG(LogTemp, Warning, TEXT("RightMouse"));
+
+	if (InventorySlot->GetCurrentStackCount() >= 1)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Item Used"));
+		InventorySlot->DecreaseStackCount();
+	}
 
 }

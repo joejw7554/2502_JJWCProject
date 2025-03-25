@@ -10,7 +10,6 @@ UCInventoryComponent::UCInventoryComponent()
 	PrimaryComponentTick.bCanEverTick = false;
 
 	InventorySlots.Reserve(InventoryMaxSize);
-	InventorySlots.Empty();
 
 	for (int i = 0; i < InventoryMaxSize; i++)
 	{
@@ -46,14 +45,12 @@ bool UCInventoryComponent::AddItemToInventory(FItemStructure* InItemData)
 		//일단 같은 아이템이 있는지 없는지부터 순회
 		if (!slot.Value->IsEmpty())
 		{
-			if (current->ItemID == InItemData->ItemID)
+			if (current->ItemID == InItemData->ItemID &&InItemData->bStackable)
 			{
 				//같은 아이템이 있다면 그 해당 셀의 현재갯수를 업데이트한다
 				if (slot.Value->GetCurrentStackCount() < current->MaxStack)
 				{
 					slot.Value->IncreaseStackCount();
-					if (OnSlotUpdate.IsBound())
-						OnSlotUpdate.Broadcast(slot.Value);
 					return true;
 				}
 			}
@@ -68,8 +65,6 @@ bool UCInventoryComponent::AddItemToInventory(FItemStructure* InItemData)
 		if (slot.Value->IsEmpty())
 		{
 			slot.Value->SetItemInSlot(InItemData);
-			if (OnSlotUpdate.IsBound())
-				OnSlotUpdate.Broadcast(slot.Value);
 			return true;
 		}
 	}
@@ -86,6 +81,16 @@ bool UCInventoryComponent::CheckInventoryFull()
 	}
 
 	return true;
+}
+
+void UCInventoryComponent::ResetInventory(ACPlayer* OwnerCharacter)
+{
+	for (const TPair<TEnumAsByte<EInvenSlotOrder>, UCInventorySlot*>& slot : InventorySlots)
+	{
+		slot.Value->ClearSlotData();
+	}
+
+	Owner = OwnerCharacter;
 }
 
 void UCInventoryComponent::BeginPlay()
@@ -116,8 +121,6 @@ void UCInventoryComponent::BeginPlay()
 		UI_Slot = UI_Slots[i];
 
 		UI_Slot->AssignInventorySlot(slot);
-		UE_LOG(LogTemp, Warning, TEXT("UCInventoryComponent::BeginPlay - Slot %d is assigned"), i);
-		OnSlotUpdate.AddDynamic(UI_Slot, &UCUI_InventorySlot::OnSlotUpdate);
 	}
 
 
