@@ -7,7 +7,6 @@
 
 #include "CPlayer.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FInventoryUpdate);
 
 UCLASS()
 class JJW_PROJECT_API ACPlayer : public ACharacter
@@ -21,7 +20,6 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
 
 public: //Getter
 	FORCEINLINE UCWeaponComponent* GetWeaponComponent() { return Weapon; }
@@ -39,9 +37,6 @@ private:
 
 	void ToggleInventoryMenu();
 
-
-public:
-	FInventoryUpdate OnInventoryUpdate;
 
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Input")

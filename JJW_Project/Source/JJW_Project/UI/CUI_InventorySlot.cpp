@@ -1,6 +1,7 @@
 #include "UI/CUI_InventorySlot.h"
 #include "Components/TextBlock.h"
 #include "Components/Image.h"
+#include "Inventory/CInventorySlot.h"
 
 
 
@@ -10,6 +11,14 @@ void UCUI_InventorySlot::InitializeSlotWidget(int32 InSlotIndex, UCInventorySlot
 	if (!InSlot) return;
 	SlotIndex = InSlotIndex;
 	InventorySlot = InSlot;
+}
+
+void UCUI_InventorySlot::OnSlotUpdate(UCInventorySlot* InSlot)
+{
+	if (!InSlot) return;
+
+	ItemThumnail->SetBrushFromTexture(InSlot->GetItemData()->Thumbnail);
+	ItemQuantityText->SetText(FText::FromString(FString::FromInt(InSlot->GetCurrentStackCount())));
 }
 
 void UCUI_InventorySlot::NativePreConstruct()

@@ -12,6 +12,10 @@ class JJW_PROJECT_API ACHUD : public AHUD
 	GENERATED_BODY()
 
 public:
+	virtual void PostInitializeComponents() override;
+
+
+public:
 	UCUI_MainHUD* GetMainHUD() { return UI_MainHUD; }
 
 	FORCEINLINE void ToggleInventory() 

@@ -12,6 +12,7 @@ class JJW_PROJECT_API UCUI_Inventory : public UUserWidget
 public:
 	UFUNCTION()
 	void ToggleInventory();
+	TArray<class UCUI_InventorySlot*> GetInventorySlots() { return InventorySlots; }
 
 protected:
 	virtual void NativeConstruct() override;

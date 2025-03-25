@@ -62,12 +62,8 @@ void ACPlayer::BeginPlay()
 	Movement->DisableControlRotation();
 
 	CPlayerState = Cast<ACPlayerState>(GetPlayerState());
-	if (!CPlayerState) return;
 
 	HUD = GetWorld()->GetFirstPlayerController()->GetHUD<ACHUD>();
-	if (!HUD) return;
-
-	if (HUD) UE_LOG(LogTemp, Warning, TEXT("HUD is not nullptr"));
 }
 
 void ACPlayer::InitializePlayerEnhnacedInput()

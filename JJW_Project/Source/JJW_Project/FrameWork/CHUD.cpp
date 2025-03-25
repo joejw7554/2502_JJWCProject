@@ -2,13 +2,19 @@
 #include "UI/CUI_MainHUD.h"
 
 
-void ACHUD::BeginPlay()
+void ACHUD::PostInitializeComponents()
 {
-	Super::BeginPlay();
+	Super::PostInitializeComponents();
 
 	if (!UI_MainHUDClass) return;
 
 	UI_MainHUD = CreateWidget<UCUI_MainHUD>(GetWorld(), UI_MainHUDClass);
 	UI_MainHUD->AddToViewport();
+}
+
+void ACHUD::BeginPlay()
+{
+	Super::BeginPlay();
+
 }
 
