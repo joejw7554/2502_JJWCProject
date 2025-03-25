@@ -43,8 +43,8 @@ void UCUI_Inventory::NativeConstruct()
 		UCUI_InventorySlot* UI_slot = Cast<UCUI_InventorySlot>(SlotGridPanel->GetChildAt(i));
 		if (!UI_slot) UE_LOG(LogTemp, Warning, TEXT("Slot is nullptr"));
 
-		EInvenSlotOrder slotNumberOrder = static_cast<EInvenSlotOrder>(i);
-		UI_slot->InitializeSlotWidget(slotNumberOrder, inventory->GetInventorySlot(slotNumberOrder));
+		
+		UI_slot->InitializeSlotWidget(i, inventory->GetInventorySlot(i));
 
 		InventorySlots.Add(UI_slot);
 	}

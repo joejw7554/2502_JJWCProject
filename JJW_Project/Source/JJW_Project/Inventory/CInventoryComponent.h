@@ -22,7 +22,7 @@ public:
 
 	bool CheckInventoryFull();
 
-	UCInventorySlot* GetInventorySlot(TEnumAsByte<EInvenSlotOrder> InSlotOrder) { return InventorySlots[InSlotOrder]; }
+	UCInventorySlot* GetInventorySlot(int32 Index) { return InventorySlots[Index]; }
 
 public:
 	void ResetInventory(class ACPlayer* OwnerCharacter);
@@ -36,7 +36,7 @@ private:
 	
 private:
 	UPROPERTY(VisibleAnywhere)
-	TMap<TEnumAsByte<EInvenSlotOrder>, UCInventorySlot*> InventorySlots;
+	TArray<UCInventorySlot*> InventorySlots;
 
 	UPROPERTY(EditDefaultsOnly)
 	uint8 InventoryMaxSize = 10;

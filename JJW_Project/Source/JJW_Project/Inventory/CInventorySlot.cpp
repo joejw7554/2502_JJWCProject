@@ -25,11 +25,6 @@ void UCInventorySlot::SetItemInSlot(FItemStructure* InData, int32 Count)
 		OnSlotUpdate.Broadcast(this);
 }
 
-void UCInventorySlot::InitializeSlot(int32 InSlotIndex)
-{
-	SlotIndex = InSlotIndex;
-}
-
 void UCInventorySlot::ClearSlotData()
 {
 	ItemData = nullptr;

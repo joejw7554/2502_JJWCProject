@@ -17,8 +17,7 @@ UCInventoryComponent::UCInventoryComponent()
 		if (slot)
 		{
 			slot->ClearSlotData();
-			InventorySlots.Add(static_cast<EInvenSlotOrder>(i), slot);
-			slot->InitializeSlot(i);
+			InventorySlots.Add(slot);
 			//여기서 Slot 이랑 Slot UI 바인딩 타이밍이 될려나? 그래서 BeginPlay에서 바인딩을할꺼임
 
 		}
@@ -35,22 +34,22 @@ bool UCInventoryComponent::AddItemToInventory(FItemStructure* InItemData)
 
 	FItemStructure* current;
 
-	for (const TPair<TEnumAsByte<EInvenSlotOrder>, UCInventorySlot*>& slot : InventorySlots)
+	for (UCInventorySlot* slot : InventorySlots)
 	{
 		//TMap에 같은 아이템이 있는지 없는지 확인한다
 
 		//빈 Empty Slot을 먼저 찾는다?
-		current = slot.Value->GetItemData();
+		current = slot->GetItemData();
 
 		//일단 같은 아이템이 있는지 없는지부터 순회
-		if (!slot.Value->IsEmpty())
+		if (!slot->IsEmpty())
 		{
 			if (current->ItemID == InItemData->ItemID &&InItemData->bStackable)
 			{
 				//같은 아이템이 있다면 그 해당 셀의 현재갯수를 업데이트한다
-				if (slot.Value->GetCurrentStackCount() < current->MaxStack)
+				if (slot->GetCurrentStackCount() < current->MaxStack)
 				{
-					slot.Value->IncreaseStackCount();
+					slot->IncreaseStackCount();
 					return true;
 				}
 			}
@@ -60,11 +59,11 @@ bool UCInventoryComponent::AddItemToInventory(FItemStructure* InItemData)
 	if (CheckInventoryFull()) return false;
 
 	//여기까지 왔다면 같은 아이템이 없다는뜻으로 빈슬롯을 찾아 아이템 추가
-	for (const TPair<TEnumAsByte<EInvenSlotOrder>, UCInventorySlot*>& slot : InventorySlots)
+	for (UCInventorySlot* slot : InventorySlots)
 	{
-		if (slot.Value->IsEmpty())
+		if (slot->IsEmpty())
 		{
-			slot.Value->SetItemInSlot(InItemData);
+			slot->SetItemInSlot(InItemData);
 			return true;
 		}
 	}
@@ -74,9 +73,9 @@ bool UCInventoryComponent::AddItemToInventory(FItemStructure* InItemData)
 
 bool UCInventoryComponent::CheckInventoryFull()
 {
-	for (TPair<TEnumAsByte<EInvenSlotOrder>, UCInventorySlot*>& slot : InventorySlots)
+	for (UCInventorySlot* slot : InventorySlots)
 	{
-		if (slot.Value->IsEmpty())
+		if (slot->IsEmpty())
 			return false;
 	}
 
@@ -85,9 +84,9 @@ bool UCInventoryComponent::CheckInventoryFull()
 
 void UCInventoryComponent::ResetInventory(ACPlayer* OwnerCharacter)
 {
-	for (const TPair<TEnumAsByte<EInvenSlotOrder>, UCInventorySlot*>& slot : InventorySlots)
+	for (UCInventorySlot* slot : InventorySlots)
 	{
-		slot.Value->ClearSlotData();
+		slot->ClearSlotData();
 	}
 
 	Owner = OwnerCharacter;
@@ -115,9 +114,9 @@ void UCInventoryComponent::BeginPlay()
 
 	for (int i = 0; i < InventorySlots.Num(); i++)
 	{
-		if (InventorySlots[static_cast<EInvenSlotOrder>(i)] == nullptr) continue;
+		if (InventorySlots[i] == nullptr) continue;
 
-		slot = InventorySlots[static_cast<EInvenSlotOrder>(i)];
+		slot = InventorySlots[i];
 		UI_Slot = UI_Slots[i];
 
 		UI_Slot->AssignInventorySlot(slot);
@@ -130,10 +129,10 @@ UCInventorySlot* UCInventoryComponent::FindEmptySlot()
 {
 	if (CheckInventoryFull()) return nullptr;
 
-	for (const TPair<TEnumAsByte<EInvenSlotOrder>, UCInventorySlot*>& slot : InventorySlots)
+	for (UCInventorySlot* slot : InventorySlots)
 	{
-		if (slot.Value->IsEmpty())
-			return slot.Value;
+		if (slot->IsEmpty())
+			return slot;
 	}
 
 	return nullptr;
