@@ -22,69 +22,60 @@ UCInventoryComponent::UCInventoryComponent()
 
 bool UCInventoryComponent::AddItemToInventory(FItemStructure* InItemData)
 {
-	bool bSuccess = false;
-	if (!InItemData) return false;
+	if (!InItemData)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("UCInventoryComponent::AddItemToInventory - InItemData is nullptr"));
+		return false;
+	}
 
 	FItemStructure* current;
-	UCInventorySlot* emptySlot = nullptr;
 
 	for (const TPair<TEnumAsByte<EInvenSlotOrder>, UCInventorySlot*>& slot : InventorySlots)
 	{
 		//TMap에 같은 아이템이 있는지 없는지 확인한다
 
+		//빈 Empty Slot을 먼저 찾는다?
 		current = slot.Value->GetItemData();
 
-		if (current->ItemID == InItemData->ItemID)
+		//일단 같은 아이템이 있는지 없는지부터 순회
+		if (!slot.Value->IsEmpty())
 		{
-			//같은 아이템이 있다면 그 해당 셀의 현재갯수를 업데이트한다
-			if (slot.Value->GetCurrentStackCount() < current->MaxStack)
+			if (current->ItemID == InItemData->ItemID)
 			{
-				slot.Value->IncreaseStackCount();
-				bSuccess = true;
-				break;
-			}
-			else
-			{
-				//만약 같은 아이템이 있는 셀의 최대갯수를 넘어가면 다음 빈셀로 찾는다 그리고 데이터를 초기화한다 =빈 공간을 찾아야하는 경우의수 
-				emptySlot = FindEmptySlot();
-				if (emptySlot)
+				//같은 아이템이 있다면 그 해당 셀의 현재갯수를 업데이트한다
+				if (slot.Value->GetCurrentStackCount() < current->MaxStack)
 				{
-					emptySlot->SetItemInSlot(InItemData);
-
-					bSuccess = true;
-					break;
+					slot.Value->IncreaseStackCount();
+					return true;
 				}
-				else
-				{
-					UE_LOG(LogTemp, Warning, TEXT("Inventory is Full"));
-					break;
-				}
-			}
-		}
-		else
-		{
-			//같은 아이템이 없다면 빈셀을 찾아서 데이터를 넣는다 = 빈 공간을 찾아야하는 경우의 수 
-			emptySlot = FindEmptySlot();
-			if (emptySlot)
-			{
-				emptySlot->SetItemInSlot(InItemData);
-
-				bSuccess = true;
-			}
-			else
-			{
-				UE_LOG(LogTemp, Warning, TEXT("Inventory is Full"));
-				break;
 			}
 		}
 	}
 	
-	return bSuccess;
+	if (CheckInventoryFull()) return false;
+
+	//여기까지 왔다면 같은 아이템이 없다는뜻으로 빈슬롯을 찾아 아이템 추가
+	for (const TPair<TEnumAsByte<EInvenSlotOrder>, UCInventorySlot*>& slot : InventorySlots)
+	{
+		if (slot.Value->IsEmpty())
+		{
+			slot.Value->SetItemInSlot(InItemData);
+			return true;
+		}
+	}
+
+	return false;
 }
 
 bool UCInventoryComponent::CheckInventoryFull()
 {
-	return InventorySlots.Num() >= InventoryMaxSize;
+	for (TPair<TEnumAsByte<EInvenSlotOrder>, UCInventorySlot*>& slot : InventorySlots)
+	{
+		if (slot.Value->IsEmpty())
+			return false;
+	}
+
+	return true;
 }
 
 void UCInventoryComponent::BeginPlay()

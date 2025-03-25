@@ -43,7 +43,7 @@ public:
 	void ClearSlotData();
 
 protected:
-	void RefreshSlotData();
+	//void RefreshSlotData();
 
 private:
 
