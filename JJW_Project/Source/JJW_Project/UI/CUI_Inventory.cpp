@@ -45,10 +45,24 @@ void UCUI_Inventory::NativeConstruct()
 
 		
 		UI_slot->InitializeSlotWidget(i, inventory->GetInventorySlot(i));
-
+		UI_slot->OnSlotRightClicked.AddDynamic(this, &UCUI_Inventory::OnInvenSlotRightClicked);
 		InventorySlots.Add(UI_slot);
 	}
 
 
+}
+
+void UCUI_Inventory::OnInvenSlotRightClicked(int32 SlotIndex)
+{
+	APlayerController* controller = GetWorld()->GetFirstPlayerController();
+	if (!controller) return;
+
+	ACPlayerState* state = controller->GetPlayerState<ACPlayerState>();
+	if (!state) return;
+
+	UCInventoryComponent* inventory = state->GetInventoryComponent();
+	if (!inventory)return;
+
+	///////CONTINUE HERE
 }
 

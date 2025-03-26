@@ -14,12 +14,11 @@ public:
 	ACItemBase();
 	virtual void Tick(float DeltaTime) override;
 
-	void InitializeItemData(FItemStructure InItemData) { ItemData = InItemData; }
+	void InitializeItemData(ACItemBase* InItemInstance, FItemStructure InItemData) { ItemData = InItemData; ItemData.ItemInstance = InItemInstance; }
 	FItemStructure& GetItemData() { return ItemData; }
 
 protected:
 	virtual void BeginPlay() override;
-	virtual void UseItem() {} //이거 인터페이스로 뺼 생각 해봐야함 잡템은 사용이 불가능하잖아? 그럼 인터페이스로 빼서 사용가능한 아이템만 사용하게끔 해야할지도?
 	void ItemWave(float InDeltaTime);
 
 	UFUNCTION()

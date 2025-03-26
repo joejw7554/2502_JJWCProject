@@ -1,5 +1,5 @@
 #include "Inventory/CInventorySlot.h"
-
+#include "Item/Potions/CPotionBase.h"
 void UCInventorySlot::SetStackCount(int32 InCount)
 {
 	if (InCount <= 0)

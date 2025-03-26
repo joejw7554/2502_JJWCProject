@@ -38,6 +38,10 @@ public:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<class ACItemBase> ItemClass;
 
+	UPROPERTY(VisibleAnywhere)
+	ACItemBase* ItemInstance;
+
+
 	FItemStructure()
 	{
 		ItemID = 0;

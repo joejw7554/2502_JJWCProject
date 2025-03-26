@@ -18,6 +18,7 @@
 #include "Framework/CHUD.h"
 #include "UI/CUI_MainHUD.h"
 
+
 ACPlayer::ACPlayer()
 {
 	PrimaryActorTick.bCanEverTick = true;

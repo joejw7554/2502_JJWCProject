@@ -10,6 +10,7 @@ void UCUI_InventorySlot::InitializeSlotWidget(int32 InSlotIndex, UCInventorySlot
 	InventorySlot = InSlot;
 	InventorySlot->OnSlotUpdate.AddDynamic(this, &UCUI_InventorySlot::OnSlotUpdate);
 	InventorySlot->OnSlotClear.AddDynamic(this, &UCUI_InventorySlot::OnSlotClear);
+	
 }
 
 void UCUI_InventorySlot::OnSlotUpdate(UCInventorySlot* InSlot)
@@ -33,35 +34,24 @@ void UCUI_InventorySlot::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	SlotButton->OnClicked.AddDynamic(this, &UCUI_InventorySlot::LeftMouseButtonClicked);
 	ItemQuantityText->SetVisibility(ESlateVisibility::Hidden);
 }
 
 FReply UCUI_InventorySlot::NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
 {
 
-	if (InMouseEvent.GetEffectingButton() == EKeys::RightMouseButton)
+	if (InMouseEvent.IsMouseButtonDown(EKeys::RightMouseButton))
 	{
-		RightMouseButtonClicked();
+		UE_LOG(LogTemp, Warning, TEXT("RightMouse"));
+		if (OnSlotRightClicked.IsBound())
+			OnSlotRightClicked.Broadcast(SlotIndex);
+	}
+
+	else if (InMouseEvent.IsMouseButtonDown(EKeys::LeftMouseButton))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("LeftMouse"));
 	}
 
 
 	return Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
-}
-
-void UCUI_InventorySlot::LeftMouseButtonClicked()
-{
-	UE_LOG(LogTemp, Warning, TEXT("LeftMouse"));
-}
-
-void UCUI_InventorySlot::RightMouseButtonClicked()
-{
-	UE_LOG(LogTemp, Warning, TEXT("RightMouse"));
-
-	if (InventorySlot->GetCurrentStackCount() >= 1)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Item Used"));
-		InventorySlot->DecreaseStackCount();
-	}
-
 }

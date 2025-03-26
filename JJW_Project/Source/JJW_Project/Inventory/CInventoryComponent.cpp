@@ -82,6 +82,13 @@ bool UCInventoryComponent::CheckInventoryFull()
 	return true;
 }
 
+void UCInventoryComponent::UseSlotItem(int32 Index)
+{
+	InventorySlots[Index]->GetItemData()->ItemInstance;
+
+	///CONTINUE HERE
+}
+
 void UCInventoryComponent::ResetInventory(ACPlayer* OwnerCharacter)
 {
 	for (UCInventorySlot* slot : InventorySlots)
@@ -121,7 +128,6 @@ void UCInventoryComponent::BeginPlay()
 
 		UI_Slot->AssignInventorySlot(slot);
 	}
-
 
 }
 

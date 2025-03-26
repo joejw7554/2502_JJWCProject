@@ -6,10 +6,17 @@
 #include "Item/CItemStructure.h"
 #include "CUI_InventorySlot.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FSlotRightClicked, int32, Index);
+
 UCLASS()
 class JJW_PROJECT_API UCUI_InventorySlot : public UUserWidget
 {
 	GENERATED_BODY()
+
+public:
+	FSlotRightClicked OnSlotRightClicked;
+
+
 public:
 	void InitializeSlotWidget(int32 InSlotIndex, class UCInventorySlot* InSlot);
 	void AssignInventorySlot(class UCInventorySlot* InSlot) { InventorySlot = InSlot; }
@@ -25,11 +32,6 @@ protected:
 
 private:
 	virtual FReply NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
-
-	UFUNCTION()
-	void LeftMouseButtonClicked();
-	UFUNCTION()
-	void RightMouseButtonClicked();
 
 private:
 	UPROPERTY(meta = (BindWidget))

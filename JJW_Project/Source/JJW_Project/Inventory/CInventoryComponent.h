@@ -24,6 +24,10 @@ public:
 
 	UCInventorySlot* GetInventorySlot(int32 Index) { return InventorySlots[Index]; }
 
+	class ACPlayer* GetOwnerCharacter() { return Owner; }
+
+	void UseSlotItem(int32 Index);
+
 public:
 	void ResetInventory(class ACPlayer* OwnerCharacter);
 

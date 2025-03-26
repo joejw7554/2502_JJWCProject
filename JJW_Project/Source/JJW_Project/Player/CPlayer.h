@@ -7,6 +7,7 @@
 
 #include "CPlayer.generated.h"
 
+#define TESTHEALTH 10;
 
 UCLASS()
 class JJW_PROJECT_API ACPlayer : public ACharacter
@@ -24,7 +25,14 @@ public:
 public: //Getter
 	FORCEINLINE UCWeaponComponent* GetWeaponComponent() { return Weapon; }
 	FORCEINLINE float GetCurrentHealthPercent() { return CurrentHealth / MaxHealth; }
+	FORCEINLINE float GetCurrentHealth() { return CurrentHealth; }
+	FORCEINLINE void IncreamentHealth(float InHealth) { SetCurrentHealth(InHealth);}
 
+private:
+	FORCEINLINE void SetCurrentHealth(float InHealth)
+	{
+		CurrentHealth = FMath::Clamp(CurrentHealth + InHealth, 0.f, MaxHealth);
+	}
 
 protected:
 	virtual void BeginPlay() override;
@@ -107,7 +115,10 @@ private:
 	float MaxHealth = 100.f;
 
 	UPROPERTY(EditAnywhere)
-	float CurrentHealth = MaxHealth;
+	float CurrentHealth= TESTHEALTH;
+
+	//float CurrentHealth = MaxHealth;
+
 
 	UPROPERTY()
 	class ACPlayerState* CPlayerState;

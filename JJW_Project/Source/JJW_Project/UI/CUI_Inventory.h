@@ -26,5 +26,8 @@ protected:
 
 	UPROPERTY()
 	TArray<class UCUI_InventorySlot*> InventorySlots;
+
+	UFUNCTION()
+	void OnInvenSlotRightClicked(int32 SlotIndex);
 	
 };
