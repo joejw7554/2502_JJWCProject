@@ -4,10 +4,22 @@
 #include "GameFramework/Character.h"
 #include "../Components/CMovementComponent.h"
 #include "../Components/CWeaponComponent.h"
-
 #include "CPlayer.generated.h"
 
 #define TESTHEALTH 10;
+
+USTRUCT(BlueprintType)
+struct FStatsStructure
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere)
+	float Strength = 1.f;
+
+	UPROPERTY(EditAnywhere)
+	float Defense = 1.f;
+};
+
 
 UCLASS()
 class JJW_PROJECT_API ACPlayer : public ACharacter
@@ -26,7 +38,8 @@ public: //Getter
 	FORCEINLINE UCWeaponComponent* GetWeaponComponent() { return Weapon; }
 	FORCEINLINE float GetCurrentHealthPercent() { return CurrentHealth / MaxHealth; }
 	FORCEINLINE float GetCurrentHealth() { return CurrentHealth; }
-	FORCEINLINE void IncreamentHealth(float InHealth) { SetCurrentHealth(InHealth);}
+	FORCEINLINE void IncreamentHealth(float InHealth) { SetCurrentHealth(InHealth); }
+
 
 private:
 	FORCEINLINE void SetCurrentHealth(float InHealth)
@@ -115,7 +128,7 @@ private:
 	float MaxHealth = 100.f;
 
 	UPROPERTY(EditAnywhere)
-	float CurrentHealth= TESTHEALTH;
+	float CurrentHealth = TESTHEALTH;
 
 	//float CurrentHealth = MaxHealth;
 

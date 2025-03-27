@@ -3,17 +3,12 @@
 #include "Player/CPlayer.h"
 
 
-
-void ACPotionBase_HP::BeginPlay()
-{
-	Super::BeginPlay();
-}
-
 void ACPotionBase_HP::UseItem(ACPlayer* InOwner)
 {
     RemainingDuration = PotionData.Duration;
 
     //PotionDelegate.BindUObject(this, &ACPotionBase_HP::HealthRestore, InOwner);
+    FTimerDelegate PotionDelegate;
 	PotionDelegate.BindLambda([this, InOwner]() { HealthRestore(InOwner); });
     
     if (PotionDelegate.IsBound())
@@ -43,7 +38,6 @@ void ACPotionBase_HP::HealthRestore(ACPlayer* InOwner)
 
 	if (RemainingDuration <= 0.0f)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Potion effect ended."));
 		FTimerManager& TimerManager = InOwner->GetWorldTimerManager();
 		TimerManager.ClearTimer(TimerHandle); // 타이머 정지
 	}

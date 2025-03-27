@@ -2,6 +2,8 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "GameFramework/Character.h"
 #include "CMovementComponent.generated.h"
 
 
@@ -34,6 +36,9 @@ public:
 	FORCEINLINE void EnableMovement() { bCanMove = true; }
 	FORCEINLINE void DisableMovment() { bCanMove = false; }
 	FORCEINLINE bool CanMove() { return bCanMove; }
+	FORCEINLINE void IncreamentSpeed(float InSpeed) { SetMoveSpeed(OwnerCharacter->GetCharacterMovement()->MaxWalkSpeed += InSpeed); }
+	FORCEINLINE void DecreamentSpeed(float InSpeed) { SetMoveSpeed(OwnerCharacter->GetCharacterMovement()->MaxWalkSpeed -= InSpeed); }
+	FORCEINLINE float GetMaxWalkSpeed() { return OwnerCharacter->GetCharacterMovement()->MaxWalkSpeed; }
 
 	void SetWalkMode();
 	void SetSprintMode();
