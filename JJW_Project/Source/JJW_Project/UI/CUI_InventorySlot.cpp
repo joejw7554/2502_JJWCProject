@@ -39,7 +39,6 @@ void UCUI_InventorySlot::NativeConstruct()
 
 FReply UCUI_InventorySlot::NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
 {
-
 	if (InMouseEvent.IsMouseButtonDown(EKeys::RightMouseButton))
 	{
 		if (OnSlotRightClicked.IsBound())
@@ -50,7 +49,6 @@ FReply UCUI_InventorySlot::NativeOnMouseButtonDown(const FGeometry& InGeometry, 
 	{
 		UE_LOG(LogTemp, Warning, TEXT("LeftMouse"));
 	}
-
 
 	return Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
 }

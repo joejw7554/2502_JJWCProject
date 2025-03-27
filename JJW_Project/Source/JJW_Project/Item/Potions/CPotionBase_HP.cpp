@@ -2,35 +2,42 @@
 #include "GameFramework/Character.h"
 #include "Player/CPlayer.h"
 
+
+
+void ACPotionBase_HP::BeginPlay()
+{
+	Super::BeginPlay();
+}
+
 void ACPotionBase_HP::UseItem(ACPlayer* InOwner)
 {
-	RemainingDuration = PotionData.Duration; // 남은 지속 시간 초기화
-	FTimerDelegate TimerDelegate;
-	TimerDelegate.BindUObject(this, &ACPotionBase_HP::HealthRestore, InOwner);
+    RemainingDuration = PotionData.Duration;
 
-	
-	FTimerManager& TimerManager =InOwner->GetWorldTimerManager();
-	TimerManager.ClearTimer(TimerHandle);
-	TimerManager.SetTimer(TimerHandle, TimerDelegate, PotionData.Duration, false);
+    //PotionDelegate.BindUObject(this, &ACPotionBase_HP::HealthRestore, InOwner);
+	PotionDelegate.BindLambda([this, InOwner]() { HealthRestore(InOwner); });
+    
+    if (PotionDelegate.IsBound())
+    {
+        UE_LOG(LogTemp, Warning, TEXT("Delegate successfully bound."));
+    }
+    else
+    {
+        UE_LOG(LogTemp, Error, TEXT("Delegate binding failed."));
+        return;
+    }
+
+    FTimerManager& TimerManager = InOwner->GetWorldTimerManager();
+    TimerManager.SetTimer(TimerHandle, PotionDelegate, 1.f, true);
+    
 }
+
 
 void ACPotionBase_HP::HealthRestore(ACPlayer* InOwner)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Potion effect started."));
-
-	if (!InOwner) UE_LOG(LogTemp, Warning, TEXT("Owner is nullptr"));
 	if (!InOwner) return;
-
 	
-	
-	ACPlayer* player = Cast<ACPlayer>(InOwner);
-	if (!player) 
-		UE_LOG(LogTemp, Warning, TEXT("Player is nullptr"));
-
-	if (!player) return;
-
-	player->IncreamentHealth(PotionData.EffectValue);
-	UE_LOG(LogTemp, Warning, TEXT("PlayerHealth: %f"), player->GetCurrentHealth());
+	InOwner->IncreamentHealth(PotionData.EffectValue);
+	UE_LOG(LogTemp, Warning, TEXT("PlayerHealth: %f"), InOwner->GetCurrentHealth());
 
 	RemainingDuration -= 1.f;
 
@@ -43,3 +50,4 @@ void ACPotionBase_HP::HealthRestore(ACPlayer* InOwner)
 
 
 }
+

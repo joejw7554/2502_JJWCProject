@@ -8,12 +8,15 @@ UCLASS()
 class JJW_PROJECT_API ACPotionBase_HP : public ACPotionBase
 {
 	GENERATED_BODY()
-	
-private:
+
+protected:
+
+	virtual void BeginPlay() override;
+
 	virtual void UseItem(class ACPlayer* InOwner) override;
 
 	void HealthRestore(class ACPlayer* InOwner);
 
 private:
-
+	FTimerDelegate PotionDelegate;
 };

@@ -18,7 +18,6 @@ void ACPlayerState::BeginPlay()
 	if (!controller) return;
 
 	OwnerCharacter = Cast<ACPlayer>(controller->GetPawn());
-	if (OwnerCharacter) UE_LOG(LogTemp, Warning, TEXT("ACPlayerState::BeginPlay() player is %s"), *OwnerCharacter->GetActorLabel());
 	
 	InventoryComponent->ResetInventory(OwnerCharacter);
 }

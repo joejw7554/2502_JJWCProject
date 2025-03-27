@@ -43,6 +43,7 @@ private:
 	UPROPERTY(meta = (BindWidget))
 	class UButton* SlotButton;
 
+	UPROPERTY()
 	class UCInventorySlot* InventorySlot;
 
 	int32 SlotIndex = 0;

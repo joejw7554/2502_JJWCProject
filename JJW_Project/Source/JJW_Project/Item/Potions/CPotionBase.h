@@ -15,6 +15,10 @@ public:
 	virtual void UseItem(class ACPlayer* InOwner) {}
 
 protected:
+	virtual void BeginPlay() override;
+	
+
+protected:
 	UPROPERTY(EditAnywhere, Category = "Potion Property")
 	FPotionStructure PotionData;
 
