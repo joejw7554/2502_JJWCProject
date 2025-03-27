@@ -12,14 +12,13 @@ class JJW_PROJECT_API ACPotionBase : public ACItemBase
 	GENERATED_BODY()
 
 public:
-	virtual void UseItem(class ACharacter* InOwner) {}
+	virtual void UseItem(class ACPlayer* InOwner) {}
 
 protected:
 	UPROPERTY(EditAnywhere, Category = "Potion Property")
 	FPotionStructure PotionData;
 
-protected:
-	UPROPERTY()
 	FTimerHandle TimerHandle;
 
+	float RemainingDuration;
 };

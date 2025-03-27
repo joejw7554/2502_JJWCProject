@@ -11,8 +11,9 @@ class JJW_PROJECT_API ACPlayerState : public APlayerState
 
 public:
 	ACPlayerState();
-
 	class UCInventoryComponent* GetInventoryComponent() { return InventoryComponent; }
+
+
 
 protected:
 	virtual void BeginPlay() override;
@@ -20,4 +21,7 @@ protected:
 private:
 	UPROPERTY(VisibleAnywhere)
 	class UCInventoryComponent* InventoryComponent;
+
+	UPROPERTY()
+	class ACPlayer* OwnerCharacter;
 };

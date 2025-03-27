@@ -1,5 +1,6 @@
 #include "CPlayerState.h"
 #include "Inventory/CInventoryComponent.h"
+#include "CPlayerController.h"
 #include "Player/CPlayer.h"
 
 ACPlayerState::ACPlayerState()
@@ -12,6 +13,12 @@ ACPlayerState::ACPlayerState()
 void ACPlayerState::BeginPlay()
 {
 	Super::BeginPlay();
+	
+	ACPlayerController* controller = Cast<ACPlayerController>(GetOwner());
+	if (!controller) return;
 
-	InventoryComponent->ResetInventory(Cast<ACPlayer>(GetOwner()));
+	OwnerCharacter = Cast<ACPlayer>(controller->GetPawn());
+	if (OwnerCharacter) UE_LOG(LogTemp, Warning, TEXT("ACPlayerState::BeginPlay() player is %s"), *OwnerCharacter->GetActorLabel());
+	
+	InventoryComponent->ResetInventory(OwnerCharacter);
 }

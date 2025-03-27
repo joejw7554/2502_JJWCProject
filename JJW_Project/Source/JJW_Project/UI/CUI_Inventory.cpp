@@ -63,6 +63,9 @@ void UCUI_Inventory::OnInvenSlotRightClicked(int32 SlotIndex)
 	UCInventoryComponent* inventory = state->GetInventoryComponent();
 	if (!inventory)return;
 
+
+	inventory->UseSlotItem(SlotIndex);
+
 	///////CONTINUE HERE
 }
 

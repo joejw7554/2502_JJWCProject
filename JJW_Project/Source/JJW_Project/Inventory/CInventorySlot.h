@@ -19,6 +19,7 @@ public:
 
 public:
 	FItemStructure* GetItemData() { return ItemData; }
+	class ACItemBase* GetItemInstance() { return ItemData ? ItemData->ItemInstance : nullptr; }
 	int32 GetMaxStackCount() { return MaxStackCount; }
 	int32 GetCurrentStackCount() { return CurrentStackCount; }
 

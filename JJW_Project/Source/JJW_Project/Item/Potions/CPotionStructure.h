@@ -36,5 +36,13 @@ public:
 	UPROPERTY(EditAnywhere)
 	float EffectValue;
 
+
+	FPotionStructure()
+	{
+		PotionType = EPotionType::HP;
+		PotionSize = EPotionSize::Small;
+		Duration = 3.f;
+		EffectValue = 1.f;
+	}
 };
 

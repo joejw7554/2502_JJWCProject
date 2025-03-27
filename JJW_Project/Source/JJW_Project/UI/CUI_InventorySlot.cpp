@@ -42,7 +42,6 @@ FReply UCUI_InventorySlot::NativeOnMouseButtonDown(const FGeometry& InGeometry, 
 
 	if (InMouseEvent.IsMouseButtonDown(EKeys::RightMouseButton))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("RightMouse"));
 		if (OnSlotRightClicked.IsBound())
 			OnSlotRightClicked.Broadcast(SlotIndex);
 	}

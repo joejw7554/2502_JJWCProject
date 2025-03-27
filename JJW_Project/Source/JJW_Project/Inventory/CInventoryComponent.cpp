@@ -4,6 +4,8 @@
 #include "Framework/CHUD.h"
 #include "UI/CUI_Inventory.h"
 #include "UI/CUI_InventorySlot.h"
+#include "Item/CItemBase.h"
+#include "Item/Potions/CPotionBase.h"
 
 UCInventoryComponent::UCInventoryComponent()
 {
@@ -36,9 +38,6 @@ bool UCInventoryComponent::AddItemToInventory(FItemStructure* InItemData)
 
 	for (UCInventorySlot* slot : InventorySlots)
 	{
-		//TMap에 같은 아이템이 있는지 없는지 확인한다
-
-		//빈 Empty Slot을 먼저 찾는다?
 		current = slot->GetItemData();
 
 		//일단 같은 아이템이 있는지 없는지부터 순회
@@ -58,7 +57,7 @@ bool UCInventoryComponent::AddItemToInventory(FItemStructure* InItemData)
 
 	if (CheckInventoryFull()) return false;
 
-	//여기까지 왔다면 같은 아이템이 없다는뜻으로 빈슬롯을 찾아 아이템 추가
+	//여기까지 왔다면 같은 아이템이 없거나 풀스택이라는 뜻으로 빈슬롯을 찾아 아이템 추가
 	for (UCInventorySlot* slot : InventorySlots)
 	{
 		if (slot->IsEmpty())
@@ -84,13 +83,25 @@ bool UCInventoryComponent::CheckInventoryFull()
 
 void UCInventoryComponent::UseSlotItem(int32 Index)
 {
-	InventorySlots[Index]->GetItemData()->ItemInstance;
 
-	///CONTINUE HERE
+	ACItemBase* item = InventorySlots[Index]->GetItemInstance();
+	if (!item) return;
+
+
+	ACPotionBase* potion = Cast<ACPotionBase>(item);
+	if (!potion) return;
+
+
+	if (!Owner) return;
+	potion->UseItem(Owner);
+
+	InventorySlots[Index]->DecreaseStackCount();
 }
 
 void UCInventoryComponent::ResetInventory(ACPlayer* OwnerCharacter)
 {
+	if (!OwnerCharacter) return;
+
 	for (UCInventorySlot* slot : InventorySlots)
 	{
 		slot->ClearSlotData();

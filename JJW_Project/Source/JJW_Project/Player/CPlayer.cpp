@@ -57,12 +57,12 @@ void ACPlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
+	CPlayerState = Cast<ACPlayerState>(GetPlayerState());
+
 	InitializePlayerEnhnacedInput();
 
 	if (!Movement) return;
 	Movement->DisableControlRotation();
-
-	CPlayerState = Cast<ACPlayerState>(GetPlayerState());
 
 	HUD = GetWorld()->GetFirstPlayerController()->GetHUD<ACHUD>();
 }
@@ -87,8 +87,6 @@ void ACPlayer::InitializePlayerEnhnacedInput()
 
 void ACPlayer::PickupItem()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Pickup Item"));
-
 	FHitResult hitResult;
 	UKismetSystemLibrary::SphereTraceSingle(GetWorld(), GetActorLocation(), GetActorLocation() + GetActorForwardVector() * 10, 150, ETraceTypeQuery::TraceTypeQuery1, false, TArray<AActor*>{this}, EDrawDebugTrace::ForDuration, hitResult, true);
 
