@@ -6,24 +6,31 @@ void ACPotionBase_Speed::UseItem(ACPlayer* InOwner)
 {
 	RemainingDuration = PotionData.Duration;
 
-	FTimerManager& timerManager = InOwner->GetWorldTimerManager();
 	FTimerDelegate PotionDelegate;
 	PotionDelegate.BindLambda([this, InOwner]() { IncreaseSpeed(InOwner); });
+
+	if (PotionDelegate.IsBound())
+	{
+		BaseWalkSpeed = InOwner->GetCharacterMovement()->MaxWalkSpeed;
+		FTimerManager& timerManager = InOwner->GetWorldTimerManager();
+		timerManager.SetTimer(TimerHandle, PotionDelegate, 1.f, true);
+	}
+	
 }
 
 void ACPotionBase_Speed::IncreaseSpeed(ACPlayer* InOwner)
 {
 	if (!InOwner) return;
-
 	UCMovementComponent* movementComp= InOwner->GetComponentByClass<UCMovementComponent>();
 	if (!movementComp) return;
-	RemainingDuration -= 1.f;
-	float speed = movementComp->GetMaxWalkSpeed();
-	movementComp->IncreamentSpeed(PotionData.EffectValue);
+	
+	movementComp->SetBueffedWalkSpeed(PotionData.EffectValue * BaseWalkSpeed);
 
+	RemainingDuration -= 1.f;
 	if (RemainingDuration <= 0.f)
 	{
-		movementComp->DecreamentSpeed(PotionData.EffectValue);
+
+		movementComp->SetWalkMode();
 		FTimerManager& TimerManager = InOwner->GetWorldTimerManager();
 		TimerManager.ClearTimer(TimerHandle); // 타이머 정지
 	}

@@ -89,16 +89,6 @@ void UCMovementComponent::LookAction(const FInputActionValue& Value)
 	OwnerCharacter->AddControllerPitchInput(-val.Y);
 }
 
-void UCMovementComponent::SprintAction(const FInputActionValue& Value)
-{
-	bool bPressed = Value.Get<bool>();
-
-	if (bPressed)
-		SetSprintMode();
-	else
-		SetWalkMode();
-}
-
 void UCMovementComponent::Dodge()
 {
 	if (!OwnerCharacter) return;
@@ -132,20 +122,5 @@ void UCMovementComponent::DisableControlRotation()
 {
 	OwnerCharacter->GetCharacterMovement()->bOrientRotationToMovement = true;
 	OwnerCharacter->bUseControllerRotationYaw = false;
-}
-
-void UCMovementComponent::SetWalkMode()
-{
-	SetMoveSpeed(WalkSpeed);
-}
-
-void UCMovementComponent::SetSprintMode()
-{
-	SetMoveSpeed(SprintSpeed);
-}
-
-void UCMovementComponent::SetMoveSpeed(float Value)
-{
-	OwnerCharacter->GetCharacterMovement()->MaxWalkSpeed = Value;
 }
 

@@ -14,4 +14,5 @@ protected:
 
 	void IncreaseSpeed(class ACPlayer* InOwner);
 	
+	float BaseWalkSpeed;
 };

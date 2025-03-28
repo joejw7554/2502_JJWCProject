@@ -13,16 +13,11 @@ void ACPotionBase_HP::UseItem(ACPlayer* InOwner)
     
     if (PotionDelegate.IsBound())
     {
-        UE_LOG(LogTemp, Warning, TEXT("Delegate successfully bound."));
+		FTimerManager& TimerManager = InOwner->GetWorldTimerManager();
+		TimerManager.SetTimer(TimerHandle, PotionDelegate, 1.f, true);
     }
-    else
-    {
-        UE_LOG(LogTemp, Error, TEXT("Delegate binding failed."));
-        return;
-    }
+   
 
-    FTimerManager& TimerManager = InOwner->GetWorldTimerManager();
-    TimerManager.SetTimer(TimerHandle, PotionDelegate, 1.f, true);
     
 }
 

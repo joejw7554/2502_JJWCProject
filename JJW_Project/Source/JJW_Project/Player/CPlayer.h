@@ -72,9 +72,6 @@ protected:
 	class UInputAction* IA_LookAction;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
-	class UInputAction* IA_SprintAction;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	class UInputAction* IA_DodgeAction;
 
 
@@ -128,9 +125,10 @@ private:
 	float MaxHealth = 100.f;
 
 	UPROPERTY(EditAnywhere)
-	float CurrentHealth = TESTHEALTH;
+	float CurrentHealth = MaxHealth;
 
-	//float CurrentHealth = MaxHealth;
+	UPROPERTY(EditAnywhere)
+	FStatsStructure Stats;
 
 
 	UPROPERTY()

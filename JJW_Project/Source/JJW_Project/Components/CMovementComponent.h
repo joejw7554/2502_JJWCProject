@@ -22,7 +22,6 @@ protected:
 
 public:
 	void LookAction(const struct FInputActionValue& Value);
-	void SprintAction(const struct FInputActionValue& Value);
 	void MoveAction(const struct FInputActionValue& Value);
 	void Dodge();
 
@@ -36,15 +35,13 @@ public:
 	FORCEINLINE void EnableMovement() { bCanMove = true; }
 	FORCEINLINE void DisableMovment() { bCanMove = false; }
 	FORCEINLINE bool CanMove() { return bCanMove; }
-	FORCEINLINE void IncreamentSpeed(float InSpeed) { SetMoveSpeed(OwnerCharacter->GetCharacterMovement()->MaxWalkSpeed += InSpeed); }
-	FORCEINLINE void DecreamentSpeed(float InSpeed) { SetMoveSpeed(OwnerCharacter->GetCharacterMovement()->MaxWalkSpeed -= InSpeed); }
 	FORCEINLINE float GetMaxWalkSpeed() { return OwnerCharacter->GetCharacterMovement()->MaxWalkSpeed; }
 
-	void SetWalkMode();
-	void SetSprintMode();
+	FORCEINLINE void SetWalkMode() { SetMoveSpeed(WalkSpeed); }
+	FORCEINLINE void SetBueffedWalkSpeed(float InValue) { SetMoveSpeed(InValue); }
 
 private:
-	void SetMoveSpeed(float Value);
+	FORCEINLINE void SetMoveSpeed(float Value) { OwnerCharacter->GetCharacterMovement()->MaxWalkSpeed = Value; }
 
 	bool IsArrivedAtDestination(FVector CurrentLocation, FVector TargetLocation);
 	void MoveToDestination();
