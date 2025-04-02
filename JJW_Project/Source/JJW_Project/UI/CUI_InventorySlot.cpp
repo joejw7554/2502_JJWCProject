@@ -2,6 +2,7 @@
 #include "Components/TextBlock.h"
 #include "Components/Image.h"
 #include "Inventory/CInventorySlot.h"
+#include "Inventory/CInventoryDragDropOperation.h"
 
 void UCUI_InventorySlot::InitializeSlotWidget(int32 InSlotIndex, UCInventorySlot* InSlot)
 {
@@ -45,10 +46,29 @@ FReply UCUI_InventorySlot::NativeOnMouseButtonDown(const FGeometry& InGeometry, 
 			OnSlotRightClicked.Broadcast(SlotIndex);
 	}
 
-	else if (InMouseEvent.IsMouseButtonDown(EKeys::LeftMouseButton))
+	return Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
+}
+
+FReply UCUI_InventorySlot::NativeOnPreviewMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
+{
+
+	if (InMouseEvent.IsMouseButtonDown(EKeys::LeftMouseButton))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("LeftMouse"));
+		if (InventorySlot->GetItemData())
+		{
+			APlayerController* controller = GetWorld()->GetFirstPlayerController();
+			if (!controller) return FReply::Unhandled();
+
+			UCInventoryDragDropOperation* DragDropOperation = NewObject<UCInventoryDragDropOperation>(controller);
+			if (!DragDropOperation) return FReply::Unhandled();
+
+			DragDropOperation->InitializeDragDropOperation(InventorySlot);
+		}
+		else
+		{
+			return FReply::Unhandled();
+		}
 	}
 
-	return Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
+	return FReply::Handled();
 }
