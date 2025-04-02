@@ -17,40 +17,21 @@ void UCInventoryDragDropOperation::Drop_Implementation(const FPointerEvent& Poin
 }
 
 
-
 void UCInventoryDragDropOperation::InitializeDragDropOperation(UCInventorySlot* InSlot)
 {
-	if (!InSlot) return;
-	DraggedSlot = InSlot;
+    // ÇÁ¸®ºä À§Á¬ »ý¼º
+    if (!DragPreviewClass) return;
+    UCUI_SlotDragPreview* PreviewWidget = CreateWidget<UCUI_SlotDragPreview>(GetWorld(), DragPreviewClass);
+    if (PreviewWidget && InSlot->GetItemData())
+    {
+        PreviewWidget->SetImage(InSlot->GetItemData()->Thumbnail);
+    }
 
-	if (!DraggedSlot) return;
-	if (!DragPreview)
-	{
-		UWorld* World = GetWorld();
-		if (!World) return;
-			
+    // µå·¡±× ÀÛ¾÷ ÃÊ±âÈ­
+    DefaultDragVisual = PreviewWidget;
+    Payload = (UObject*)InSlot;
 
-		DragPreview = CreateWidget<UCUI_SlotDragPreview>(GetWorld(), UCUI_SlotDragPreview::StaticClass());
-		//ì´ê±° StaticClass ì“°ì§€ë§ê³  ë¸”ë£¨í”„ë¦°íŠ¸ë¡œ ë§Œë“¤ì–´ì„œ ì“°ìž TSubClassOfë¡œ ë°›ì•„ì„œ ë§Œë“¤ì–´ì„œ í•´ë³´ìž
-		if (DragPreview)
-		{
-
-			if (!DraggedSlot->GetItemData()) return;
-
-			DragPreview->SetImage(DraggedSlot->GetItemData()->Thumbnail); 
-			DragPreview->AddToViewport(2);
-			DefaultDragVisual = DragPreview;
-		}
-		else
-		{
-			UE_LOG(LogTemp, Warning, TEXT("DragPreview is not created"));
-		}
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("DragPreview is already created or not Valid"));
-	}
-
+    UE_LOG(LogTemp, Warning, TEXT("DragDropOperation Initialized with Preview Widget"));
 }
 
 

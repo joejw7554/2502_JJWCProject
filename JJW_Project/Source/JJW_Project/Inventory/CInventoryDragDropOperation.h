@@ -15,11 +15,6 @@ public:
 	void InitializeDragDropOperation(class UCInventorySlot* InSlot);
 
 protected:
-	UPROPERTY()
-	class UCInventorySlot* DraggedSlot;
-
-	UPROPERTY()
-	class UCUI_SlotDragPreview* DragPreview;
-
-	class UCUI_InventorySlot* Test;
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<class UCUI_SlotDragPreview> DragPreviewClass;
 };

@@ -11,9 +11,14 @@
 void UCUI_Inventory::ToggleInventory()
 {
 	if (IsVisible())
+	{
 		SetVisibility(ESlateVisibility::Hidden);
+	}
 	else
+	{
 		SetVisibility(ESlateVisibility::Visible);
+	}
+
 }
 
 void UCUI_Inventory::NativeConstruct()

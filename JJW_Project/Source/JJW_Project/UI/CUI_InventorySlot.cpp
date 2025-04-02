@@ -1,8 +1,11 @@
 #include "UI/CUI_InventorySlot.h"
+#include "Blueprint/UserWidget.h"
 #include "Components/TextBlock.h"
 #include "Components/Image.h"
 #include "Inventory/CInventorySlot.h"
+#include "UI/CUI_SlotDragPreview.h"
 #include "Inventory/CInventoryDragDropOperation.h"
+#include "Blueprint/WidgetBlueprintLibrary.h"
 
 void UCUI_InventorySlot::InitializeSlotWidget(int32 InSlotIndex, UCInventorySlot* InSlot)
 {
@@ -36,6 +39,7 @@ void UCUI_InventorySlot::NativeConstruct()
 	Super::NativeConstruct();
 
 	ItemQuantityText->SetVisibility(ESlateVisibility::Hidden);
+	
 }
 
 FReply UCUI_InventorySlot::NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
@@ -46,29 +50,28 @@ FReply UCUI_InventorySlot::NativeOnMouseButtonDown(const FGeometry& InGeometry, 
 			OnSlotRightClicked.Broadcast(SlotIndex);
 	}
 
+	if (InMouseEvent.IsMouseButtonDown(EKeys::LeftMouseButton))
+	{
+		FEventReply reply;
+		reply = UWidgetBlueprintLibrary::DetectDragIfPressed(InMouseEvent, this, EKeys::LeftMouseButton);
+		return reply.NativeReply;
+	}
+
 	return Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
 }
 
-FReply UCUI_InventorySlot::NativeOnPreviewMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
+void UCUI_InventorySlot::NativeOnDragDetected(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent, UDragDropOperation*& OutOperation)
 {
+	Super::NativeOnDragDetected(InGeometry, InMouseEvent, OutOperation);
+	UE_LOG(LogTemp, Warning, TEXT("NativeOnDragDetected"));
 
-	if (InMouseEvent.IsMouseButtonDown(EKeys::LeftMouseButton))
-	{
-		if (InventorySlot->GetItemData())
-		{
-			APlayerController* controller = GetWorld()->GetFirstPlayerController();
-			if (!controller) return FReply::Unhandled();
+	//UCInventoryDragDropOperation* DragDropOperation = NewObject<UCInventoryDragDropOperation>(GetWorld(), DragDropClass);
+	//OutOperation = DragDropOperation;
+}
 
-			UCInventoryDragDropOperation* DragDropOperation = NewObject<UCInventoryDragDropOperation>(controller);
-			if (!DragDropOperation) return FReply::Unhandled();
-
-			DragDropOperation->InitializeDragDropOperation(InventorySlot);
-		}
-		else
-		{
-			return FReply::Unhandled();
-		}
-	}
-
-	return FReply::Handled();
+bool UCUI_InventorySlot::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation)
+{
+	Super::NativeOnDrop(InGeometry, InDragDropEvent, InOperation);
+	UE_LOG(LogTemp, Warning, TEXT("NativeOnDrop"));
+	return false;
 }

@@ -114,7 +114,6 @@ void ACPlayer::ToggleInventoryMenu()
 {
 	if (!HUD) return;
 
-	if (!HUD) UE_LOG(LogTemp, Warning, TEXT("HUD is nullptr"));
 	HUD->ToggleInventory();
 }
 
