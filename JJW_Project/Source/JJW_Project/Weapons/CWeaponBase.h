@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Stats/CStatStructure.h"
 #include "CWeaponBase.generated.h"
 
 UCLASS(Abstract, NotBlueprintable)
@@ -45,7 +46,6 @@ protected:
 	UStaticMeshComponent* LeftHandWeaponMesh;
 
 
-
 	//Skills////////
 	UPROPERTY(VisibleAnywhere, Category = "SKills")
 	class UCSkill_BasicCombo* BasicCombo;
@@ -66,7 +66,10 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	float Damage = 0;
 
-
 	UPROPERTY(VisibleAnywhere)
 	TArray<AActor*> DamagedActors;
+
+private:
+	UPROPERTY()
+	class ACPlayer* PlayerCharacter;
 };

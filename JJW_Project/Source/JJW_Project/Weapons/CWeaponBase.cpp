@@ -12,6 +12,7 @@
 #include "../Components/CSkill_R.h"
 #include "../Components/CSkill_BasicCombo.h"
 #include "../Components/CWeaponComponent.h"
+#include "Player/CPlayer.h"
 
 
 ACWeaponBase::ACWeaponBase()
@@ -44,6 +45,8 @@ void ACWeaponBase::BeginPlay()
 {
 	Super::BeginPlay();
 
+	PlayerCharacter = Cast<ACPlayer>(GetOwner());
+
 	if (RightHandWeaponMesh)
 	{
 		RightHandWeaponMesh->OnComponentBeginOverlap.AddDynamic(this, &ACWeaponBase::OnWeaponBeginOverlap);
@@ -62,10 +65,12 @@ void ACWeaponBase::BeginPlay()
 
 void ACWeaponBase::OnWeaponBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	//여기 수정사항 있을꺼 같음 
+	if (!PlayerCharacter) return;
+
 	if (OtherActor->ActorHasTag("Enemy") && !DamagedActors.Contains(OtherActor))
-	{
-		UGameplayStatics::ApplyDamage(OtherActor, Damage, nullptr, this, nullptr);
+	{	
+		float extraDamage = PlayerCharacter->GetStats().Strength;
+		UGameplayStatics::ApplyDamage(OtherActor, Damage + extraDamage, nullptr, this, nullptr);
 		DamagedActors.AddUnique(OtherActor);
 	}
 }

@@ -65,6 +65,9 @@ void ACPlayer::BeginPlay()
 	Movement->DisableControlRotation();
 
 	HUD = GetWorld()->GetFirstPlayerController()->GetHUD<ACHUD>();
+
+
+	OnTakeAnyDamage.AddDynamic(this, &ACPlayer::OnPlayerTakeDamage);
 }
 
 void ACPlayer::InitializePlayerEnhnacedInput()
@@ -117,6 +120,11 @@ void ACPlayer::ToggleInventoryMenu()
 	HUD->ToggleInventory();
 }
 
+void ACPlayer::OnPlayerTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
+{
+	CurrentHealth = FMath::Clamp(CurrentHealth - (Damage + Stats.Defense), 0.f, MaxHealth);
+}
+
 
 
 void ACPlayer::Tick(float DeltaTime)
@@ -165,7 +173,7 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 				Weapon->DoSkill(ESkillKey::W);
 			});
 
-	if(IA_SKill_E)
+	if (IA_SKill_E)
 		enhancedInput->BindActionValueLambda(IA_SKill_E, ETriggerEvent::Started, [this](const FInputActionValue& value)
 			{
 				Weapon->DoSkill(ESkillKey::E);

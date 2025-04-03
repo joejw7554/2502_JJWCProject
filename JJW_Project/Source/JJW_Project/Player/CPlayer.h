@@ -2,24 +2,14 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+
 #include "../Components/CMovementComponent.h"
 #include "../Components/CWeaponComponent.h"
+#include "Stats/CStatStructure.h"
+
 #include "CPlayer.generated.h"
 
 #define TESTHEALTH 10;
-
-USTRUCT(BlueprintType)
-struct FStatsStructure
-{
-	GENERATED_BODY()
-
-	UPROPERTY(EditAnywhere)
-	float Strength = 1.f;
-
-	UPROPERTY(EditAnywhere)
-	float Defense = 1.f;
-};
-
 
 UCLASS()
 class JJW_PROJECT_API ACPlayer : public ACharacter
@@ -36,6 +26,7 @@ public:
 
 public: //Getter
 	FORCEINLINE UCWeaponComponent* GetWeaponComponent() { return Weapon; }
+	FORCEINLINE const FStatsStructure& GetStats() { return Stats; }
 	FORCEINLINE float GetCurrentHealthPercent() { return CurrentHealth / MaxHealth; }
 	FORCEINLINE float GetCurrentHealth() { return CurrentHealth; }
 	FORCEINLINE void IncreamentHealth(float InHealth) { SetCurrentHealth(InHealth); }
@@ -58,6 +49,8 @@ private:
 
 	void ToggleInventoryMenu();
 
+	UFUNCTION()
+	void OnPlayerTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser);
 
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
@@ -129,7 +122,6 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	FStatsStructure Stats;
-
 
 	UPROPERTY()
 	class ACPlayerState* CPlayerState;
