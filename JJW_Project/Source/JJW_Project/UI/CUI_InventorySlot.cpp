@@ -52,9 +52,12 @@ FReply UCUI_InventorySlot::NativeOnMouseButtonDown(const FGeometry& InGeometry, 
 
 	if (InMouseEvent.IsMouseButtonDown(EKeys::LeftMouseButton))
 	{
-		FEventReply reply;
-		reply = UWidgetBlueprintLibrary::DetectDragIfPressed(InMouseEvent, this, EKeys::LeftMouseButton);
-		return reply.NativeReply;
+		if (InventorySlot->GetItemData())
+		{
+			FEventReply reply;
+			reply = UWidgetBlueprintLibrary::DetectDragIfPressed(InMouseEvent, this, EKeys::LeftMouseButton);
+			return reply.NativeReply;
+		}
 	}
 
 	return Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
@@ -65,8 +68,24 @@ void UCUI_InventorySlot::NativeOnDragDetected(const FGeometry& InGeometry, const
 	Super::NativeOnDragDetected(InGeometry, InMouseEvent, OutOperation);
 	UE_LOG(LogTemp, Warning, TEXT("NativeOnDragDetected"));
 
-	//UCInventoryDragDropOperation* DragDropOperation = NewObject<UCInventoryDragDropOperation>(GetWorld(), DragDropClass);
-	//OutOperation = DragDropOperation;
+	if (!DragDropClass) return;
+	UCInventoryDragDropOperation* dragDropOperation = NewObject<UCInventoryDragDropOperation>(GetWorld(), DragDropClass);
+	OutOperation = dragDropOperation;
+
+	if (!DragPreviewClass) return;
+	UCUI_SlotDragPreview* PreviewWidget = CreateWidget<UCUI_SlotDragPreview>(GetWorld(), DragPreviewClass);
+	if (!PreviewWidget) return;
+	
+
+	FItemStructure* ItemData = InventorySlot->GetItemData();
+	if (!ItemData) return;
+
+	PreviewWidget->SetImage(ItemData->Thumbnail);
+	dragDropOperation->DefaultDragVisual = PreviewWidget;
+
+	//dragDropOperation->Payload =
+
+	UE_LOG(LogTemp, Warning, TEXT("DragDropOperation Initialized with Preview Widget"));
 }
 
 bool UCUI_InventorySlot::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation)

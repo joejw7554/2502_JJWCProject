@@ -12,9 +12,4 @@ class JJW_PROJECT_API UCInventoryDragDropOperation : public UDragDropOperation
 public:
 	void Dragged_Implementation(const FPointerEvent& PointerEvent);
 	void Drop_Implementation(const FPointerEvent& PointerEvent);
-	void InitializeDragDropOperation(class UCInventorySlot* InSlot);
-
-protected:
-	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<class UCUI_SlotDragPreview> DragPreviewClass;
 };

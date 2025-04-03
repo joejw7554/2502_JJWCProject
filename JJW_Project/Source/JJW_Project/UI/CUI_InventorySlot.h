@@ -44,6 +44,9 @@ private:
 	class UTextBlock* ItemQuantityText;
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<class UCInventoryDragDropOperation> DragDropClass;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<class UCUI_SlotDragPreview> DragPreviewClass;
 	
 	UPROPERTY()
 	class UCInventorySlot* InventorySlot;
