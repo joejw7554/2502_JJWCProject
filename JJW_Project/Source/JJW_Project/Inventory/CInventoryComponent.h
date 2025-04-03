@@ -28,6 +28,8 @@ public:
 
 	void UseSlotItem(int32 Index);
 
+	bool SwapSlots(UCInventorySlot* sourceSlot, UCInventorySlot* targetSlot);
+
 public:
 	void ResetInventory(class ACPlayer* OwnerCharacter);
 

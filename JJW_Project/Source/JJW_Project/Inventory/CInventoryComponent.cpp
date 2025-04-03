@@ -98,6 +98,55 @@ void UCInventoryComponent::UseSlotItem(int32 Index)
 	InventorySlots[Index]->DecreaseStackCount();
 }
 
+bool UCInventoryComponent::SwapSlots(UCInventorySlot* sourceSlot, UCInventorySlot* targetSlot)
+{
+	if (!sourceSlot || !targetSlot) return false;
+
+	FItemStructure* sourceItem = sourceSlot->GetItemData();
+	FItemStructure* targetItem = targetSlot->GetItemData();
+
+	int32 sourceStackCount = sourceSlot->GetCurrentStackCount();
+	int32 targetStackCount = targetSlot->GetCurrentStackCount();
+
+	if (sourceItem && targetItem)
+	{
+		if (sourceItem->ItemID == targetItem->ItemID)
+		{
+			int32 totalCount = sourceStackCount + targetStackCount;
+			if (totalCount <= targetSlot->GetMaxStackCount())
+			{
+				targetSlot->AddStackCount(sourceStackCount);
+				sourceSlot->ClearSlotData();
+				return true;
+			}
+			else
+			{
+				int32 excessCount = totalCount - targetSlot->GetMaxStackCount();
+				targetSlot->SetItemInSlot(targetItem, targetSlot->GetMaxStackCount());
+				sourceSlot->SetItemInSlot(sourceItem, excessCount);
+				return true;
+			}
+		}
+		else
+		{
+			FItemStructure* tempItem = sourceItem;
+			int32 tempStack = sourceStackCount;
+
+			sourceSlot->SetItemInSlot(targetItem, targetStackCount);
+			targetSlot->SetItemInSlot(tempItem, tempStack);
+			return true;
+		}
+	}
+	else if (!targetItem)
+	{
+		targetSlot->SetItemInSlot(sourceItem, sourceStackCount);
+		sourceSlot->ClearSlotData();
+		return true;
+	}
+
+	return false;
+}
+
 void UCInventoryComponent::ResetInventory(ACPlayer* OwnerCharacter)
 {
 	if (!OwnerCharacter) return;

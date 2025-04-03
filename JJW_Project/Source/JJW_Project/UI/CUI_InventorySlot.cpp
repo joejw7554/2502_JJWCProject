@@ -2,10 +2,14 @@
 #include "Blueprint/UserWidget.h"
 #include "Components/TextBlock.h"
 #include "Components/Image.h"
+
 #include "Inventory/CInventorySlot.h"
 #include "UI/CUI_SlotDragPreview.h"
 #include "Inventory/CInventoryDragDropOperation.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
+#include "Item/CItemStructure.h"
+#include "Player/CPlayerState.h"
+#include "Inventory/CInventoryComponent.h"
 
 void UCUI_InventorySlot::InitializeSlotWidget(int32 InSlotIndex, UCInventorySlot* InSlot)
 {
@@ -66,7 +70,6 @@ FReply UCUI_InventorySlot::NativeOnMouseButtonDown(const FGeometry& InGeometry, 
 void UCUI_InventorySlot::NativeOnDragDetected(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent, UDragDropOperation*& OutOperation)
 {
 	Super::NativeOnDragDetected(InGeometry, InMouseEvent, OutOperation);
-	UE_LOG(LogTemp, Warning, TEXT("NativeOnDragDetected"));
 
 	if (!DragDropClass) return;
 	UCInventoryDragDropOperation* dragDropOperation = NewObject<UCInventoryDragDropOperation>(GetWorld(), DragDropClass);
@@ -82,15 +85,28 @@ void UCUI_InventorySlot::NativeOnDragDetected(const FGeometry& InGeometry, const
 
 	PreviewWidget->SetImage(ItemData->Thumbnail);
 	dragDropOperation->DefaultDragVisual = PreviewWidget;
+	dragDropOperation->Payload = this;
 
-	//dragDropOperation->Payload =
-
-	UE_LOG(LogTemp, Warning, TEXT("DragDropOperation Initialized with Preview Widget"));
 }
 
 bool UCUI_InventorySlot::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation)
 {
 	Super::NativeOnDrop(InGeometry, InDragDropEvent, InOperation);
-	UE_LOG(LogTemp, Warning, TEXT("NativeOnDrop"));
-	return false;
+
+	if (!InOperation || !InOperation->Payload) return false;
+
+	UCUI_InventorySlot* sourceSlot = Cast<UCUI_InventorySlot>(InOperation->Payload);
+	if (!sourceSlot || !sourceSlot->InventorySlot) return false;
+
+	APlayerController* controller = GetWorld()->GetFirstPlayerController();
+	if (!controller) return false;
+
+	ACPlayerState* state= controller->GetPlayerState<ACPlayerState>();
+	if (!state) return false;
+
+	if (!state->GetInventoryComponent()) return false;
+
+	if (state->GetInventoryComponent()->CheckInventoryFull())return false;
+
+	return state->GetInventoryComponent()->SwapSlots(sourceSlot->InventorySlot, InventorySlot);
 }

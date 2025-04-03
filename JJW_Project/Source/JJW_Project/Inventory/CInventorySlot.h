@@ -25,6 +25,7 @@ public:
 
 	void IncreaseStackCount() { SetStackCount(CurrentStackCount + 1); }
 	void DecreaseStackCount() { SetStackCount(CurrentStackCount - 1); }
+	void AddStackCount(int32 InCount) { SetStackCount(InCount+ CurrentStackCount); }
 	void SetItemInSlot(FItemStructure* InData ,int32 Count=1);
 	bool IsEmpty() { return ItemData == nullptr; }
 

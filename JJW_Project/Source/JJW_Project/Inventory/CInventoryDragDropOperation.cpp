@@ -6,12 +6,8 @@
 
 void UCInventoryDragDropOperation::Dragged_Implementation(const FPointerEvent& PointerEvent)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Dragged_Implementation"));
 }
 
 void UCInventoryDragDropOperation::Drop_Implementation(const FPointerEvent& PointerEvent)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Drop_Implementation"));
-
-	//DragPreview = nullptr;
 }
