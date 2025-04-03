@@ -120,6 +120,11 @@ void ACPlayer::ToggleInventoryMenu()
 	HUD->ToggleInventory();
 }
 
+void ACPlayer::ToggleStatMenu()
+{
+	UE_LOG(LogTemp, Warning, TEXT("ACPlayer::ToggleStatMenu"));
+}
+
 void ACPlayer::OnPlayerTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
 {
 	CurrentHealth = FMath::Clamp(CurrentHealth - (Damage + Stats.Defense), 0.f, MaxHealth);
@@ -190,5 +195,8 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	if (IA_InventoryAction)
 		enhancedInput->BindAction(IA_InventoryAction, ETriggerEvent::Started, this, &ACPlayer::ToggleInventoryMenu);
+
+	if(IA_StatAction)
+		enhancedInput->BindAction(IA_StatAction, ETriggerEvent::Started, this, &ACPlayer::ToggleStatMenu);
 }
 

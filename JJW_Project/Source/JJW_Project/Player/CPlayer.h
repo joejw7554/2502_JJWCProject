@@ -49,6 +49,8 @@ private:
 
 	void ToggleInventoryMenu();
 
+	void ToggleStatMenu();
+
 	UFUNCTION()
 	void OnPlayerTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser);
 
@@ -97,6 +99,10 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	class UInputAction* IA_InventoryAction;
+
+
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	class UInputAction* IA_StatAction;
 
 	UPROPERTY(VisibleAnywhere)
 	class USpringArmComponent* SpringArm;
