@@ -19,7 +19,6 @@ protected:
 	
 
 protected:
-	UPROPERTY(EditAnywhere, Category = "Potion Property")
 	FPotionStructure PotionData;
 
 	FTimerHandle TimerHandle;

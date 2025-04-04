@@ -13,6 +13,4 @@ protected:
 	virtual void UseItem(class ACPlayer* InOwner) override;
 
 	void IncreaseSpeed(class ACPlayer* InOwner);
-	
-	float BaseWalkSpeed;
 };

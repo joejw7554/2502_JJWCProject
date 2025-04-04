@@ -19,8 +19,6 @@ void UCMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
 	CalculateCursorDirection();
 }
 
-
-
 void UCMovementComponent::MoveToDestination()
 {
 	if (IsArrivedAtDestination(OwnerCharacter->GetActorLocation(), LastInputLocation))

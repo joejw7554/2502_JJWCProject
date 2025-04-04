@@ -55,10 +55,6 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Movement Property")
 	float WalkSpeed = 600.f;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Movement Property")
-	float SprintSpeed = 1000.f;
-
-
 	////////Montage
 	UPROPERTY(EditDefaultsOnly, Category = "Animation")
 	class UAnimMontage* AnimMontage_Dodge;
@@ -81,7 +77,4 @@ private:
 	FVector LastInputLocation;
 
 	float Tolerance = 40.f;
-
-	
-
 };
