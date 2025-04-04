@@ -36,4 +36,12 @@ void ACPotionBase_Speed::IncreaseSpeed(ACPlayer* InOwner)
 	}
 }
 
+void ACPotionBase_Speed::BeginPlay()
+{
+	Super::BeginPlay();
+
+	UE_LOG(LogTemp, Warning, TEXT("%f"), PotionData.EffectValue);
+	
+}
+
 

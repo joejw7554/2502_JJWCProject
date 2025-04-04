@@ -14,11 +14,10 @@ class JJW_PROJECT_API ACPotionBase : public ACItemBase
 public:
 	virtual void UseItem(class ACPlayer* InOwner) {}
 
-protected:
 	virtual void BeginPlay() override;
 	
-
 protected:
+	UPROPERTY(EditDefaultsOnly, Category="Potion Setups")
 	FPotionStructure PotionData;
 
 	FTimerHandle TimerHandle;

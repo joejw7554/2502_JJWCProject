@@ -69,8 +69,7 @@ void ACWeaponBase::OnWeaponBeginOverlap(UPrimitiveComponent* OverlappedComponent
 
 	if (OtherActor->ActorHasTag("Enemy") && !DamagedActors.Contains(OtherActor))
 	{	
-		float extraDamage = PlayerCharacter->GetStats().Strength;
-		UGameplayStatics::ApplyDamage(OtherActor, Damage + extraDamage, nullptr, this, nullptr);
+		UGameplayStatics::ApplyDamage(OtherActor, Damage , nullptr, this, nullptr);
 		DamagedActors.AddUnique(OtherActor);
 	}
 }

@@ -26,7 +26,6 @@ public:
 
 public: //Getter
 	FORCEINLINE UCWeaponComponent* GetWeaponComponent() { return Weapon; }
-	FORCEINLINE const FStatsStructure& GetStats() { return Stats; }
 	FORCEINLINE float GetCurrentHealthPercent() { return CurrentHealth / MaxHealth; }
 	FORCEINLINE float GetCurrentHealth() { return CurrentHealth; }
 	FORCEINLINE void IncreamentHealth(float InHealth) { SetCurrentHealth(InHealth); }
@@ -125,9 +124,6 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	float CurrentHealth = MaxHealth;
-
-	UPROPERTY(EditAnywhere)
-	FStatsStructure Stats;
 
 	UPROPERTY()
 	class ACPlayerState* CPlayerState;

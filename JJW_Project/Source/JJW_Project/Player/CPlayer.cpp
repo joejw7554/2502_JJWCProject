@@ -127,7 +127,7 @@ void ACPlayer::ToggleStatMenu()
 
 void ACPlayer::OnPlayerTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
 {
-	CurrentHealth = FMath::Clamp(CurrentHealth - (Damage + Stats.Defense), 0.f, MaxHealth);
+	CurrentHealth = FMath::Clamp(CurrentHealth - Damage, 0.f, MaxHealth);
 }
 
 
