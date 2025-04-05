@@ -13,6 +13,8 @@ public:
 	ACPlayerState();
 	class UCInventoryComponent* GetInventoryComponent() { return InventoryComponent; }
 
+	class UCStatComponent* GetStatComponent() { return StatComponent; }
+
 
 
 protected:
@@ -21,6 +23,9 @@ protected:
 private:
 	UPROPERTY(VisibleAnywhere)
 	class UCInventoryComponent* InventoryComponent;
+
+	UPROPERTY()
+	class UCStatComponent* StatComponent;
 
 	UPROPERTY()
 	class ACPlayer* OwnerCharacter;

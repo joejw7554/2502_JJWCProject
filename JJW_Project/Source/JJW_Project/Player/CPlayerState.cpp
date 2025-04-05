@@ -1,5 +1,6 @@
 #include "CPlayerState.h"
 #include "Inventory/CInventoryComponent.h"
+#include "Stats/CStatComponent.h"
 #include "CPlayerController.h"
 #include "Player/CPlayer.h"
 
@@ -8,6 +9,7 @@ ACPlayerState::ACPlayerState()
 	PrimaryActorTick.bCanEverTick = false;
 
 	InventoryComponent = CreateDefaultSubobject<UCInventoryComponent>(TEXT("InventoryComponent"));
+	StatComponent = CreateDefaultSubobject<UCStatComponent>(TEXT("StatComponent"));
 }
 
 void ACPlayerState::BeginPlay()

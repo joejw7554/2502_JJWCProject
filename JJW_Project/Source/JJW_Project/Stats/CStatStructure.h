@@ -15,6 +15,12 @@ struct FStatsStructure
 
 	UPROPERTY(EditAnywhere)
 	float Defense = 1.f;
+
+	FStatsStructure()
+	{
+		Strength = 1.f;
+		Defense = 1.f;
+	}
 };
 
 UCLASS()
