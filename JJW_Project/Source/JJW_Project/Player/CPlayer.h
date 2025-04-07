@@ -29,6 +29,7 @@ public: //Getter
 	FORCEINLINE float GetCurrentHealthPercent() { return CurrentHealth / MaxHealth; }
 	FORCEINLINE float GetCurrentHealth() { return CurrentHealth; }
 	FORCEINLINE void IncreamentHealth(float InHealth) { SetCurrentHealth(InHealth); }
+	FORCEINLINE class ACPlayerState* GetPlayerState() { return CPlayerState; }
 
 
 private:

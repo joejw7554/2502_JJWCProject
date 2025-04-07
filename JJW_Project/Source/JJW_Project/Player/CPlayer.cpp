@@ -17,6 +17,7 @@
 #include "Inventory/CInventoryComponent.h"
 #include "Framework/CHUD.h"
 #include "UI/CUI_MainHUD.h"
+#include "Stats/CStatComponent.h"
 
 
 ACPlayer::ACPlayer()
@@ -57,7 +58,7 @@ void ACPlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
-	CPlayerState = Cast<ACPlayerState>(GetPlayerState());
+	CPlayerState = Cast<ACPlayerState>(GetController()->GetPlayerState<ACPlayerState>());
 
 	InitializePlayerEnhnacedInput();
 
@@ -122,12 +123,15 @@ void ACPlayer::ToggleInventoryMenu()
 
 void ACPlayer::ToggleStatMenu()
 {
-	UE_LOG(LogTemp, Warning, TEXT("ACPlayer::ToggleStatMenu"));
+	HUD->ToggleStat();
 }
 
 void ACPlayer::OnPlayerTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
 {
-	CurrentHealth = FMath::Clamp(CurrentHealth - Damage, 0.f, MaxHealth);
+	float defense = CPlayerState->GetStatComponent()->GetStatStructure().Defense;
+	float minimalDamage= FMath::Clamp(Damage - defense, 0, 9999);
+
+	CurrentHealth = FMath::Clamp(CurrentHealth - minimalDamage, 0.f, MaxHealth);
 }
 
 

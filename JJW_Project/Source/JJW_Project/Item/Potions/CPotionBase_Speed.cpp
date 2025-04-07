@@ -23,7 +23,6 @@ void ACPotionBase_Speed::IncreaseSpeed(ACPlayer* InOwner)
 	UCMovementComponent* movementComp= InOwner->GetComponentByClass<UCMovementComponent>();
 	if (!movementComp) return;
 	
-	UE_LOG(LogTemp, Warning, TEXT("%f"), PotionData.EffectValue);
 	movementComp->SetBueffedWalkSpeed(PotionData.EffectValue);
 
 
@@ -40,7 +39,6 @@ void ACPotionBase_Speed::BeginPlay()
 {
 	Super::BeginPlay();
 
-	UE_LOG(LogTemp, Warning, TEXT("%f"), PotionData.EffectValue);
 	
 }
 

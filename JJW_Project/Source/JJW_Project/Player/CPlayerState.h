@@ -24,7 +24,7 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	class UCInventoryComponent* InventoryComponent;
 
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere)
 	class UCStatComponent* StatComponent;
 
 	UPROPERTY()

@@ -8,6 +8,7 @@ UCStatComponent::UCStatComponent()
 
 void UCStatComponent::IncrementStat(FName InStat)
 {
+
 	if (InStat == "Strength")
 	{
 		StatStructure.Strength += 1.f;
@@ -16,6 +17,7 @@ void UCStatComponent::IncrementStat(FName InStat)
 	{
 		StatStructure.Defense += 1.f;
 	}
+
 }
 
 void UCStatComponent::DecrementStat(FName InStat)
@@ -28,6 +30,7 @@ void UCStatComponent::DecrementStat(FName InStat)
 	{
 		StatStructure.Defense -= 1.f;
 	}
+
 }
 
 

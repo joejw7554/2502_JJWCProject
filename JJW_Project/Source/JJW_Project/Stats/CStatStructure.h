@@ -5,7 +5,7 @@
 #include "CStatStructure.generated.h"
 
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FStatsStructure
 {
 	GENERATED_BODY()
@@ -15,12 +15,6 @@ struct FStatsStructure
 
 	UPROPERTY(EditAnywhere)
 	float Defense = 1.f;
-
-	FStatsStructure()
-	{
-		Strength = 1.f;
-		Defense = 1.f;
-	}
 };
 
 UCLASS()

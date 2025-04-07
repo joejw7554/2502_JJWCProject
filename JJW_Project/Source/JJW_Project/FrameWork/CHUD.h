@@ -24,6 +24,12 @@ public:
 		UI_MainHUD->ToggleInventoryUI();
 	}
 
+	FORCEINLINE void ToggleStat()
+	{
+		if (!UI_MainHUD) return;
+		UI_MainHUD->ToggleStatUI();
+	}
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -33,5 +39,4 @@ protected:
 
 	UPROPERTY()
 	UCUI_MainHUD* UI_MainHUD;
-
 };

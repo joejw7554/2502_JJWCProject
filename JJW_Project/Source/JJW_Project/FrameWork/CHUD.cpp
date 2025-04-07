@@ -1,5 +1,7 @@
 #include "FrameWork/CHUD.h"
 #include "UI/CUI_MainHUD.h"
+#include "Player/CPlayerState.h"
+#include "Stats/CStatComponent.h"
 
 
 void ACHUD::PostInitializeComponents()
@@ -15,6 +17,5 @@ void ACHUD::PostInitializeComponents()
 void ACHUD::BeginPlay()
 {
 	Super::BeginPlay();
-
 }
 

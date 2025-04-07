@@ -5,7 +5,6 @@
 #include "CStatStructure.h"
 #include "CStatComponent.generated.h"
 
-
 UCLASS()
 class JJW_PROJECT_API UCStatComponent : public UActorComponent
 {
@@ -14,7 +13,10 @@ class JJW_PROJECT_API UCStatComponent : public UActorComponent
 public:	
 	UCStatComponent();
 	
+	UFUNCTION()
 	void IncrementStat(FName InStat);
+
+	UFUNCTION()
 	void DecrementStat(FName InStat);
 
 protected:
@@ -23,9 +25,9 @@ protected:
 public:	
 	//virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	FStatsStructure GetStatStructure() const { return StatStructure; }
+	FORCEINLINE FStatsStructure const GetStatStructure() { return StatStructure; }
 		
 private:
-	UPROPERTY()
+	UPROPERTY(EditDefaultsOnly)
 	FStatsStructure StatStructure;
 };

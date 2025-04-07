@@ -12,7 +12,10 @@
 #include "../Components/CSkill_R.h"
 #include "../Components/CSkill_BasicCombo.h"
 #include "../Components/CWeaponComponent.h"
+#include "Stats/CStatComponent.h"
 #include "Player/CPlayer.h"
+#include "Player/CPlayerState.h"
+
 
 
 ACWeaponBase::ACWeaponBase()
@@ -59,7 +62,9 @@ void ACWeaponBase::BeginPlay()
 		LeftHandWeaponMesh->OnComponentEndOverlap.AddDynamic(this, &ACWeaponBase::OnWeaponEndOverlap);
 	}
 
-	DamagedActors.Reserve(5);
+
+
+	DamagedActors.Reserve(10);
 }
 
 
@@ -68,8 +73,21 @@ void ACWeaponBase::OnWeaponBeginOverlap(UPrimitiveComponent* OverlappedComponent
 	if (!PlayerCharacter) return;
 
 	if (OtherActor->ActorHasTag("Enemy") && !DamagedActors.Contains(OtherActor))
-	{	
-		UGameplayStatics::ApplyDamage(OtherActor, Damage , nullptr, this, nullptr);
+	{
+		if (!PlayerCharacter) return;
+		ACPlayerState* playerState = PlayerCharacter->GetPlayerState();
+		if (!playerState) return;
+
+		UCStatComponent* statComponent = playerState->GetStatComponent();
+		if (!statComponent) return;
+
+		FStatsStructure statStructure = statComponent->GetStatStructure();
+
+		float strength = statStructure.Strength;
+		float finalDamage = Damage + strength;
+		UE_LOG(LogTemp, Warning, TEXT("Damage : %f"), finalDamage);
+
+		UGameplayStatics::ApplyDamage(OtherActor, finalDamage, nullptr, this, nullptr);
 		DamagedActors.AddUnique(OtherActor);
 	}
 }

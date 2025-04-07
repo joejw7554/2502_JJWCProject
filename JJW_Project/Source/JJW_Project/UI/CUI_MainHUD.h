@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "CUI_Inventory.h"
+#include "CUI_Stats.h"
 #include "CUI_MainHUD.generated.h"
 
 UCLASS()
@@ -19,11 +20,19 @@ public:
 		GetInventoryWidget()->ToggleInventory();
 	}
 
-	UCUI_Inventory* GetInventoryWidget() { return InventoryWidgetUI; }
+	FORCEINLINE void ToggleStatUI()
+	{
+		if (!GetStatsWidget()) return;
+		GetStatsWidget()->ToggleStats();
+	}
 
+	UCUI_Inventory* GetInventoryWidget() { return InventoryWidgetUI; }
+	UCUI_Stats* GetStatsWidget() { return StatsWidgetUI; }
 
 private:
 	UPROPERTY(meta = (BindWidget))
 	 UCUI_Inventory* InventoryWidgetUI;
 
+	 UPROPERTY(meta = (BindWidget))
+	 UCUI_Stats* StatsWidgetUI;
 };
