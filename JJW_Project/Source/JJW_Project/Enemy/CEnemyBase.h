@@ -34,7 +34,7 @@ protected:
 
 private:
 	UPROPERTY(EditDefaultsOnly)
-	EEnemyType EnemyType= EEnemyType::Normal;
+	EEnemyType EnemyType = EEnemyType::Normal;
 
 private:
 	UPROPERTY(EditDefaultsOnly)
@@ -42,4 +42,7 @@ private:
 
 	UPROPERTY()
 	float CurrentHealth = MaxHealth;
+
+	UPROPERTY(EditDefaultsOnly)
+	float EXPValue = 10.f;
 };

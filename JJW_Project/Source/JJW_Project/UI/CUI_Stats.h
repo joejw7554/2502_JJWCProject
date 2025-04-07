@@ -33,6 +33,8 @@ protected:
 
 	void StatUIInitialization();
 
+
+
 private:
 	UFUNCTION()
 	void OnStrengthIncrementation();
@@ -42,6 +44,9 @@ private:
 	void OnDefenseIncrementation();
 	UFUNCTION()
 	void OnDefenseDecrementation();
+
+	UFUNCTION()
+	void OnUpdateAvailableStatPoint(uint8 InValue);
 
 private:
 	UPROPERTY(meta = (BindWidget))
@@ -67,6 +72,9 @@ private:
 
 	UPROPERTY(meta = (BindWidget))
 	class UButton* CloseButton;
+
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* StatPointsText;
 
 	UPROPERTY()
 	class UCStatComponent* StatComponent;

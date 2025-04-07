@@ -87,7 +87,10 @@ void ACWeaponBase::OnWeaponBeginOverlap(UPrimitiveComponent* OverlappedComponent
 		float finalDamage = Damage + strength;
 		UE_LOG(LogTemp, Warning, TEXT("Damage : %f"), finalDamage);
 
-		UGameplayStatics::ApplyDamage(OtherActor, finalDamage, nullptr, this, nullptr);
+		if (!PlayerCharacter) return;
+		if (!PlayerCharacter->GetController()) return;
+
+		UGameplayStatics::ApplyDamage(OtherActor, finalDamage, PlayerCharacter->GetController(), PlayerCharacter, nullptr);
 		DamagedActors.AddUnique(OtherActor);
 	}
 }

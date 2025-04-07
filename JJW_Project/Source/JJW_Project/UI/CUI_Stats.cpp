@@ -44,6 +44,8 @@ void UCUI_Stats::NativeConstruct()
 	OnDefenseIncremented.AddDynamic(StatComponent, &UCStatComponent::IncrementStat);
 	OnDefenseDecremented.AddDynamic(StatComponent, &UCStatComponent::DecrementStat);
 
+	StatComponent->OnStatPointUpdate.AddDynamic(this, &UCUI_Stats::OnUpdateAvailableStatPoint);
+	
 
 	StatUIInitialization();
 }
@@ -85,8 +87,14 @@ void UCUI_Stats::OnDefenseDecrementation()
 		OnDefenseDecremented.Broadcast(FName("Defense"));
 
 	DefenseValueText->SetText(FText::AsNumber(StatComponent->GetStatStructure().Defense));
-
 }
+
+void UCUI_Stats::OnUpdateAvailableStatPoint(uint8 InValue)
+{
+	StatPointsText->SetText(FText::AsNumber(InValue));
+}
+
+
 
 
 

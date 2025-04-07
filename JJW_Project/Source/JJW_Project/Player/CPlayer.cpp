@@ -129,7 +129,7 @@ void ACPlayer::ToggleStatMenu()
 void ACPlayer::OnPlayerTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
 {
 	float defense = CPlayerState->GetStatComponent()->GetStatStructure().Defense;
-	float minimalDamage= FMath::Clamp(Damage - defense, 0, 9999);
+	float minimalDamage = FMath::Clamp(Damage - defense, 0, 9999);
 
 	CurrentHealth = FMath::Clamp(CurrentHealth - minimalDamage, 0.f, MaxHealth);
 }
@@ -200,7 +200,6 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	if (IA_InventoryAction)
 		enhancedInput->BindAction(IA_InventoryAction, ETriggerEvent::Started, this, &ACPlayer::ToggleInventoryMenu);
 
-	if(IA_StatAction)
+	if (IA_StatAction)
 		enhancedInput->BindAction(IA_StatAction, ETriggerEvent::Started, this, &ACPlayer::ToggleStatMenu);
 }
-

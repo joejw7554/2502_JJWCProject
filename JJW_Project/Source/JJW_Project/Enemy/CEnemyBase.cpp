@@ -6,6 +6,8 @@
 #include "Item/CItemBase.h"
 #include "Components/CItemFactoryComponent.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Player/CPlayerState.h"
+#include "Stats/CStatComponent.h"
 
 ACEnemyBase::ACEnemyBase()
 {
@@ -49,6 +51,16 @@ void ACEnemyBase::OnEnemyTakeAnyDamage(AActor* DamagedActor, float Damage, const
 	if (IsDead())
 	{
 		DropItem();
+		if (InstigatedBy)
+		{
+			ACPlayerState* playerState =(InstigatedBy->GetPlayerState<ACPlayerState>());
+			if (!playerState) return;
+
+			playerState->GetStatComponent()->AddPlayerEXP(EXPValue);
+		}
 		Dead();
+
+
+		//Give EXP TO Player
 	}
 }

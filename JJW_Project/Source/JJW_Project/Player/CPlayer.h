@@ -31,6 +31,8 @@ public: //Getter
 	FORCEINLINE void IncreamentHealth(float InHealth) { SetCurrentHealth(InHealth); }
 	FORCEINLINE class ACPlayerState* GetPlayerState() { return CPlayerState; }
 
+	
+
 
 private:
 	FORCEINLINE void SetCurrentHealth(float InHealth)
@@ -126,6 +128,7 @@ private:
 	UPROPERTY(EditAnywhere)
 	float CurrentHealth = MaxHealth;
 
+	//Cached
 	UPROPERTY()
 	class ACPlayerState* CPlayerState;
 
