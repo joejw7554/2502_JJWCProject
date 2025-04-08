@@ -48,6 +48,9 @@ private:
 	UFUNCTION()
 	void OnUpdateAvailableStatPoint(uint8 InValue);
 
+	UFUNCTION()
+	void OnEXPBarUpdate(float InPercent);
+
 private:
 	UPROPERTY(meta = (BindWidget))
 	class UTextBlock* StrengthValueText;

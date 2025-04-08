@@ -6,6 +6,7 @@
 #include "CStatComponent.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FStatPointUpdate, uint8, InValue);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FEXPUpdate, float, InPercent);
 
 UCLASS()
 class JJW_PROJECT_API UCStatComponent : public UActorComponent
@@ -14,10 +15,11 @@ class JJW_PROJECT_API UCStatComponent : public UActorComponent
 
 public:
 	FStatPointUpdate OnStatPointUpdate;
+	FEXPUpdate OnEXPUpdate;
 
-public:	
+public:
 	UCStatComponent();
-	
+
 	UFUNCTION()
 	void IncrementStat(FName InStat);
 
@@ -28,15 +30,17 @@ public:
 
 	void AddPlayerEXP(float InEXP);
 
+	float GetCurrentEXPPercent() { return CurrentEXP / MaxEXP; }
+
 protected:
 	virtual void BeginPlay() override;
 
 	void ExtendMaxEXP();
-public:	
+public:
 	//virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	FORCEINLINE FStatsStructure const GetStatStructure() { return StatStructure; }
-		
+
 private:
 	UPROPERTY(EditDefaultsOnly)
 	FStatsStructure StatStructure;

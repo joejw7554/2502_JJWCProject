@@ -1,6 +1,7 @@
 #include "UI/CUI_Stats.h"
 #include "Components/TextBlock.h"
 #include "Components/Button.h"
+#include "Components/ProgressBar.h"
 
 #include "Player/CPlayerState.h"
 #include "Stats/CStatComponent.h"
@@ -44,6 +45,7 @@ void UCUI_Stats::NativeConstruct()
 	OnDefenseIncremented.AddDynamic(StatComponent, &UCStatComponent::IncrementStat);
 	OnDefenseDecremented.AddDynamic(StatComponent, &UCStatComponent::DecrementStat);
 
+	StatComponent->OnEXPUpdate.AddDynamic(this, &UCUI_Stats::OnEXPBarUpdate);
 	StatComponent->OnStatPointUpdate.AddDynamic(this, &UCUI_Stats::OnUpdateAvailableStatPoint);
 	
 
@@ -92,6 +94,11 @@ void UCUI_Stats::OnDefenseDecrementation()
 void UCUI_Stats::OnUpdateAvailableStatPoint(uint8 InValue)
 {
 	StatPointsText->SetText(FText::AsNumber(InValue));
+}
+
+void UCUI_Stats::OnEXPBarUpdate(float InPercent)
+{
+	EXPBar->SetPercent(InPercent);
 }
 
 
