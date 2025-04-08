@@ -78,14 +78,13 @@ void ACWeaponBase::OnWeaponBeginOverlap(UPrimitiveComponent* OverlappedComponent
 		ACPlayerState* playerState = PlayerCharacter->GetPlayerState();
 		if (!playerState) return;
 
-		UCStatComponent* statComponent = playerState->GetStatComponent();
-		if (!statComponent) return;
+		UCStatComponent* statCompo = playerState->GetStatComponent();
+		if (!statCompo) return;
 
-		FStatsStructure statStructure = statComponent->GetStatStructure();
 
-		float strength = statStructure.Strength;
+		float strength = statCompo->GetStatValue(FName("Strength"));
 		float finalDamage = Damage + strength;
-		UE_LOG(LogTemp, Warning, TEXT("Damage : %f"), finalDamage);
+		UE_LOG(LogTemp, Warning, TEXT("Total Damage : %f"), finalDamage);
 
 		if (!PlayerCharacter) return;
 		if (!PlayerCharacter->GetController()) return;

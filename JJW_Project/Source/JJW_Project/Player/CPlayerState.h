@@ -15,8 +15,6 @@ public:
 
 	class UCStatComponent* GetStatComponent() { return StatComponent; }
 
-
-
 protected:
 	virtual void BeginPlay() override;
 

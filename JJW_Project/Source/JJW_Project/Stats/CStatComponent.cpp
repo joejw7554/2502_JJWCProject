@@ -8,9 +8,7 @@ UCStatComponent::UCStatComponent()
 
 void UCStatComponent::IncrementStat(FName InStat)
 {
-
 	if (AvailableStatPoint <= 0) return;
-
 
 	if (InStat == "Strength")
 	{
@@ -88,4 +86,63 @@ void UCStatComponent::ExtendMaxEXP()
 {
 	CurrentEXP -= MaxEXP; // 현재 경험치에서 MaxEXP를 빼서 남은 경험치 저장
 	MaxEXP *= MaxEXPIncrement; // MaxEXP를 증가
+}
+
+void UCStatComponent::ApplyBuff(FName StatName, float BuffAmount, float Duration)
+{
+	TemporaryStatBonuses.FindOrAdd(StatName) += BuffAmount;
+
+	FTimerHandle* timer = BuffTimers.Find(StatName);
+	FTimerManager& timerManager = GetWorld()->GetTimerManager();
+	if (timer && timerManager.IsTimerActive(*timer))
+	{
+		timerManager.ClearTimer(*timer);
+	}
+
+
+	FTimerHandle newTimer;
+	BuffTimers.Add(StatName, newTimer);
+	timerManager.SetTimer(newTimer, [this, StatName]()
+		{
+			RemoveBuff(StatName);
+		}, Duration, false);
+}
+
+void UCStatComponent::RemoveBuff(FName StatName)
+{
+	FTimerHandle* timer = BuffTimers.Find(StatName);
+	FTimerManager& timerManager = GetWorld()->GetTimerManager();
+
+	if (timer)
+	{
+		timerManager.ClearTimer(*timer);
+		BuffTimers.Remove(StatName);
+		TemporaryStatBonuses.Remove(StatName);
+		UE_LOG(LogTemp, Warning, TEXT("Buff %s removed"), *StatName.ToString());
+	}
+}
+
+float UCStatComponent::GetStatValue(FName StatName) const
+{
+	float BaseValue = 0.f;
+
+	if (StatName == "Strength")
+	{
+		BaseValue = StatStructure.Strength;
+	}
+	else if (StatName == "Defense")
+	{
+		BaseValue = StatStructure.Defense;
+	}
+
+	float BonusValue =0.f;
+
+	if (TemporaryStatBonuses.Contains(StatName))
+	{
+		BonusValue = TemporaryStatBonuses[StatName];
+	}
+
+	UE_LOG(LogTemp, Warning, TEXT("Base Stats Value: %f, Buff Value: %f"), BaseValue, BonusValue);
+
+	return BaseValue + BonusValue; // 기본 값 + 임시 버프 값 반환
 }

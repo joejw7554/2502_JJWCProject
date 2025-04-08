@@ -32,19 +32,30 @@ public:
 
 	float GetCurrentEXPPercent() { return CurrentEXP / MaxEXP; }
 
+	//For UI
+	FORCEINLINE FStatsStructure const& GetStatStructure() { return StatStructure; }
+
+	//For Combat
+
 protected:
 	virtual void BeginPlay() override;
 
 	void ExtendMaxEXP();
-public:
-	//virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-	FORCEINLINE FStatsStructure const GetStatStructure() { return StatStructure; }
 
 private:
 	UPROPERTY(EditDefaultsOnly)
 	FStatsStructure StatStructure;
 
+	TMap<FName, FTimerHandle> BuffTimers; // 스탯 이름과 타이머를 매핑
+	TMap<FName, float> TemporaryStatBonuses; // 스탯 이름과 보너스를 매핑
+
+public:
+	void ApplyBuff(FName StatName, float BuffAmount, float Duration);
+	void RemoveBuff(FName StatName);
+	float GetStatValue(FName StatName) const;
+
+
+private:
 	UPROPERTY(VisibleAnywhere)
 	uint8 CurrentLevel = 1;
 

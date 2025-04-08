@@ -20,7 +20,6 @@ UCInventoryComponent::UCInventoryComponent()
 		{
 			slot->ClearSlotData();
 			InventorySlots.Add(slot);
-			//여기서 Slot 이랑 Slot UI 바인딩 타이밍이 될려나? 그래서 BeginPlay에서 바인딩을할꺼임
 
 		}
 	}
@@ -40,7 +39,6 @@ bool UCInventoryComponent::AddItemToInventory(FItemStructure* InItemData)
 	{
 		current = slot->GetItemData();
 
-		//일단 같은 아이템이 있는지 없는지부터 순회
 		if (!slot->IsEmpty())
 		{
 			if (current->ItemID == InItemData->ItemID &&InItemData->bStackable)
