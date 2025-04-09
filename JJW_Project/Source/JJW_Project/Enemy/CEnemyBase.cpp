@@ -6,8 +6,12 @@
 #include "Item/CItemBase.h"
 #include "Components/CItemFactoryComponent.h"
 #include "Components/SkeletalMeshComponent.h"
+
+
 #include "Player/CPlayerState.h"
 #include "Stats/CStatComponent.h"
+#include "Components/CWeaponComponent.h"
+#include "CAIController.h"
 
 ACEnemyBase::ACEnemyBase()
 {
@@ -17,6 +21,14 @@ ACEnemyBase::ACEnemyBase()
 
 	GetMesh()->SetRelativeLocation(FVector(0, 0, -90));
 	GetMesh()->SetRelativeRotation(FRotator(0, -90, 0));
+
+	WeaponComponent = CreateDefaultSubobject<UCWeaponComponent>(TEXT("WeaponComponent"));
+
+	ConstructorHelpers::FClassFinder<ACAIController> AI_controller(L"/Script/Engine.Blueprint'/Game/Blueprints/Enemy/BP_CAIController.BP_CAIController_C'");
+	if (AI_controller.Succeeded())
+	{
+		AIControllerClass = AI_controller.Class;
+	}
 }
 
 void ACEnemyBase::BeginPlay()
@@ -59,8 +71,5 @@ void ACEnemyBase::OnEnemyTakeAnyDamage(AActor* DamagedActor, float Damage, const
 			playerState->GetStatComponent()->AddPlayerEXP(EXPValue);
 		}
 		Dead();
-
-
-		//Give EXP TO Player
 	}
 }

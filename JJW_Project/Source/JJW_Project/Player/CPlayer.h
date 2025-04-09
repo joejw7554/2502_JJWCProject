@@ -9,7 +9,7 @@
 
 #include "CPlayer.generated.h"
 
-#define TESTHEALTH 10;
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FHealthBarUpdate, float, HealthPercent);
 
 UCLASS()
 class JJW_PROJECT_API ACPlayer : public ACharacter
@@ -17,6 +17,8 @@ class JJW_PROJECT_API ACPlayer : public ACharacter
 	GENERATED_BODY()
 
 public:
+	FHealthBarUpdate OnHealthBarUpdate;
+
 	ACPlayer();
 
 public:
@@ -31,11 +33,17 @@ public: //Getter
 	FORCEINLINE void IncreamentHealth(float InHealth) { SetCurrentHealth(InHealth); }
 	FORCEINLINE class ACPlayerState* GetPlayerState() { return CPlayerState; }
 
+	
 
 private:
+	UFUNCTION(BlueprintCallable)
 	FORCEINLINE void SetCurrentHealth(float InHealth)
 	{
-		CurrentHealth = FMath::Clamp(CurrentHealth + InHealth, 0.f, MaxHealth);
+		TargetHealth = FMath::Clamp(CurrentHealth + InHealth, 0.f, MaxHealth);
+		bInterpolatingHealth = true;
+
+		if (OnHealthBarUpdate.IsBound())
+			OnHealthBarUpdate.Broadcast(GetCurrentHealthPercent());
 	}
 
 protected:
@@ -126,6 +134,11 @@ private:
 	UPROPERTY(EditAnywhere)
 	float CurrentHealth = MaxHealth;
 
+	UPROPERTY(VisibleAnywhere)
+	float TargetHealth;
+
+	UPROPERTY(VisibleAnywhere)
+	bool bInterpolatingHealth = false;
 	//Cached
 	UPROPERTY()
 	class ACPlayerState* CPlayerState;

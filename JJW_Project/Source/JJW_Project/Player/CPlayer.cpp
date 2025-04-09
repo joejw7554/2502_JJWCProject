@@ -66,10 +66,10 @@ void ACPlayer::BeginPlay()
 	Movement->DisableControlRotation();
 
 	HUD = GetWorld()->GetFirstPlayerController()->GetHUD<ACHUD>();
-
-
-	OnTakeAnyDamage.AddDynamic(this, &ACPlayer::OnPlayerTakeDamage);
 }
+
+
+
 
 void ACPlayer::InitializePlayerEnhnacedInput()
 {
@@ -132,12 +132,29 @@ void ACPlayer::OnPlayerTakeDamage(AActor* DamagedActor, float Damage, const UDam
 	float minimalDamage = FMath::Clamp(Damage - defense, 0, 9999);
 
 	if(minimalDamage >0)
-	CurrentHealth = FMath::Clamp(CurrentHealth - minimalDamage, 0.f, MaxHealth);
+		SetCurrentHealth(-minimalDamage);
+
+	if(OnHealthBarUpdate.IsBound())
+		OnHealthBarUpdate.Broadcast(GetCurrentHealthPercent());
+	
 }
 
 void ACPlayer::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	if (bInterpolatingHealth)
+	{
+		CurrentHealth = FMath::FInterpTo(CurrentHealth, TargetHealth, DeltaTime, 1.f);
+		if (FMath::IsNearlyEqual(CurrentHealth, TargetHealth, 0.01f))
+		{
+			bInterpolatingHealth = false;
+			CurrentHealth = TargetHealth;
+		}
+
+		if (OnHealthBarUpdate.IsBound())
+			OnHealthBarUpdate.Broadcast(GetCurrentHealthPercent());
+	}
 }
 
 void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)

@@ -26,8 +26,9 @@ public:
 		GetStatsWidget()->ToggleStats();
 	}
 
-	UCUI_Inventory* GetInventoryWidget() { return InventoryWidgetUI; }
-	UCUI_Stats* GetStatsWidget() { return StatsWidgetUI; }
+	FORCEINLINE UCUI_Inventory* GetInventoryWidget() { return InventoryWidgetUI; }
+	FORCEINLINE UCUI_Stats* GetStatsWidget() { return StatsWidgetUI; }
+	FORCEINLINE class UCUI_HealthBar* GetHealthBarWidget() { return HealthBarUI; }
 
 private:
 	UPROPERTY(meta = (BindWidget))
@@ -35,4 +36,7 @@ private:
 
 	 UPROPERTY(meta = (BindWidget))
 	 UCUI_Stats* StatsWidgetUI;
+
+	 UPROPERTY(meta = (BindWidget))
+	 class UCUI_HealthBar* HealthBarUI;
 };

@@ -45,4 +45,7 @@ private:
 
 	UPROPERTY(EditDefaultsOnly)
 	float EXPValue = 10.f;
+
+	UPROPERTY(VisibleAnywhere)
+	class UCWeaponComponent* WeaponComponent;
 };
