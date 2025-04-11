@@ -68,9 +68,6 @@ void ACPlayer::BeginPlay()
 	HUD = GetWorld()->GetFirstPlayerController()->GetHUD<ACHUD>();
 }
 
-
-
-
 void ACPlayer::InitializePlayerEnhnacedInput()
 {
 	APlayerController* playerController = Cast<APlayerController>(GetController());

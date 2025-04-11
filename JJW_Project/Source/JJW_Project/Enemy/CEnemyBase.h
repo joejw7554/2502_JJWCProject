@@ -3,6 +3,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Item/CItemStructure.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "CEnemyBase.generated.h"
 
 UENUM(BlueprintType)
@@ -18,7 +19,9 @@ class JJW_PROJECT_API ACEnemyBase : public ACharacter
 
 public:
 	ACEnemyBase();
-	//virtual void Tick(float DeltaTime) override;
+
+	void SetWalkMode() { GetCharacterMovement()->MaxWalkSpeed = RunSpeed; }
+	void SetRunMode() { GetCharacterMovement()->MaxWalkSpeed = WalkSpeed; }
 
 protected:
 	virtual void BeginPlay() override;
@@ -37,7 +40,19 @@ private:
 	EEnemyType EnemyType = EEnemyType::Normal;
 
 private:
+	UPROPERTY(VisibleAnywhere)
+	class UCapsuleComponent* WeaponLCollision;
+
+	UPROPERTY(VisibleAnywhere)
+	class UCapsuleComponent* WeaponRCollision;
+
 	UPROPERTY(EditDefaultsOnly)
+	float WalkSpeed = 200.f;
+
+	UPROPERTY(EditDefaultsOnly)
+	float RunSpeed = 400.f;
+
+		UPROPERTY(EditDefaultsOnly)
 	float MaxHealth = 100.f;
 
 	UPROPERTY()

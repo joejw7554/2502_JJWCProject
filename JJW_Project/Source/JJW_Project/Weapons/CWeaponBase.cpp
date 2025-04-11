@@ -15,7 +15,7 @@
 #include "Stats/CStatComponent.h"
 #include "Player/CPlayer.h"
 #include "Player/CPlayerState.h"
-
+#include "Enemy/CEnemyBase.h"
 
 
 ACWeaponBase::ACWeaponBase()
@@ -48,7 +48,20 @@ void ACWeaponBase::BeginPlay()
 {
 	Super::BeginPlay();
 
-	PlayerCharacter = Cast<ACPlayer>(GetOwner());
+	if (GetOwner()->IsA<ACPlayer>())
+	{
+		PlayerCharacter = Cast<ACPlayer>(GetOwner());
+		bIsOwnerPlayer = true;
+	}
+	else if (GetOwner()->IsA<ACEnemyBase>())
+	{
+		EnemyCharacter = Cast<ACEnemyBase>(GetOwner());
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Weapon Owner is not Player or Enemy"));
+		return;
+	}
 
 	if (RightHandWeaponMesh)
 	{
@@ -68,29 +81,81 @@ void ACWeaponBase::BeginPlay()
 }
 
 
+//void ACWeaponBase::OnWeaponBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+//{
+//
+//	if (OtherActor->ActorHasTag("Enemy") && !DamagedActors.Contains(OtherActor))
+//	{
+//		if (!PlayerCharacter) return;
+//		ACPlayerState* playerState = PlayerCharacter->GetPlayerState();
+//		if (!playerState) return;
+//
+//		UCStatComponent* statCompo = playerState->GetStatComponent();
+//		if (!statCompo) return;
+//
+//
+//		float strength = statCompo->GetStatValue(FName("Strength"));
+//		float finalDamage = Damage + strength;
+//		UE_LOG(LogTemp, Warning, TEXT("Total Damage : %f"), finalDamage);
+//
+//		if (!PlayerCharacter) return;
+//		if (!PlayerCharacter->GetController()) return;
+//
+//		UGameplayStatics::ApplyDamage(OtherActor, finalDamage, PlayerCharacter->GetController(), PlayerCharacter, nullptr);
+//		DamagedActors.AddUnique(OtherActor);
+//	}
+//
+//}
+
 void ACWeaponBase::OnWeaponBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (!PlayerCharacter) return;
+	if (!GetOwner() || DamagedActors.Contains(OtherActor) || OtherActor == GetOwner()) return;
 
-	if (OtherActor->ActorHasTag("Enemy") && !DamagedActors.Contains(OtherActor))
+	bool bIsEnemyTarget = OtherActor->ActorHasTag("Enemy");
+	bool bIsPlayerTarget = OtherActor->ActorHasTag("Player");
+
+	if (bIsOwnerPlayer && bIsEnemyTarget)
 	{
-		if (!PlayerCharacter) return;
-		ACPlayerState* playerState = PlayerCharacter->GetPlayerState();
-		if (!playerState) return;
+		float FinalDamage = CalculateDamageForPlayer();
+		ApplyDamage(OtherActor, FinalDamage, PlayerCharacter);
+	}
+	else if (!bIsOwnerPlayer && bIsPlayerTarget)
+	{
+		ApplyDamage(OtherActor, Damage, EnemyCharacter);
+	}
+	
+}
 
-		UCStatComponent* statCompo = playerState->GetStatComponent();
-		if (!statCompo) return;
+float ACWeaponBase::CalculateDamageForPlayer() const
+{
+	float FinalDamage = Damage;
 
+	if (PlayerCharacter)
+	{
+		ACPlayerState* PlayerState = PlayerCharacter->GetPlayerState();
+		if (PlayerState)
+		{
+			UCStatComponent* StatComp = PlayerState->GetStatComponent();
+			if (StatComp)
+			{
+				float Strength = StatComp->GetStatValue(FName("Strength"));
+				FinalDamage += Strength;
+			}
+		}
+	}
 
-		float strength = statCompo->GetStatValue(FName("Strength"));
-		float finalDamage = Damage + strength;
-		UE_LOG(LogTemp, Warning, TEXT("Total Damage : %f"), finalDamage);
+	UE_LOG(LogTemp, Warning, TEXT("Player inflicted damage: %f"), FinalDamage);
 
-		if (!PlayerCharacter) return;
-		if (!PlayerCharacter->GetController()) return;
+	return FinalDamage;
+}
 
-		UGameplayStatics::ApplyDamage(OtherActor, finalDamage, PlayerCharacter->GetController(), PlayerCharacter, nullptr);
-		DamagedActors.AddUnique(OtherActor);
+void ACWeaponBase::ApplyDamage(AActor* TargetActor, float DamageAmount, ACharacter* DamageCauser) 
+{
+	if (TargetActor && DamageCauser)
+	{
+		UGameplayStatics::ApplyDamage(TargetActor, DamageAmount, DamageCauser->GetController(), DamageCauser, nullptr);
+		DamagedActors.AddUnique(TargetActor);
+		UE_LOG(LogTemp, Warning, TEXT("Damage Applied to %s: %f"), *TargetActor->GetName(), DamageAmount);
 	}
 }
 

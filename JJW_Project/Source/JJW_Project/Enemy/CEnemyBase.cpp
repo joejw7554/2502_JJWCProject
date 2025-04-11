@@ -1,17 +1,18 @@
 #include "Enemy/CEnemyBase.h"
 
-#include "Components/CapsuleComponent.h"
 
-#include "Framework/CGameMode.h"
 #include "Item/CItemBase.h"
 #include "Components/CItemFactoryComponent.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Components/CapsuleComponent.h"
+#include "Kismet/GameplayStatics.h"
 
-
+#include "Framework/CGameMode.h"
 #include "Player/CPlayerState.h"
 #include "Stats/CStatComponent.h"
 #include "Components/CWeaponComponent.h"
 #include "CAIController.h"
+#include "Components/CapsuleComponent.h"
 
 ACEnemyBase::ACEnemyBase()
 {
@@ -29,6 +30,8 @@ ACEnemyBase::ACEnemyBase()
 	{
 		AIControllerClass = AI_controller.Class;
 	}
+
+	SetWalkMode();
 }
 
 void ACEnemyBase::BeginPlay()
@@ -36,6 +39,8 @@ void ACEnemyBase::BeginPlay()
 	Super::BeginPlay();
 
 	OnTakeAnyDamage.AddDynamic(this, &ACEnemyBase::OnEnemyTakeAnyDamage);
+	GetMesh()->HideBoneByName(TEXT("weapon_r"), EPhysBodyOp::PBO_None);
+	GetMesh()->HideBoneByName(TEXT("weapon_l"), EPhysBodyOp::PBO_None);
 }
 
 void ACEnemyBase::DropItem()

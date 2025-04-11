@@ -7,12 +7,14 @@
 #include "../Components/CWeaponComponent.h"
 #include "Stats/CStatStructure.h"
 
+#include "GenericTeamAgentInterface.h"
+
 #include "CPlayer.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FHealthBarUpdate, float, HealthPercent);
 
 UCLASS()
-class JJW_PROJECT_API ACPlayer : public ACharacter
+class JJW_PROJECT_API ACPlayer : public ACharacter, public IGenericTeamAgentInterface
 {
 	GENERATED_BODY()
 
@@ -25,6 +27,8 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	FGenericTeamId GetGenericTeamId() const override { return FGenericTeamId(TeamID); }
 
 public: //Getter
 	FORCEINLINE UCWeaponComponent* GetWeaponComponent() { return Weapon; }
@@ -119,6 +123,10 @@ protected:
 	class UCameraComponent* FollowCamera;
 
 private:
+
+	UPROPERTY(EditDefaultsOnly)
+	uint8 TeamID = 1;
+
 	UPROPERTY(VisibleAnywhere)
 	FRotator CursorTargetRotation;
 

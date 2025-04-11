@@ -8,9 +8,29 @@ UCLASS()
 class JJW_PROJECT_API ACAIController : public AAIController
 {
 	GENERATED_BODY()
-	
+
+public:
+	ACAIController();
+
+	UFUNCTION()
+	virtual void OnEnemyPerceptionUpdated(const TArray<AActor*>& UpdatedActors);
+
+	virtual FGenericTeamId GetGenericTeamId() const override { return FGenericTeamId(TeamID); }
+
+protected:
+	virtual void OnPossess(APawn* InPawn) override;
+	virtual void BeginPlay() override;
 
 protected:
 	UPROPERTY(EditDefaultsOnly)
 	UBehaviorTree* EnemyBT;
+
+	UPROPERTY(VisibleAnywhere)
+	class UAIPerceptionComponent* Perception;
+
+	UPROPERTY(VisibleAnywhere)
+	class UAISenseConfig_Sight* SightConfig;
+
+private:
+	uint8 TeamID = 2;
 };
