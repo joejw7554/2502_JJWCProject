@@ -22,9 +22,6 @@ protected:
 	virtual void BeginPlay() override;
 
 protected:
-	UPROPERTY(EditDefaultsOnly)
-	UBehaviorTree* EnemyBT;
-
 	UPROPERTY(VisibleAnywhere)
 	class UAIPerceptionComponent* Perception;
 
@@ -33,4 +30,7 @@ protected:
 
 private:
 	uint8 TeamID = 2;
+
+	UPROPERTY()
+	class ACEnemyBase* Enemy;
 };

@@ -9,16 +9,19 @@ UCMovementComponent::UCMovementComponent()
 	PrimaryComponentTick.bCanEverTick = true;
 }
 
+//p
 void UCMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
+	
+	//Detach These codes to Player
 	if (bCanMove == true)
 		MoveToDestination();
 
 	CalculateCursorDirection();
 }
 
+//p
 void UCMovementComponent::MoveToDestination()
 {
 	if (IsArrivedAtDestination(OwnerCharacter->GetActorLocation(), LastInputLocation))
@@ -29,6 +32,7 @@ void UCMovementComponent::MoveToDestination()
 	OwnerCharacter->AddMovementInput(direction, 1);
 }
 
+//p
 void UCMovementComponent::CalculateCursorDirection()
 {
 	APlayerController* controller = Cast<APlayerController>(OwnerCharacter->GetController());
@@ -44,28 +48,28 @@ void UCMovementComponent::CalculateCursorDirection()
 	CursorTargetRotation = cursorTowardRotation;
 }
 
+//player
 bool UCMovementComponent::IsArrivedAtDestination(FVector CurrentLocation, FVector TargetLocation)
 {
 	return FVector::DistXY(CurrentLocation, TargetLocation) < Tolerance;
 }
 
-
+//p
 void UCMovementComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
 	OwnerCharacter = Cast<ACPlayer>(GetOwner());
-
 	if (!OwnerCharacter) return;
 
 	PlayerController = OwnerCharacter->GetController<APlayerController>();
-
 	if (!PlayerController) return;
 
 	PlayerController->bShowMouseCursor = true;
 	OwnerCharacter->GetCharacterMovement()->RotationRate = FRotator(0, 540.f, 0);
 }
 
+//p
 void UCMovementComponent::MoveAction(const FInputActionValue& Value)
 {
 	if (!PlayerController) return;
@@ -79,22 +83,12 @@ void UCMovementComponent::MoveAction(const FInputActionValue& Value)
 	EnableMovement();
 }
 
-void UCMovementComponent::LookAction(const FInputActionValue& Value)
-{
-	FVector2D val = Value.Get<FVector2D>();
-
-	OwnerCharacter->AddControllerYawInput(val.X);
-	OwnerCharacter->AddControllerPitchInput(-val.Y);
-}
-
+//Fixable
 void UCMovementComponent::Dodge()
 {
 	if (!OwnerCharacter) return;
 
 	if (OwnerCharacter->GetMesh()->GetAnimInstance()->IsAnyMontagePlaying()) return;
-
-	ACPlayer* player = Cast<ACPlayer>(OwnerCharacter);
-	if (!player) return;
 
 	RotateActorToCusorDirection();
 
@@ -104,18 +98,14 @@ void UCMovementComponent::Dodge()
 	DisableMovment();
 }
 
+//p
 void UCMovementComponent::RotateActorToCusorDirection()
 {
 	FRotator RotateTarget = CursorTargetRotation;
 	OwnerCharacter->SetActorRotation(RotateTarget, ETeleportType::ResetPhysics);
 }
 
-//void UCMovementComponent::EnableControlRotation()
-//{
-//	OwnerCharacter->GetCharacterMovement()->bOrientRotationToMovement = false;
-//	OwnerCharacter->bUseControllerRotationYaw = true;
-//}
-
+//?
 void UCMovementComponent::DisableControlRotation()
 {
 	OwnerCharacter->GetCharacterMovement()->bOrientRotationToMovement = true;

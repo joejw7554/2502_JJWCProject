@@ -165,9 +165,6 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	if (IA_MoveAction)
 		enhancedInput->BindAction(IA_MoveAction, ETriggerEvent::Triggered, Movement, &UCMovementComponent::MoveAction);
 
-	if (IA_LookAction)
-		enhancedInput->BindAction(IA_LookAction, ETriggerEvent::Triggered, Movement, &UCMovementComponent::LookAction);
-
 	if (IA_DodgeAction)
 		enhancedInput->BindAction(IA_DodgeAction, ETriggerEvent::Started, Movement, &UCMovementComponent::Dodge);
 

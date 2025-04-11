@@ -74,10 +74,6 @@ protected:
 	//Movement Action///////////////////////////////
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	class UInputAction* IA_MoveAction;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Input")
-	class UInputAction* IA_LookAction;
-
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	class UInputAction* IA_DodgeAction;
 

@@ -22,9 +22,12 @@ public:
 
 	void SetWalkMode() { GetCharacterMovement()->MaxWalkSpeed = RunSpeed; }
 	void SetRunMode() { GetCharacterMovement()->MaxWalkSpeed = WalkSpeed; }
+	class UBehaviorTree* GetBehaviorTree() { return BehaviorTree; }
+	class ACWeaponBase* GetWeapon() { return Weapon; }
 
 protected:
 	virtual void BeginPlay() override;
+	virtual void SpawnWeapon() {}
 
 protected:
 	virtual void DropItem();
@@ -35,17 +38,22 @@ protected:
 	UFUNCTION()
 	void OnEnemyTakeAnyDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser);
 
+protected:
+	UPROPERTY(EditDefaultsOnly)
+	class UCWeaponAsset* WeaponData;
+
+	UPROPERTY(EditDefaultsOnly)
+	class UBehaviorTree* BehaviorTree;
+
+	UPROPERTY()
+	class ACWeaponBase* Weapon;
+
+
 private:
 	UPROPERTY(EditDefaultsOnly)
 	EEnemyType EnemyType = EEnemyType::Normal;
 
 private:
-	UPROPERTY(VisibleAnywhere)
-	class UCapsuleComponent* WeaponLCollision;
-
-	UPROPERTY(VisibleAnywhere)
-	class UCapsuleComponent* WeaponRCollision;
-
 	UPROPERTY(EditDefaultsOnly)
 	float WalkSpeed = 200.f;
 
@@ -61,6 +69,4 @@ private:
 	UPROPERTY(EditDefaultsOnly)
 	float EXPValue = 10.f;
 
-	UPROPERTY(VisibleAnywhere)
-	class UCWeaponComponent* WeaponComponent;
 };

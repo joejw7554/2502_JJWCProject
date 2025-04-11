@@ -1,18 +1,16 @@
 #include "Enemy/CEnemyBase.h"
 
 
-#include "Item/CItemBase.h"
-#include "Components/CItemFactoryComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Kismet/GameplayStatics.h"
 
+#include "Item/CItemBase.h"
 #include "Framework/CGameMode.h"
 #include "Player/CPlayerState.h"
 #include "Stats/CStatComponent.h"
-#include "Components/CWeaponComponent.h"
+#include "Components/CItemFactoryComponent.h"
 #include "CAIController.h"
-#include "Components/CapsuleComponent.h"
 
 ACEnemyBase::ACEnemyBase()
 {
@@ -22,8 +20,6 @@ ACEnemyBase::ACEnemyBase()
 
 	GetMesh()->SetRelativeLocation(FVector(0, 0, -90));
 	GetMesh()->SetRelativeRotation(FRotator(0, -90, 0));
-
-	WeaponComponent = CreateDefaultSubobject<UCWeaponComponent>(TEXT("WeaponComponent"));
 
 	ConstructorHelpers::FClassFinder<ACAIController> AI_controller(L"/Script/Engine.Blueprint'/Game/Blueprints/Enemy/BP_CAIController.BP_CAIController_C'");
 	if (AI_controller.Succeeded())
@@ -39,8 +35,6 @@ void ACEnemyBase::BeginPlay()
 	Super::BeginPlay();
 
 	OnTakeAnyDamage.AddDynamic(this, &ACEnemyBase::OnEnemyTakeAnyDamage);
-	GetMesh()->HideBoneByName(TEXT("weapon_r"), EPhysBodyOp::PBO_None);
-	GetMesh()->HideBoneByName(TEXT("weapon_l"), EPhysBodyOp::PBO_None);
 }
 
 void ACEnemyBase::DropItem()

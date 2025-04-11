@@ -21,7 +21,6 @@ protected:
 
 
 public:
-	void LookAction(const struct FInputActionValue& Value);
 	void MoveAction(const struct FInputActionValue& Value);
 	void Dodge();
 
