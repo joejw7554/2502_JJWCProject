@@ -21,18 +21,18 @@ protected:
 
 
 public:
-	void MoveAction(const struct FInputActionValue& Value);
+	virtual void MoveAction(const struct FInputActionValue& Value);
 	void Dodge();
 
-	void RotateActorToCusorDirection();
+	virtual void RotateActor();
 
 	//void EnableControlRotation();
 	void DisableControlRotation();
 
 	FORCEINLINE FRotator GetCursorTargetRotation() { return CursorTargetRotation; }
 
-	FORCEINLINE void EnableMovement() { bCanMove = true; }
-	FORCEINLINE void DisableMovment() { bCanMove = false; }
+	FORCEINLINE virtual void EnableMovement() { bCanMove = true; }
+	FORCEINLINE virtual void DisableMovment() { bCanMove = false; }
 	FORCEINLINE bool CanMove() { return bCanMove; }
 	FORCEINLINE float GetMaxWalkSpeed() { return OwnerCharacter->GetCharacterMovement()->MaxWalkSpeed; }
 

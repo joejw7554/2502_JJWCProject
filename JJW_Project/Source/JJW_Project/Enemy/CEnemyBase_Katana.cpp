@@ -2,6 +2,14 @@
 #include "Weapons/CWeapon_Katana.h"
 #include "Weapons/CWeaponAsset.h"
 
+ACEnemyBase_Katana::ACEnemyBase_Katana()
+{
+	PrimaryActorTick.bCanEverTick = false;
+
+	WeaponComponent = CreateDefaultSubobject<UCWeaponComponent>(TEXT("WeaponComponent"));
+	MovementComponent = CreateDefaultSubobject<UCMovementComponent>(TEXT("MovementComponent"));
+}
+
 void ACEnemyBase_Katana::BeginPlay()
 {
 	Super::BeginPlay();
@@ -9,7 +17,7 @@ void ACEnemyBase_Katana::BeginPlay()
 	GetMesh()->HideBoneByName(TEXT("weapon_l"), EPhysBodyOp::PBO_None);
 	GetMesh()->HideBoneByName(TEXT("weapon_r"), EPhysBodyOp::PBO_None);
 
-	SpawnWeapon();
+	//SpawnWeapon();
 }
 
 void ACEnemyBase_Katana::SpawnWeapon()

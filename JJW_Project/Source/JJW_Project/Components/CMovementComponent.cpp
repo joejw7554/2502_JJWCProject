@@ -14,7 +14,6 @@ void UCMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 	
-	//Detach These codes to Player
 	if (bCanMove == true)
 		MoveToDestination();
 
@@ -90,7 +89,7 @@ void UCMovementComponent::Dodge()
 
 	if (OwnerCharacter->GetMesh()->GetAnimInstance()->IsAnyMontagePlaying()) return;
 
-	RotateActorToCusorDirection();
+	RotateActor();
 
 	if (AnimMontage_Dodge)
 			OwnerCharacter->PlayAnimMontage(AnimMontage_Dodge, PlayRate_Dodge);
@@ -99,7 +98,7 @@ void UCMovementComponent::Dodge()
 }
 
 //p
-void UCMovementComponent::RotateActorToCusorDirection()
+void UCMovementComponent::RotateActor()
 {
 	FRotator RotateTarget = CursorTargetRotation;
 	OwnerCharacter->SetActorRotation(RotateTarget, ETeleportType::ResetPhysics);

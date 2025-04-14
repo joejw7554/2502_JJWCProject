@@ -38,7 +38,7 @@ void UCSkillComponentBase::PerformSkill(bool bEnableCombo, int8 InComboIndex,  A
 			if (nextSection != NAME_None)
 			{
 				animInstance->Montage_JumpToSection(nextSection);
-				movementComp->RotateActorToCusorDirection();
+				movementComp->RotateActor();
 
 			}
 		}
@@ -46,7 +46,7 @@ void UCSkillComponentBase::PerformSkill(bool bEnableCombo, int8 InComboIndex,  A
 	else
 	{
 		InWeaponOwner->PlayAnimMontage(montage, playRate);
-		movementComp->RotateActorToCusorDirection();
+		movementComp->RotateActor();
 	}
 
 }

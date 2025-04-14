@@ -47,6 +47,7 @@ void UCWeaponComponent::SpawnWeapons(UCWeaponAsset* asset)
 	params.Instigator = OwnerCharacter;
 	params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
+
 	ACWeaponBase* weapon = GetWorld()->SpawnActor<ACWeaponBase>(asset->GetWeaponClass(), params);
 	if (!weapon) return;
 
