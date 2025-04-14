@@ -4,7 +4,8 @@
 
 #include "Weapons/CWeaponBase.h"
 #include "Weapons/CSkillStructure.h"
-#include "CMovementComponent.h"
+#include "Player/CMovementComponent_Player.h"
+
 
 UCSkillComponentBase::UCSkillComponentBase()
 {
@@ -26,7 +27,7 @@ void UCSkillComponentBase::PerformSkill(bool bEnableCombo, int8 InComboIndex,  A
 	UAnimInstance* animInstance = InWeaponOwner->GetMesh()->GetAnimInstance();
 	if (!animInstance) return;
 
-	UCMovementComponent* movementComp = InWeaponOwner->GetComponentByClass<UCMovementComponent>();
+	UCMovementComponent_Player* movementComp = InWeaponOwner->GetComponentByClass<UCMovementComponent_Player>();
 	if (!movementComp) return;
 
 

@@ -3,7 +3,6 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 
-#include "../Components/CMovementComponent.h"
 #include "../Components/CWeaponComponent.h"
 #include "Stats/CStatStructure.h"
 
@@ -126,11 +125,12 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	FRotator CursorTargetRotation;
 
-	UPROPERTY(VisibleAnywhere)
-	UCMovementComponent* Movement;
 
 	UPROPERTY(VisibleAnywhere)
 	UCWeaponComponent* Weapon;
+
+	//UPROPERTY(VisibleAnywhere)
+
 
 	UPROPERTY(EditAnywhere)
 	float MaxHealth = 100.f;

@@ -1,5 +1,5 @@
 #include "Item/Potions/CPotionBase_Speed.h"
-#include "Components/CMovementComponent.h"
+#include "Player/CMovementComponent_Player.h"
 #include "Player/CPlayer.h"
 
 void ACPotionBase_Speed::UseItem(ACPlayer* InOwner)
@@ -20,7 +20,7 @@ void ACPotionBase_Speed::UseItem(ACPlayer* InOwner)
 void ACPotionBase_Speed::IncreaseSpeed(ACPlayer* InOwner)
 {
 	if (!InOwner) return;
-	UCMovementComponent* movementComp= InOwner->GetComponentByClass<UCMovementComponent>();
+	UCMovementComponent_Player* movementComp= InOwner->GetComponentByClass<UCMovementComponent_Player>();
 	if (!movementComp) return;
 	
 	movementComp->SetBueffedWalkSpeed(PotionData.EffectValue);
