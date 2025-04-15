@@ -35,7 +35,7 @@ void UCMovementComponent_Player::CalculateCursorDirection()
 	cursorTowardRotation.Pitch = 0.f;
 	cursorTowardRotation.Roll = 0.f;
 
-	CursorTargetRotation = cursorTowardRotation;
+	RotationToTarget = cursorTowardRotation;
 }
 
 bool UCMovementComponent_Player::IsArrivedAtDestination(FVector CurrentLocation, FVector TargetLocation)
@@ -76,18 +76,12 @@ void UCMovementComponent_Player::Dodge()
 
 	if (OwnerCharacter->GetMesh()->GetAnimInstance()->IsAnyMontagePlaying()) return;
 
-	RotateActor();
+	RotateActor(RotationToTarget);
 
 	if (AnimMontage_Dodge)
 		OwnerCharacter->PlayAnimMontage(AnimMontage_Dodge, PlayRate_Dodge);
 
 	DisableMovment();
-}
-
-void UCMovementComponent_Player::RotateActor()
-{
-	FRotator RotateTarget = CursorTargetRotation;
-	OwnerCharacter->SetActorRotation(RotateTarget, ETeleportType::ResetPhysics);
 }
 
 void UCMovementComponent_Player::DisableControlRotation()

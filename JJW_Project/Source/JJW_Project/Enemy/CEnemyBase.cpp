@@ -11,6 +11,8 @@
 #include "Stats/CStatComponent.h"
 #include "Components/CItemFactoryComponent.h"
 #include "CAIController.h"
+#include "Components/CDamageUIComponent.h"
+#include "UI/CUI_Damage.h"
 
 ACEnemyBase::ACEnemyBase()
 {
@@ -21,12 +23,17 @@ ACEnemyBase::ACEnemyBase()
 	GetMesh()->SetRelativeLocation(FVector(0, 0, -90));
 	GetMesh()->SetRelativeRotation(FRotator(0, -90, 0));
 
-	ConstructorHelpers::FClassFinder<ACAIController> AI_controller(L"/Script/Engine.Blueprint'/Game/Blueprints/Enemy/BP_CAIController.BP_CAIController_C'");
+	ConstructorHelpers::FClassFinder<ACAIController> AI_controller(L"/Script/Engine.Blueprint'/Game/Blueprints/Enemy/AI/BP_CAIController.BP_CAIController_C'");
 	if (AI_controller.Succeeded())
 	{
 		AIControllerClass = AI_controller.Class;
 	}
 
+
+	DamageUIComponent = CreateDefaultSubobject<UCDamageUIComponent>(TEXT("DamageUIComponent"));
+	DamageUIComponent->SetupAttachment(RootComponent);
+	DamageUIComponent->SetWidgetSpace(EWidgetSpace::Screen);
+	DamageUIComponent->SetRelativeLocation(FVector(0, 0, 80.f));
 	SetWalkMode();
 }
 
@@ -34,7 +41,13 @@ void ACEnemyBase::BeginPlay()
 {
 	Super::BeginPlay();
 
+	CurrentHealth = MaxHealth;
 	OnTakeAnyDamage.AddDynamic(this, &ACEnemyBase::OnEnemyTakeAnyDamage);
+
+	DamageUI = Cast<UCUI_Damage>(DamageUIComponent->GetUserWidgetObject());
+	if (!DamageUI) return;
+
+	OnEnemyDamaged.AddDynamic(DamageUI, &UCUI_Damage::PlayDamageAnimation);
 }
 
 void ACEnemyBase::DropItem()
@@ -58,6 +71,7 @@ void ACEnemyBase::Dead()
 void ACEnemyBase::OnEnemyTakeAnyDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
 {
 	CurrentHealth = FMath::Clamp(CurrentHealth - Damage, 0.f, MaxHealth);
+	OnEnemyDamaged.Broadcast(Damage);
 
 	if (IsDead())
 	{

@@ -118,7 +118,6 @@ void UCStatComponent::RemoveBuff(FName StatName)
 		timerManager.ClearTimer(*timer);
 		BuffTimers.Remove(StatName);
 		TemporaryStatBonuses.Remove(StatName);
-		UE_LOG(LogTemp, Warning, TEXT("Buff %s removed"), *StatName.ToString());
 	}
 }
 
@@ -141,8 +140,6 @@ float UCStatComponent::GetStatValue(FName StatName) const
 	{
 		BonusValue = TemporaryStatBonuses[StatName];
 	}
-
-	UE_LOG(LogTemp, Warning, TEXT("Base Stats Value: %f, Buff Value: %f"), BaseValue, BonusValue);
 
 	return BaseValue + BonusValue; // 기본 값 + 임시 버프 값 반환
 }

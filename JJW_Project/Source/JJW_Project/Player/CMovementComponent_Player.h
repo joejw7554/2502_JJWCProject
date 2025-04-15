@@ -18,11 +18,8 @@ public:
 	virtual void MoveAction(const struct FInputActionValue& Value);
 	void Dodge();
 
-	virtual void RotateActor();
-
 	void DisableControlRotation();
 
-	FORCEINLINE FRotator GetCursorTargetRotation() { return CursorTargetRotation; }
 
 	FORCEINLINE float GetMaxWalkSpeed() { return OwnerCharacter->GetCharacterMovement()->MaxWalkSpeed; }
 
@@ -49,13 +46,11 @@ private:
 	float PlayRate_Dodge = 1.5f;
 
 private:
-	ACharacter* OwnerCharacter;
-
 	APlayerController* PlayerController;
 
 	//Montage
 private:
-	FRotator CursorTargetRotation;
+	
 
 	bool bIsRootMotionMoving = false;
 

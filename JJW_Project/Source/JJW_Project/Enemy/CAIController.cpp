@@ -1,8 +1,12 @@
 #include "Enemy/CAIController.h"
+
 #include "Perception/AIPerceptionComponent.h"
 #include "Perception/AISenseConfig_Sight.h"
 #include "BehaviorTree/BlackboardComponent.h"
+
+
 #include "CEnemyBase.h"
+
 ACAIController::ACAIController()
 {
 	Perception = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("Perception"));
@@ -24,7 +28,6 @@ void ACAIController::OnEnemyPerceptionUpdated(const TArray<AActor*>& UpdatedActo
 {
 	if (!UpdatedActors.Num()) return; // Ignore if no actors updated
 
-	// Get the currently perceived actors (ensuring only those in sight)
 	TArray<AActor*> PerceivedActors;
 	Perception->GetCurrentlyPerceivedActors(TSubclassOf<UAISense_Sight>(), PerceivedActors);
 
@@ -36,7 +39,6 @@ void ACAIController::OnEnemyPerceptionUpdated(const TArray<AActor*>& UpdatedActo
 	}
 	else if (Blackboard)
 	{
-		// Clear the target if no actors are perceived
 		Blackboard->ClearValue(FName("Target"));
 		UE_LOG(LogTemp, Warning, TEXT("No actors perceived, clearing Target."));
 	}
@@ -46,11 +48,9 @@ void ACAIController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
 
+	Enemy = Cast<ACEnemyBase>(GetPawn());
+	if (!Enemy) return;
 
-	UE_LOG(LogTemp, Warning, TEXT("Behavior Tree is running"));
-	Enemy = Cast<ACEnemyBase>(GetOwner());
-
-	if (!Enemy)return;
 	if (!Enemy->GetBehaviorTree()) return;
 
 	RunBehaviorTree(Enemy->GetBehaviorTree());

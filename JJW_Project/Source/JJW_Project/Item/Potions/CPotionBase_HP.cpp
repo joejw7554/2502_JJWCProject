@@ -27,7 +27,6 @@ void ACPotionBase_HP::HealthRestore(ACPlayer* InOwner)
 	if (!InOwner) return;
 	
 	InOwner->IncreamentHealth(PotionData.EffectValue);
-	UE_LOG(LogTemp, Warning, TEXT("PlayerHealth: %f"), InOwner->GetCurrentHealth());
 
 	RemainingDuration -= 1.f;
 

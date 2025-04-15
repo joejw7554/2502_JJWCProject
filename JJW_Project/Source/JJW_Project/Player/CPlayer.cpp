@@ -31,7 +31,7 @@ ACPlayer::ACPlayer()
 	GetMesh()->SetRelativeRotation(FRotator(0, -90, 0));
 
 	{
-		//Movement = CreateDefaultSubobject<UCMovementComponent_Player>("MovementComponent_Player");
+		Movement = CreateDefaultSubobject<UCMovementComponent_Player>("MovementComponent_Player");
 		Weapon = CreateDefaultSubobject<UCWeaponComponent>("WeaponComponent");
 	}
 
@@ -62,8 +62,8 @@ void ACPlayer::BeginPlay()
 
 	InitializePlayerEnhnacedInput();
 
-	/*if (!Movement) return;
-	Movement->DisableControlRotation();*/
+	if (!Movement) return;
+	Movement->DisableControlRotation();
 
 	HUD = GetWorld()->GetFirstPlayerController()->GetHUD<ACHUD>();
 }
@@ -160,13 +160,13 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	UEnhancedInputComponent* enhancedInput = Cast<UEnhancedInputComponent>(PlayerInputComponent);
 
-	/*if (!Movement) return;
+	if (!Movement) return;
 
 	if (IA_MoveAction)
-		enhancedInput->BindAction(IA_MoveAction, ETriggerEvent::Triggered, Movement, &UCMovementComponent::MoveAction);
+		enhancedInput->BindAction(IA_MoveAction, ETriggerEvent::Triggered, Movement, &UCMovementComponent_Player::MoveAction);
 
 	if (IA_DodgeAction)
-		enhancedInput->BindAction(IA_DodgeAction, ETriggerEvent::Started, Movement, &UCMovementComponent::Dodge);*/
+		enhancedInput->BindAction(IA_DodgeAction, ETriggerEvent::Started, Movement, &UCMovementComponent_Player::Dodge);
 
 	if (IA_KatanaAction)
 		enhancedInput->BindAction(IA_KatanaAction, ETriggerEvent::Started, Weapon, &UCWeaponComponent::SetKatanaMode);

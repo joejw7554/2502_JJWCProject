@@ -11,16 +11,16 @@ class JJW_PROJECT_API ACEnemyBase_Katana : public ACEnemyBase
 
 public:
 	ACEnemyBase_Katana();
+	FORCEINLINE class UCWeaponComponent* GetWeaponComponent() { return WeaponComponent; }
+	FORCEINLINE class UCMovementComponent_Enemy* GetMovementComponent() { return MovementComponent; }
 
 protected:
 	virtual void BeginPlay() override;
-
-	virtual void SpawnWeapon() override;
 
 private:
 	UPROPERTY(VisibleAnywhere)
 	class UCWeaponComponent* WeaponComponent;
 
 	UPROPERTY(VisibleAnywhere)
-	class UCMovementComponent* MovementComponent;
+	class UCMovementComponent_Enemy* MovementComponent;
 };

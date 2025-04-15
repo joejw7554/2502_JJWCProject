@@ -144,7 +144,6 @@ float ACWeaponBase::CalculateDamageForPlayer() const
 		}
 	}
 
-	UE_LOG(LogTemp, Warning, TEXT("Player inflicted damage: %f"), FinalDamage);
 
 	return FinalDamage;
 }
@@ -155,16 +154,10 @@ void ACWeaponBase::ApplyDamage(AActor* TargetActor, float DamageAmount, ACharact
 	{
 		UGameplayStatics::ApplyDamage(TargetActor, DamageAmount, DamageCauser->GetController(), DamageCauser, nullptr);
 		DamagedActors.AddUnique(TargetActor);
-		UE_LOG(LogTemp, Warning, TEXT("Damage Applied to %s: %f"), *TargetActor->GetName(), DamageAmount);
 	}
 }
 
 void ACWeaponBase::OnWeaponEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	for (AActor* actor : DamagedActors)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Damaged Actor : %s"), *actor->GetName());
-	}
-
 	DamagedActors.Empty();
 }

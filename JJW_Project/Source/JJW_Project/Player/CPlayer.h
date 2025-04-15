@@ -129,7 +129,8 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	UCWeaponComponent* Weapon;
 
-	//UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere)
+	class UCMovementComponent_Player* Movement;
 
 
 	UPROPERTY(EditAnywhere)

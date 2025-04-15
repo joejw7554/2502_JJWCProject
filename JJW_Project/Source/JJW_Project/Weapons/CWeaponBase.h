@@ -74,6 +74,8 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	TArray<AActor*> DamagedActors;
 
+
+
 private:
 	bool bIsOwnerPlayer = false;
 

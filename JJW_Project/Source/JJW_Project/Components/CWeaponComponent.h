@@ -42,7 +42,7 @@ public:
 
 	void DoSkill(ESkillKey InKey);
 
-private:
+protected:
 	void SetUnarmedMode();
 	
 
@@ -57,23 +57,25 @@ public:
 public:
 	class UCWeaponAsset* GetWeaponAsset(EWeaponType WeaponType);
 
-private:
+protected:
+	ACharacter* GetOwnerCharacter() { return OwnerCharacter; }
+
+
+protected:
 	//애니메이션 관련 함수
 	FORCEINLINE bool IsPlayingAnimAction();
 
 	//무기관련 함수들////////////////////////////////////////
-private:
+protected:
 	void SetMode(EWeaponType WeaponType);// 타입 바꾸기전 명시하는 함수들
-
 	void ChangeWeaponType(EWeaponType WeaponType); //무기 타입 바꾸는용도
-
 	void ActivateWeapon(EWeaponType WeaponType);
 	void DeActivateWeapon(EWeaponType WeaponType);
 
 
 
 	///장착관련 함수들//////////////////////////////////////////////
-private:
+protected:
 	void Equip(EWeaponType WeaponType);
 	void UnEquip(EWeaponType WeaponType);
 
@@ -83,11 +85,11 @@ public:
 	void End_Equip();
 	
 
-private:
+protected:
 	UPROPERTY(EditDefaultsOnly, Category="Weapon Assets")
 	TArray<class UCWeaponAsset*> WeaponAssets;
 
-private:
+protected:
 	ACharacter* OwnerCharacter;
 
 	EWeaponType CurrentWeaponType = EWeaponType::Max;

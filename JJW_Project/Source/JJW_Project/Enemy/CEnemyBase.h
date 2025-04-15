@@ -6,11 +6,14 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "CEnemyBase.generated.h"
 
+
 UENUM(BlueprintType)
 enum class EEnemyType : uint8
 {
 	Normal, MAX
 };
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FEnemyDamaged, float, Damage);
 
 UCLASS()
 class JJW_PROJECT_API ACEnemyBase : public ACharacter
@@ -18,12 +21,14 @@ class JJW_PROJECT_API ACEnemyBase : public ACharacter
 	GENERATED_BODY()
 
 public:
+	FEnemyDamaged OnEnemyDamaged;
+
+public:
 	ACEnemyBase();
 
 	void SetWalkMode() { GetCharacterMovement()->MaxWalkSpeed = RunSpeed; }
 	void SetRunMode() { GetCharacterMovement()->MaxWalkSpeed = WalkSpeed; }
 	class UBehaviorTree* GetBehaviorTree() { return BehaviorTree; }
-	class ACWeaponBase* GetWeapon() { return Weapon; }
 
 protected:
 	virtual void BeginPlay() override;
@@ -39,9 +44,6 @@ protected:
 	void OnEnemyTakeAnyDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser);
 
 protected:
-	UPROPERTY(EditDefaultsOnly)
-	class UCWeaponAsset* WeaponData;
-
 	UPROPERTY(EditDefaultsOnly)
 	class UBehaviorTree* BehaviorTree;
 
@@ -64,9 +66,14 @@ private:
 	float MaxHealth = 100.f;
 
 	UPROPERTY()
-	float CurrentHealth = MaxHealth;
+	float CurrentHealth;
 
 	UPROPERTY(EditDefaultsOnly)
 	float EXPValue = 10.f;
 
+	UPROPERTY(VisibleAnywhere)
+	class UCDamageUIComponent* DamageUIComponent;
+
+	UPROPERTY()
+	class UCUI_Damage* DamageUI;
 };

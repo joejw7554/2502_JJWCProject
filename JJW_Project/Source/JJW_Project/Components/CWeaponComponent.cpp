@@ -181,16 +181,25 @@ void UCWeaponComponent::TestWeaponMode() //////////////NEED TO IMPLEMENTED
 
 void UCWeaponComponent::DoSkill(ESkillKey InKey)
 {
-	if (IsUnArmed()) return;
+	if (IsUnArmed())
+	{
+		UE_LOG(LogTemp, Warning, TEXT("무기를 장착하지 않았습니다."));
+		return;
+	}
 
 	ACWeaponBase* weapon = GetCurrentWeapon();
-	if (!OwnerCharacter) return;
-	if (!weapon) return;
+	if (!OwnerCharacter)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("OwnerCharacter is null"));
+		return;
+	}
+	if (!weapon)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Weapon is null"));
+		return;
+	}
 
-	UCMovementComponent* movementComp = OwnerCharacter->GetComponentByClass<UCMovementComponent>();
-	if (!movementComp) return;
-
-	movementComp->DisableMovment();
+	MovementComp->DisableMovment();
 
 	ESkillKey PrevSkill = CurrentSkillKey;
 
@@ -320,8 +329,6 @@ void UCWeaponComponent::Equip(EWeaponType WeaponType)
 
 	OwnerCharacter->PlayAnimMontage(GetWeaponAsset(CurrentWeaponType)->GetEquipmentData().EquipMontage);
 	ActivateWeapon(CurrentWeaponType);
-
-	MovementComp->DisableMovment();
 }
 
 void UCWeaponComponent::UnEquip(EWeaponType WeaponType)

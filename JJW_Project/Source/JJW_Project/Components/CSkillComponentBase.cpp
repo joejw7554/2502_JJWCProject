@@ -18,8 +18,16 @@ void UCSkillComponentBase::BeginPlay()
 
 void UCSkillComponentBase::PerformSkill(bool bEnableCombo, int8 InComboIndex,  ACharacter* InWeaponOwner)
 {
-	if (!SkillData) return;
-	if (!InWeaponOwner)return;
+	if (!SkillData)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("UCSkillComponentBase::PerformSkill: SkillData is null"));
+		return;
+	}
+	if (!InWeaponOwner)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("UCSkillComponentBase::PerformSkill: InWeaponOwner is null"));
+		return;
+	}
 
 	UAnimMontage* montage = SkillData->Montage;
 	float playRate = SkillData->PlayRate;
@@ -27,8 +35,12 @@ void UCSkillComponentBase::PerformSkill(bool bEnableCombo, int8 InComboIndex,  A
 	UAnimInstance* animInstance = InWeaponOwner->GetMesh()->GetAnimInstance();
 	if (!animInstance) return;
 
-	UCMovementComponent_Player* movementComp = InWeaponOwner->GetComponentByClass<UCMovementComponent_Player>();
-	if (!movementComp) return;
+	UCMovementComponent* movementComp = InWeaponOwner->GetComponentByClass<UCMovementComponent>();
+	if (!movementComp)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("UCSkillComponentBase::PerformSkill: MovementComponent is null"));
+		return;
+	}
 
 
 	if (animInstance->Montage_IsPlaying(montage))
@@ -39,7 +51,7 @@ void UCSkillComponentBase::PerformSkill(bool bEnableCombo, int8 InComboIndex,  A
 			if (nextSection != NAME_None)
 			{
 				animInstance->Montage_JumpToSection(nextSection);
-				movementComp->RotateActor();
+				movementComp->RotateActor(movementComp->GetTargetRotation());
 
 			}
 		}
@@ -47,7 +59,7 @@ void UCSkillComponentBase::PerformSkill(bool bEnableCombo, int8 InComboIndex,  A
 	else
 	{
 		InWeaponOwner->PlayAnimMontage(montage, playRate);
-		movementComp->RotateActor();
+		movementComp->RotateActor(movementComp->GetTargetRotation());
 	}
 
 }
