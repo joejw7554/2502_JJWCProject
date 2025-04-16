@@ -3,9 +3,10 @@
 #include "Perception/AIPerceptionComponent.h"
 #include "Perception/AISenseConfig_Sight.h"
 #include "BehaviorTree/BlackboardComponent.h"
-
+#include "Enemy/CEnemyBase_Katana.h"
 
 #include "CEnemyBase.h"
+#include "Components/CWeaponComponent.h"
 
 ACAIController::ACAIController()
 {
@@ -62,4 +63,17 @@ void ACAIController::BeginPlay()
 	Super::BeginPlay();
 
 	Perception->OnPerceptionUpdated.AddDynamic(this, &ACAIController::OnEnemyPerceptionUpdated);
+	
+	ACEnemyBase_Katana* enemy= Cast<ACEnemyBase_Katana>(GetPawn());
+	
+
+	enemy->GetWeaponComponent()->OnAIWeaponStateChanged.AddDynamic(this, &ACAIController::HandleWeaponTypeChanged);
+}
+
+void ACAIController::HandleWeaponTypeChanged(bool bIsArmed)
+{
+	if (!Blackboard) return;
+
+	UE_LOG(LogTemp, Warning, TEXT("HandleWeaponTypeChanged: %s"), bIsArmed ? TEXT("Armed") : TEXT("Unarmed"));
+	Blackboard->SetValueAsBool(FName("bIsArmed"), bIsArmed);
 }

@@ -8,7 +8,7 @@
 #include "CWeaponComponent.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FWeaponTypeChanged, EWeaponType, InPrevType, EWeaponType, InNewType);
-
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FAIWeaponEquipped, bool, bIsArmed);
 
 UCLASS()
 class JJW_PROJECT_API UCWeaponComponent : public UActorComponent
@@ -34,6 +34,7 @@ public:
 	class ACWeaponBase* GetCurrentWeapon();
 
 	FWeaponTypeChanged OnWeaponTypeChanged;
+	FAIWeaponEquipped OnAIWeaponStateChanged;
 
 	//무기 관련함수들
 public:
@@ -68,7 +69,7 @@ protected:
 	//무기관련 함수들////////////////////////////////////////
 protected:
 	void SetMode(EWeaponType WeaponType);// 타입 바꾸기전 명시하는 함수들
-	void ChangeWeaponType(EWeaponType WeaponType); //무기 타입 바꾸는용도
+	virtual void ChangeWeaponType(EWeaponType WeaponType); //무기 타입 바꾸는용도
 	void ActivateWeapon(EWeaponType WeaponType);
 	void DeActivateWeapon(EWeaponType WeaponType);
 

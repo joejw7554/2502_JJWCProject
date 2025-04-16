@@ -41,7 +41,7 @@ protected:
 	bool IsDead() { return CurrentHealth <= 0 ? true : false; }
 
 	UFUNCTION()
-	void OnEnemyTakeAnyDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser);
+	virtual void OnEnemyTakeAnyDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser);
 
 protected:
 	UPROPERTY(EditDefaultsOnly)
@@ -76,4 +76,6 @@ private:
 
 	UPROPERTY()
 	class UCUI_Damage* DamageUI;
+
+
 };

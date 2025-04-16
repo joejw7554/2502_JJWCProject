@@ -26,10 +26,6 @@ EBTNodeResult::Type UCBTTaskNode_Equip::ExecuteTask(UBehaviorTreeComponent& Owne
 
 	enemy->GetWeaponComponent()->SetKatanaMode();
 
-	UBlackboardComponent* blackboard = OwnerComp.GetBlackboardComponent();
-	if (!blackboard) return EBTNodeResult::Failed;
-
-	blackboard->SetValueAsBool(FName("bIsArmed"), true);
 
 	return EBTNodeResult::Succeeded;
 }

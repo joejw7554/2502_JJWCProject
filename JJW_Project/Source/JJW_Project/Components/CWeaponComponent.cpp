@@ -7,6 +7,7 @@
 #include "Weapons/CWeaponBase.h"
 #include "Weapons/CWeaponAsset.h"
 #include "Weapons/CSkillStructure.h"
+#include "Enemy/CAIController.h"
 
 #include "CSkill_Q.h"
 #include "CSkill_W.h"
@@ -248,17 +249,14 @@ void UCWeaponComponent::SetMode(EWeaponType WeaponType)
 
 	if (CurrentWeaponType == WeaponType)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("현재 무기와 같은 무기입니다 장착해제."));
 		SetUnarmedMode();
 		return;
 	}
 	else if (IsUnArmed() == false)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("현재 무기와 같은 무기입니다 장착해제."));
 		UnEquip(CurrentWeaponType);
 	}
 
-	UE_LOG(LogTemp, Warning, TEXT("다른 무기를 선택하였습니다."));
 	UCWeaponAsset* asset = GetWeaponAsset(WeaponType);
 	if (asset)
 	{
@@ -271,8 +269,12 @@ void UCWeaponComponent::ChangeWeaponType(EWeaponType WeaponType)
 	EWeaponType prev = CurrentWeaponType;
 	CurrentWeaponType = WeaponType;
 
+
+	// AI인지 확인하여 Delegate 호출
 	if (OnWeaponTypeChanged.IsBound())
+	{
 		OnWeaponTypeChanged.Broadcast(prev, WeaponType);
+	}
 }
 
 void UCWeaponComponent::ActivateWeapon(EWeaponType WeaponType)
@@ -315,7 +317,7 @@ void UCWeaponComponent::DeActivateWeapon(EWeaponType WeaponType)
 	RightMesh->SetVisibility(false);
 	RightMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
-	ChangeWeaponType(EWeaponType::Max); ////??
+	ChangeWeaponType(EWeaponType::Max);
 }
 
 

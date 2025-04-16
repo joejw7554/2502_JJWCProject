@@ -22,6 +22,10 @@ protected:
 	virtual void BeginPlay() override;
 
 protected:
+	UFUNCTION()
+	void HandleWeaponTypeChanged(bool bIsArmed);
+
+protected:
 	UPROPERTY(VisibleAnywhere)
 	class UAIPerceptionComponent* Perception;
 

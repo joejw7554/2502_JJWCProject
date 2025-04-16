@@ -48,6 +48,7 @@ EBTNodeResult::Type UCBTTaskNode_Attack::ExecuteTask(UBehaviorTreeComponent& Own
 	int skillKey= FMath::RandRange(0,4);
 	ESkillKey skill = static_cast<ESkillKey>(skillKey);
 	weaponComponent->DoSkill(skill);
+
 	
 
 	return EBTNodeResult::Succeeded;
