@@ -1,12 +1,13 @@
 #include "CEnemyBase_Katana.h"
 #include "CMovementComponent_Enemy.h"
 #include "Components/CWeaponComponent.h"
+#include "CWeaponComponent_Enemy.h"
 
 ACEnemyBase_Katana::ACEnemyBase_Katana()
 {
 	PrimaryActorTick.bCanEverTick = false;
 
-	WeaponComponent = CreateDefaultSubobject<UCWeaponComponent>(TEXT("WeaponComponent"));
+	WeaponComponent = CreateDefaultSubobject<UCWeaponComponent_Enemy>(TEXT("WeaponComponent"));
 	MovementComponent = CreateDefaultSubobject<UCMovementComponent_Enemy>(TEXT("MovementComponent"));
 
 }

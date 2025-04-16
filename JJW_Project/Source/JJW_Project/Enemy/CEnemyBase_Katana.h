@@ -21,7 +21,7 @@ class JJW_PROJECT_API ACEnemyBase_Katana : public ACEnemyBase
 
 public:
 	ACEnemyBase_Katana();
-	FORCEINLINE class UCWeaponComponent* GetWeaponComponent() { return WeaponComponent; }
+	FORCEINLINE class UCWeaponComponent_Enemy* GetWeaponComponent() { return WeaponComponent; }
 	FORCEINLINE class UCMovementComponent_Enemy* GetMovementComponent() { return MovementComponent; }
 
 protected:
@@ -31,7 +31,7 @@ protected:
 
 private:
 	UPROPERTY(VisibleAnywhere)
-	class UCWeaponComponent* WeaponComponent;
+	class UCWeaponComponent_Enemy* WeaponComponent;
 
 	UPROPERTY(VisibleAnywhere)
 	class UCMovementComponent_Enemy* MovementComponent;
