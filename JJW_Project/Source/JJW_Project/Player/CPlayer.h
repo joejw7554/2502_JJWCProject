@@ -36,7 +36,6 @@ public: //Getter
 	FORCEINLINE void IncreamentHealth(float InHealth) { SetCurrentHealth(InHealth); }
 	FORCEINLINE class ACPlayerState* GetPlayerState() { return CPlayerState; }
 
-	
 
 private:
 	UFUNCTION(BlueprintCallable)
@@ -47,6 +46,12 @@ private:
 
 		if (OnHealthBarUpdate.IsBound())
 			OnHealthBarUpdate.Broadcast(GetCurrentHealthPercent());
+
+		if (TargetHealth <= 0.f)
+		{
+			Dead();
+		}
+
 	}
 
 protected:
@@ -61,6 +66,8 @@ private:
 	void ToggleInventoryMenu();
 
 	void ToggleStatMenu();
+
+	void Dead();
 
 	UFUNCTION()
 	void OnPlayerTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser);
@@ -137,7 +144,7 @@ private:
 	float MaxHealth = 100.f;
 
 	UPROPERTY(EditAnywhere)
-	float CurrentHealth = MaxHealth;
+	float CurrentHealth;
 
 	UPROPERTY(VisibleAnywhere)
 	float TargetHealth;

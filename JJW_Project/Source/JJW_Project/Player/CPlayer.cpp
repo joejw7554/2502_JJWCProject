@@ -58,8 +58,11 @@ void ACPlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
-	CPlayerState = Cast<ACPlayerState>(GetController()->GetPlayerState<ACPlayerState>());
+	OnTakeAnyDamage.AddDynamic(this, &ACPlayer::OnPlayerTakeDamage);
 
+	CurrentHealth = MaxHealth;
+	CPlayerState = Cast<ACPlayerState>(GetController()->GetPlayerState<ACPlayerState>());
+	
 	InitializePlayerEnhnacedInput();
 
 	if (!Movement) return;
@@ -123,13 +126,19 @@ void ACPlayer::ToggleStatMenu()
 	HUD->ToggleStat();
 }
 
+void ACPlayer::Dead()
+{
+	UE_LOG(LogTemp, Warning, TEXT("ACPlayer::Dead"));
+}
+
 void ACPlayer::OnPlayerTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
 {
 	float defense = CPlayerState->GetStatComponent()->GetStatValue(FName("Defense"));
-	float minimalDamage = FMath::Clamp(Damage - defense, 0, 9999);
+	float FinalDamage = FMath::Clamp(Damage - defense, 0, 9999);
 
-	if(minimalDamage >0)
-		SetCurrentHealth(-minimalDamage);
+	if(FinalDamage >0)
+		SetCurrentHealth(-FinalDamage);
+
 
 	if(OnHealthBarUpdate.IsBound())
 		OnHealthBarUpdate.Broadcast(GetCurrentHealthPercent());
@@ -147,6 +156,7 @@ void ACPlayer::Tick(float DeltaTime)
 		{
 			bInterpolatingHealth = false;
 			CurrentHealth = TargetHealth;
+			UE_LOG(LogTemp, Warning, TEXT("ACPlayer::CurrentHealth: %f"), CurrentHealth);
 		}
 
 		if (OnHealthBarUpdate.IsBound())

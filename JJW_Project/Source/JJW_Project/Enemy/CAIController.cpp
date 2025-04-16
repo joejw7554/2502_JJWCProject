@@ -15,6 +15,7 @@ ACAIController::ACAIController()
 	SightConfig->SightRadius = 800.f;
 	SightConfig->LoseSightRadius = 1000.f;
 	SightConfig->PeripheralVisionAngleDegrees = 90.f;
+	SightConfig->SetMaxAge(5.f);
 	SightConfig->DetectionByAffiliation.bDetectEnemies = true;
 	SightConfig->DetectionByAffiliation.bDetectNeutrals = false;
 	SightConfig->DetectionByAffiliation.bDetectFriendlies = false;

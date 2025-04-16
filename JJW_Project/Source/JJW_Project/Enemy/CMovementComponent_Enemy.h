@@ -9,4 +9,9 @@ class JJW_PROJECT_API UCMovementComponent_Enemy : public UCMovementComponent
 {
 	GENERATED_BODY()
 	
+protected:
+	virtual void BeginPlay() override;
+
+
+
 };
