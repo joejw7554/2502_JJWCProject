@@ -4,6 +4,7 @@
 #include "AIController.h"
 #include "CAIController.generated.h"
 
+
 UCLASS()
 class JJW_PROJECT_API ACAIController : public AAIController
 {
@@ -20,6 +21,10 @@ public:
 protected:
 	virtual void OnPossess(APawn* InPawn) override;
 	virtual void BeginPlay() override;
+
+
+	UFUNCTION()
+	void HandleEnemyDead();
 
 protected:
 	UFUNCTION()

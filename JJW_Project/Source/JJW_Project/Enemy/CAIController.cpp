@@ -7,7 +7,7 @@
 
 
 #include "CEnemyBase.h"
-#include "Components/CWeaponComponent.h"
+#include "Enemy/CWeaponComponent_Enemy.h"
 
 ACAIController::ACAIController()
 {
@@ -67,7 +67,17 @@ void ACAIController::BeginPlay()
 	
 	ACEnemyBase_Katana* enemy= Cast<ACEnemyBase_Katana>(GetPawn());
 	
-	enemy->GetWeaponComponent()->OnAIWeaponStateChanged.AddDynamic(this, &ACAIController::HandleWeaponTypeChanged);
+	if (enemy)
+	{
+		enemy->GetWeaponComponent()->OnAIWeaponStateChanged.AddDynamic(this, &ACAIController::HandleWeaponTypeChanged);
+		enemy->OnEnemyDead.AddDynamic(this, &ACAIController::HandleEnemyDead);
+	}
+
+}
+
+void ACAIController::HandleEnemyDead()
+{
+	UE_LOG(LogTemp, Warning, TEXT("HandleEnemyDead"));
 }
 
 void ACAIController::HandleWeaponTypeChanged(bool bIsArmed)

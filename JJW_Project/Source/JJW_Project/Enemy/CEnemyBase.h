@@ -6,6 +6,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "CEnemyBase.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FEnemyDead);
 
 UENUM(BlueprintType)
 enum class EEnemyType : uint8
@@ -22,6 +23,8 @@ class JJW_PROJECT_API ACEnemyBase : public ACharacter
 
 public:
 	FEnemyDamaged OnEnemyDamaged;
+
+	FEnemyDead OnEnemyDead;
 
 public:
 	ACEnemyBase();

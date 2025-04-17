@@ -23,3 +23,18 @@ void UCEnemyAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	if (!EnemyMovementComponent) return;
 	Speed = EnemyMovementComponent->Velocity.Size();
 }
+
+void UCEnemyAnimInstance::NativeBeginPlay()
+{
+	Super::NativeBeginPlay();
+
+	ACEnemyBase* owner= Cast<ACEnemyBase>(TryGetPawnOwner());
+	if (owner)
+	{
+		owner->OnEnemyDead.AddDynamic(this, &UCEnemyAnimInstance::EnemyDeadActivated);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Owner is not valid"));
+	}
+}

@@ -68,3 +68,11 @@ void ACEnemyBase_Katana::OnEnemyTakeAnyDamage(AActor* DamagedActor, float Damage
 	}
 }
 
+void ACEnemyBase_Katana::Dead()
+{
+	Super::Dead();
+
+	if(OnEnemyDead.IsBound())
+	OnEnemyDead.Broadcast();
+}
+

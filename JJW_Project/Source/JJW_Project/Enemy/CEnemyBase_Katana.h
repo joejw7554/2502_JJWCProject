@@ -4,6 +4,7 @@
 #include "Enemy/CEnemyBase.h"
 #include "CEnemyBase_Katana.generated.h"
 
+
 UENUM(BlueprintType)
 enum class EHitDireciton :uint8
 {
@@ -19,6 +20,7 @@ class JJW_PROJECT_API ACEnemyBase_Katana : public ACEnemyBase
 {
 	GENERATED_BODY()
 
+
 public:
 	ACEnemyBase_Katana();
 	FORCEINLINE class UCWeaponComponent_Enemy* GetWeaponComponent() { return WeaponComponent; }
@@ -29,6 +31,7 @@ protected:
 
 	virtual void OnEnemyTakeAnyDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser) override;
 
+	virtual void Dead() override;
 private:
 	UPROPERTY(VisibleAnywhere)
 	class UCWeaponComponent_Enemy* WeaponComponent;
