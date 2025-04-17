@@ -24,12 +24,18 @@ void ACHUD::BeginPlay()
 	if (!healthUI) return;
 
 	APlayerController* playerController = Cast<APlayerController>(GetOwningPlayerController());
-	if(!playerController) UE_LOG(LogTemp, Warning, TEXT("ACHUD::BeginPlay: No PlayerController found"));
-	if (!playerController) return;
+	if (!playerController) 
+	{
+		UE_LOG(LogTemp, Warning, TEXT("ACHUD::BeginPlay: No PlayerController found"));
+		return;
+	}
 
 	ACPlayer* player = Cast<ACPlayer>(playerController->GetPawn());
-	if (!player) UE_LOG(LogTemp, Warning, TEXT("ACHUD::BeginPlay: No Player found"));
-	if (!player) return;
+	if (!player)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("ACHUD::BeginPlay: No Player found"));
+		return;
+	}
 
 
 	player->OnHealthBarUpdate.AddDynamic(healthUI, &UCUI_HealthBar::OnHealthBarChanged);

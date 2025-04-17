@@ -5,6 +5,7 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Enemy/CEnemyBase_Katana.h"
 
+
 #include "CEnemyBase.h"
 #include "Components/CWeaponComponent.h"
 
@@ -66,7 +67,6 @@ void ACAIController::BeginPlay()
 	
 	ACEnemyBase_Katana* enemy= Cast<ACEnemyBase_Katana>(GetPawn());
 	
-
 	enemy->GetWeaponComponent()->OnAIWeaponStateChanged.AddDynamic(this, &ACAIController::HandleWeaponTypeChanged);
 }
 

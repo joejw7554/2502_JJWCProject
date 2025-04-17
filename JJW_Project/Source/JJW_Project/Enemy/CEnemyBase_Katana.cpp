@@ -1,9 +1,14 @@
 #include "CEnemyBase_Katana.h"
+
+#include "BehaviorTree/BlackboardComponent.h"
+#include "Components/SkeletalMeshComponent.h"
+
 #include "CMovementComponent_Enemy.h"
 #include "Components/CWeaponComponent.h"
 #include "CWeaponComponent_Enemy.h"
 #include "CEnemyAnimInstance.h"
-#include "Components/SkeletalMeshComponent.h"
+#include "CAIController.h"
+
 
 ACEnemyBase_Katana::ACEnemyBase_Katana()
 {
@@ -27,30 +32,39 @@ void ACEnemyBase_Katana::OnEnemyTakeAnyDamage(AActor* DamagedActor, float Damage
 {
 	Super::OnEnemyTakeAnyDamage(DamagedActor, Damage, DamageType, InstigatedBy, DamageCauser);
 
-	UE_LOG(LogTemp, Warning, TEXT("Damage Causer: %s"), *DamageCauser->GetActorLabel());
+	// 공격 방향 계산
+	FVector AttackDirection = (DamageCauser->GetActorLocation() - GetActorLocation()).GetSafeNormal();
+	FVector ForwardVector = GetActorForwardVector();
+	FVector CrossProduct = FVector::CrossProduct(ForwardVector, AttackDirection);
 
-	FVector attackDirection = DamageCauser->GetActorLocation() - GetActorLocation();
+	// 앞뒤 및 좌우 방향 결정
+	float ForwardDot = FVector::DotProduct(ForwardVector, AttackDirection);
+	float RightDot = CrossProduct.Z;
 
-	FVector forwardVector = GetActorForwardVector();
-	FVector rightVector = GetActorRightVector();
+	// Hit 방향 판단
+	EHitDireciton HitDirection = EHitDireciton::HitMax; // 기본값
 
-	float forwardDot = FVector::DotProduct(forwardVector, attackDirection);
-	FVector crossProduct = FVector::CrossProduct(forwardVector, attackDirection);
-	float rightDot = crossProduct.Z;
+	if (FMath::Abs(ForwardDot) > FMath::Abs(RightDot)) // 앞뒤 우선 판단
+	{
+		HitDirection = (ForwardDot > 0) ? EHitDireciton::HitFront : EHitDireciton::HitBack;
+	}
+	else // 좌우 판단
+	{
+		HitDirection = (RightDot > 0) ? EHitDireciton::HitRight : EHitDireciton::HitLeft;
+	}
 
-	float X = rightDot;
-	float Y = forwardDot;
+	// Hit Direction Map에서 몽타주 가져오기
+	if (HitDirectionMap.Contains(HitDirection))
+	{
+		UAnimMontage* MontageToPlay = HitDirectionMap[HitDirection];
+		if (MontageToPlay)
+			PlayAnimMontage(MontageToPlay, HitReactionPlayRate);
+	}
 
-	UAnimInstance* animInstance = GetMesh()->GetAnimInstance();
-	if (!animInstance) return;
-
-	UCEnemyAnimInstance* enemyAnimIntance= Cast<UCEnemyAnimInstance>(animInstance);
-	if (!enemyAnimIntance) return;
-
-	enemyAnimIntance->SetHitDirectionX(X);
-	enemyAnimIntance->SetHitDirectionY(Y);
-
-	//REVIEW THIS PART
+	ACAIController* controller = Cast<ACAIController>(GetController());
+	if (controller && controller->GetBlackboardComponent())
+	{
+		controller->GetBlackboardComponent()->SetValueAsBool(TEXT("bIsTakingHit"), true);
+	}
 }
-
 

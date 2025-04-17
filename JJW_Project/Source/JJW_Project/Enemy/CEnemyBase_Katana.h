@@ -37,8 +37,8 @@ private:
 	class UCMovementComponent_Enemy* MovementComponent;
 
 	UPROPERTY(EditDefaultsOnly)
-	TMap<EHitDireciton, UAnimMontage*> HitMontages;
+	TMap<EHitDireciton, UAnimMontage*> HitDirectionMap;
 
 	UPROPERTY(EditDefaultsOnly)
-	float HitMontagePlayRate = 1.0f;
+	float HitReactionPlayRate = 1.5f;
 };

@@ -50,6 +50,7 @@ void UCWeaponComponent::SpawnWeapons(UCWeaponAsset* asset)
 
 
 	ACWeaponBase* weapon = GetWorld()->SpawnActor<ACWeaponBase>(asset->GetWeaponClass(), params);
+	weapon->AttachToActor(OwnerCharacter, FAttachmentTransformRules::SnapToTargetIncludingScale);
 	if (!weapon) return;
 
 	asset->SetWeapon(weapon);
