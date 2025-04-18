@@ -2,6 +2,8 @@
 
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Kismet/KismetSystemLibrary.h"
+#include "BehaviorTree/BehaviorTreeComponent.h"
 
 #include "CMovementComponent_Enemy.h"
 #include "Components/CWeaponComponent.h"
@@ -25,13 +27,20 @@ void ACEnemyBase_Katana::BeginPlay()
 
 	GetMesh()->HideBoneByName(TEXT("weapon_l"), EPhysBodyOp::PBO_None);
 	GetMesh()->HideBoneByName(TEXT("weapon_r"), EPhysBodyOp::PBO_None);
-	OnTakeAnyDamage.AddDynamic(this, &ACEnemyBase_Katana::OnEnemyTakeAnyDamage);
+	//OnTakeAnyDamage.AddDynamic(this, &ACEnemyBase_Katana::OnEnemyTakeAnyDamage);
 }
 
 void ACEnemyBase_Katana::OnEnemyTakeAnyDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
 {
 	Super::OnEnemyTakeAnyDamage(DamagedActor, Damage, DamageType, InstigatedBy, DamageCauser);
 
+
+	ReactToHit(DamageCauser);
+	SetTarget(DamageCauser);
+}
+
+void ACEnemyBase_Katana::ReactToHit(AActor* DamageCauser)
+{
 	// 공격 방향 계산
 	FVector AttackDirection = (DamageCauser->GetActorLocation() - GetActorLocation()).GetSafeNormal();
 	FVector ForwardVector = GetActorForwardVector();
@@ -74,5 +83,19 @@ void ACEnemyBase_Katana::Dead()
 
 	if(OnEnemyDead.IsBound())
 	OnEnemyDead.Broadcast();
+
+	SetLifeSpan(3.f);
+}
+
+void ACEnemyBase_Katana::SetTarget(AActor* InDamageCauser)
+{
+	if (ACAIController* controller = Cast<ACAIController>(GetController()))
+	{
+		if (controller && controller->GetBlackboardComponent())
+		{
+			controller->GetBlackboardComponent()->SetValueAsObject(TEXT("Target"), InDamageCauser);
+		}
+	}
+
 }
 

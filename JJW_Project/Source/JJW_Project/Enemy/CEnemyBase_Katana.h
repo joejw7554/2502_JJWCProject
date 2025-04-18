@@ -31,7 +31,11 @@ protected:
 
 	virtual void OnEnemyTakeAnyDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser) override;
 
+	void ReactToHit(AActor* DamageCauser);
+
 	virtual void Dead() override;
+
+	void SetTarget(AActor* InDamageCauser);
 private:
 	UPROPERTY(VisibleAnywhere)
 	class UCWeaponComponent_Enemy* WeaponComponent;
@@ -44,4 +48,7 @@ private:
 
 	UPROPERTY(EditDefaultsOnly)
 	float HitReactionPlayRate = 1.5f;
+
+	UPROPERTY(EditDefaultsOnly)
+	float HitDetectionRange = 800.f;
 };

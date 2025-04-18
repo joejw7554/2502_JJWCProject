@@ -40,11 +40,11 @@ void ACAIController::OnEnemyPerceptionUpdated(const TArray<AActor*>& UpdatedActo
 		Blackboard->SetValueAsObject(FName("Target"), PerceivedActors[0]);
 		UE_LOG(LogTemp, Warning, TEXT("Perceived Actor: %s"), *PerceivedActors[0]->GetName());
 	}
-	else if (Blackboard)
+	/*else if (Blackboard)
 	{
 		Blackboard->ClearValue(FName("Target"));
 		UE_LOG(LogTemp, Warning, TEXT("No actors perceived, clearing Target."));
-	}
+	}*/
 }
 
 void ACAIController::OnPossess(APawn* InPawn)
@@ -77,7 +77,11 @@ void ACAIController::BeginPlay()
 
 void ACAIController::HandleEnemyDead()
 {
-	UE_LOG(LogTemp, Warning, TEXT("HandleEnemyDead"));
+	if (Blackboard)
+	{
+		Blackboard->ClearValue(FName("Target"));
+		Blackboard->SetValueAsBool(FName("bIsDead"), true);
+	}
 }
 
 void ACAIController::HandleWeaponTypeChanged(bool bIsArmed)

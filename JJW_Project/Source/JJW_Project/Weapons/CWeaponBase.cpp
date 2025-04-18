@@ -152,8 +152,8 @@ void ACWeaponBase::ApplyDamage(AActor* TargetActor, float DamageAmount, ACharact
 {
 	if (TargetActor && DamageCauser)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("DamagedTarget: %d"), *TargetActor->GetActorLabel());
-		UE_LOG(LogTemp, Warning, TEXT("Damage Amount : %f"), DamageAmount);
+		/*UE_LOG(LogTemp, Warning, TEXT("DamagedTarget: %s"), *TargetActor->GetActorLabel());
+		UE_LOG(LogTemp, Warning, TEXT("Damage Amount : %f"), DamageAmount);*/
 		UGameplayStatics::ApplyDamage(TargetActor, DamageAmount, DamageCauser->GetController(), DamageCauser, nullptr);
 		DamagedActors.AddUnique(TargetActor);
 	}

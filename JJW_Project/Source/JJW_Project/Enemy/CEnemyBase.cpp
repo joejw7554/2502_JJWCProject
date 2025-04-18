@@ -64,8 +64,8 @@ void ACEnemyBase::DropItem()
 
 void ACEnemyBase::Dead()
 {
-	GetCapsuleComponent()->SetGenerateOverlapEvents(false);
-	Destroy();
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	//Destroy();
 }
 
 void ACEnemyBase::OnEnemyTakeAnyDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
