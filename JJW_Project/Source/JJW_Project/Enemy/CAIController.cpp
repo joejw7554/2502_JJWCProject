@@ -38,7 +38,6 @@ void ACAIController::OnEnemyPerceptionUpdated(const TArray<AActor*>& UpdatedActo
 	{
 		// Set the first perceived actor as the target in the Blackboard
 		Blackboard->SetValueAsObject(FName("Target"), PerceivedActors[0]);
-		UE_LOG(LogTemp, Warning, TEXT("Perceived Actor: %s"), *PerceivedActors[0]->GetName());
 	}
 	/*else if (Blackboard)
 	{
@@ -72,7 +71,6 @@ void ACAIController::BeginPlay()
 		enemy->GetWeaponComponent()->OnAIWeaponStateChanged.AddDynamic(this, &ACAIController::HandleWeaponTypeChanged);
 		enemy->OnEnemyDead.AddDynamic(this, &ACAIController::HandleEnemyDead);
 	}
-
 }
 
 void ACAIController::HandleEnemyDead()
@@ -81,7 +79,11 @@ void ACAIController::HandleEnemyDead()
 	{
 		Blackboard->ClearValue(FName("Target"));
 		Blackboard->SetValueAsBool(FName("bIsDead"), true);
+
 	}
+	Perception->SetSenseEnabled(UAISenseConfig_Sight::StaticClass(), false);
+	Destroy(); //이렇게 쉽게 Destroy를 해도되는지 모르겠음 아직
+
 }
 
 void ACAIController::HandleWeaponTypeChanged(bool bIsArmed)

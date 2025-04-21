@@ -78,6 +78,11 @@ void ACWeaponBase::BeginPlay()
 
 
 	DamagedActors.Reserve(10);
+
+	ACEnemyBase* ownerEnemy = Cast<ACEnemyBase>(GetOwner());
+	if (!ownerEnemy) return;
+
+	ownerEnemy->OnEnemyDead.AddDynamic(this, &ACWeaponBase::OnEnenmyDead);
 }
 
 
@@ -162,4 +167,9 @@ void ACWeaponBase::ApplyDamage(AActor* TargetActor, float DamageAmount, ACharact
 void ACWeaponBase::OnWeaponEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
 	DamagedActors.Empty();
+}
+
+void ACWeaponBase::OnEnenmyDead()
+{
+	Destroy();
 }

@@ -8,13 +8,15 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FEnemyDead);
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FEnemyHealthUIUpdate, float, InPercentage);
+
 UENUM(BlueprintType)
 enum class EEnemyType : uint8
 {
 	Normal, MAX
 };
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FEnemyDamaged, float, Damage);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FEnemyDamaged, float, InPercent);
 
 UCLASS()
 class JJW_PROJECT_API ACEnemyBase : public ACharacter
@@ -26,16 +28,22 @@ public:
 
 	FEnemyDead OnEnemyDead;
 
+	FEnemyHealthUIUpdate OnEnemyHealthUIUpdate;
+	
+
 public:
 	ACEnemyBase();
 
-	void SetWalkMode() { GetCharacterMovement()->MaxWalkSpeed = RunSpeed; }
-	void SetRunMode() { GetCharacterMovement()->MaxWalkSpeed = WalkSpeed; }
+	FORCEINLINE void SetWalkMode() { GetCharacterMovement()->MaxWalkSpeed = RunSpeed; }
+	FORCEINLINE void SetRunMode() { GetCharacterMovement()->MaxWalkSpeed = WalkSpeed; }
+
+
 	class UBehaviorTree* GetBehaviorTree() { return BehaviorTree; }
 
 protected:
 	virtual void BeginPlay() override;
 	virtual void SpawnWeapon() {}
+	float GetHealthPecentage() { return CurrentHealth / MaxHealth; }
 
 protected:
 	virtual void DropItem();
@@ -76,6 +84,9 @@ private:
 
 	UPROPERTY(VisibleAnywhere)
 	class UCDamageUIComponent* DamageUIComponent;
+
+	UPROPERTY(VisibleAnywhere)
+	class UCHPBarWidgetComponent* EnemyHPBarComponent;
 
 	UPROPERTY()
 	class UCUI_Damage* DamageUI;

@@ -14,4 +14,6 @@ UCDamageUIComponent::UCDamageUIComponent()
 		UE_LOG(LogTemp, Warning, TEXT("WidgetClassFinder failed"));
 	}
 
+
+	SetWidgetSpace(EWidgetSpace::Screen);
 }

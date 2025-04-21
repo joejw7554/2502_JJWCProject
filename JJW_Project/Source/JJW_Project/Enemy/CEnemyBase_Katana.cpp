@@ -27,7 +27,7 @@ void ACEnemyBase_Katana::BeginPlay()
 
 	GetMesh()->HideBoneByName(TEXT("weapon_l"), EPhysBodyOp::PBO_None);
 	GetMesh()->HideBoneByName(TEXT("weapon_r"), EPhysBodyOp::PBO_None);
-	//OnTakeAnyDamage.AddDynamic(this, &ACEnemyBase_Katana::OnEnemyTakeAnyDamage);
+	
 }
 
 void ACEnemyBase_Katana::OnEnemyTakeAnyDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
@@ -85,6 +85,7 @@ void ACEnemyBase_Katana::Dead()
 	OnEnemyDead.Broadcast();
 
 	SetLifeSpan(3.f);
+	//Destroy(GetWeaponComponent()->GetCurrentWeapon());
 }
 
 void ACEnemyBase_Katana::SetTarget(AActor* InDamageCauser)

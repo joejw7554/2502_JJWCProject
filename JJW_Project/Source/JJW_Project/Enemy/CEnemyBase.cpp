@@ -13,6 +13,7 @@
 #include "CAIController.h"
 #include "Components/CDamageUIComponent.h"
 #include "UI/CUI_Damage.h"
+#include "Components/CHPBarWidgetComponent.h"
 
 ACEnemyBase::ACEnemyBase()
 {
@@ -34,6 +35,10 @@ ACEnemyBase::ACEnemyBase()
 	DamageUIComponent->SetupAttachment(RootComponent);
 	DamageUIComponent->SetWidgetSpace(EWidgetSpace::Screen);
 	DamageUIComponent->SetRelativeLocation(FVector(0, 0, 80.f));
+
+	EnemyHPBarComponent = CreateDefaultSubobject<UCHPBarWidgetComponent>(TEXT("EnemyHPBarUIComponent"));
+	EnemyHPBarComponent->SetupAttachment(RootComponent);
+
 	SetWalkMode();
 }
 
@@ -65,13 +70,16 @@ void ACEnemyBase::DropItem()
 void ACEnemyBase::Dead()
 {
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	//Destroy();
+	UnPossessed();
 }
 
 void ACEnemyBase::OnEnemyTakeAnyDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
 {
 	CurrentHealth = FMath::Clamp(CurrentHealth - Damage, 0.f, MaxHealth);
 	OnEnemyDamaged.Broadcast(Damage);
+
+	if (OnEnemyHealthUIUpdate.IsBound())
+		OnEnemyHealthUIUpdate.Broadcast(GetHealthPecentage());
 
 	if (IsDead())
 	{
