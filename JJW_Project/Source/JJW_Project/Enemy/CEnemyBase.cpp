@@ -40,9 +40,9 @@ ACEnemyBase::ACEnemyBase()
 	EnemyHPBarComponent->SetupAttachment(RootComponent);
 	EnemyHPBarComponent->SetWidgetSpace(EWidgetSpace::Screen);
 	EnemyHPBarComponent->SetDrawSize(FVector2D(200.f, 20.f));
-
-
 	SetWalkMode();
+
+	HideHPBar();
 }
 
 void ACEnemyBase::BeginPlay()
@@ -56,6 +56,18 @@ void ACEnemyBase::BeginPlay()
 	if (!DamageUI) return;
 
 	OnEnemyDamaged.AddDynamic(DamageUI, &UCUI_Damage::PlayDamageAnimation);
+}
+
+void ACEnemyBase::ShowHPBar()
+{
+	if (EnemyHPBarComponent)
+		EnemyHPBarComponent->SetVisibility(true);
+}
+
+void ACEnemyBase::HideHPBar()
+{
+	if (EnemyHPBarComponent)
+		EnemyHPBarComponent->SetVisibility(false);
 }
 
 void ACEnemyBase::DropItem()
@@ -83,6 +95,8 @@ void ACEnemyBase::OnEnemyTakeAnyDamage(AActor* DamagedActor, float Damage, const
 
 	if (OnEnemyHealthUIUpdate.IsBound())
 		OnEnemyHealthUIUpdate.Broadcast(GetHealthPecentage());
+
+	ShowHPBar();
 
 	if (IsDead())
 	{

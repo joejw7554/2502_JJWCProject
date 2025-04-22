@@ -4,6 +4,7 @@
 #include "GameFramework/Character.h"
 #include "Item/CItemStructure.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Interfaces/HPBarInteraction.h"
 #include "CEnemyBase.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FEnemyDead);
@@ -19,7 +20,7 @@ enum class EEnemyType : uint8
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FEnemyDamaged, float, InPercent);
 
 UCLASS()
-class JJW_PROJECT_API ACEnemyBase : public ACharacter
+class JJW_PROJECT_API ACEnemyBase : public ACharacter, public IHPBarInteraction
 {
 	GENERATED_BODY()
 
@@ -37,13 +38,19 @@ public:
 	FORCEINLINE void SetWalkMode() { GetCharacterMovement()->MaxWalkSpeed = RunSpeed; }
 	FORCEINLINE void SetRunMode() { GetCharacterMovement()->MaxWalkSpeed = WalkSpeed; }
 
-
 	class UBehaviorTree* GetBehaviorTree() { return BehaviorTree; }
+
 
 protected:
 	virtual void BeginPlay() override;
 	virtual void SpawnWeapon() {}
 	float GetHealthPecentage() { return CurrentHealth / MaxHealth; }
+
+	//HPBar
+	virtual void ShowHPBar() override;
+	virtual void HideHPBar() override;
+
+
 
 protected:
 	virtual void DropItem();

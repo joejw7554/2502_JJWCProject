@@ -11,6 +11,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include  "Animation/AnimMontage.h"
 #include "Kismet/KismetSystemLibrary.h"
+#include "Components/SphereComponent.h"
 
 #include "CPlayerState.h"
 #include "Item/CItemBase.h"
@@ -19,6 +20,8 @@
 #include "UI/CUI_MainHUD.h"
 #include "Stats/CStatComponent.h"
 #include "Player/CMovementComponent_Player.h"
+#include "Interfaces/HPBarInteraction.h"
+
 
 
 ACPlayer::ACPlayer()
@@ -52,6 +55,10 @@ ACPlayer::ACPlayer()
 	GetCharacterMovement()->MaxWalkSpeed = 600.f;
 	GetCharacterMovement()->RotationRate = FRotator(0, 720, 0);
 
+	SphereComponent = CreateDefaultSubobject<USphereComponent>("SphereComponent");
+	SphereComponent->SetupAttachment(GetCapsuleComponent());
+	SphereComponent->SetSphereRadius(500.f);
+
 }
 
 void ACPlayer::BeginPlay()
@@ -62,13 +69,16 @@ void ACPlayer::BeginPlay()
 
 	CurrentHealth = MaxHealth;
 	CPlayerState = Cast<ACPlayerState>(GetController()->GetPlayerState<ACPlayerState>());
-	
+
 	InitializePlayerEnhnacedInput();
 
 	if (!Movement) return;
 	Movement->DisableControlRotation();
 
 	HUD = GetWorld()->GetFirstPlayerController()->GetHUD<ACHUD>();
+
+	SphereComponent->OnComponentBeginOverlap.AddDynamic(this, &ThisClass::OnSphereComponentBeginOverlap);
+	SphereComponent->OnComponentEndOverlap.AddDynamic(this, &ThisClass::OnSphereComponentEndOverlap);
 }
 
 void ACPlayer::InitializePlayerEnhnacedInput()
@@ -136,13 +146,46 @@ void ACPlayer::OnPlayerTakeDamage(AActor* DamagedActor, float Damage, const UDam
 	float defense = CPlayerState->GetStatComponent()->GetStatValue(FName("Defense"));
 	float FinalDamage = FMath::Clamp(Damage - defense, 0, 9999);
 
-	if(FinalDamage >0)
+	if (FinalDamage > 0)
 		SetCurrentHealth(-FinalDamage);
 
 
-	if(OnHealthBarUpdate.IsBound())
+	if (OnHealthBarUpdate.IsBound())
 		OnHealthBarUpdate.Broadcast(GetCurrentHealthPercent());
-	
+
+}
+
+void ACPlayer::OnSphereComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (OtherActor->ActorHasTag("Enemy"))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("%s"), *OtherActor->GetActorLabel());
+		if (IHPBarInteraction* hpBar = Cast<IHPBarInteraction>(OtherActor))
+		{
+			hpBar->ShowHPBar();
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Not HPBarInteraction"));
+		}
+	}
+}
+
+void ACPlayer::OnSphereComponentEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	UE_LOG(LogTemp, Warning, TEXT("End Overlap %s"), *OtherActor->GetName());
+
+	if (OtherActor->ActorHasTag("Enemy"))
+	{
+		if (IHPBarInteraction* hpBar = Cast<IHPBarInteraction>(OtherActor))
+		{
+			hpBar->HideHPBar();
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Not HPBarInteraction"));
+		}
+	}
 }
 
 void ACPlayer::Tick(float DeltaTime)
