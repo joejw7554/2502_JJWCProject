@@ -44,9 +44,9 @@ void ACEnemyBase_Katana::ReactToHit(AActor* DamageCauser)
 	// 공격 방향 계산
 	FVector AttackDirection = (DamageCauser->GetActorLocation() - GetActorLocation()).GetSafeNormal();
 	FVector ForwardVector = GetActorForwardVector();
-	FVector CrossProduct = FVector::CrossProduct(ForwardVector, AttackDirection);
 
 	// 앞뒤 및 좌우 방향 결정
+	FVector CrossProduct = FVector::CrossProduct(ForwardVector, AttackDirection);
 	float ForwardDot = FVector::DotProduct(ForwardVector, AttackDirection);
 	float RightDot = CrossProduct.Z;
 

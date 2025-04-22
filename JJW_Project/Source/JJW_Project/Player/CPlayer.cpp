@@ -61,6 +61,22 @@ ACPlayer::ACPlayer()
 
 }
 
+void ACPlayer::SetCurrentHealth(float InHealth)
+{
+	TargetHealth = FMath::Clamp(CurrentHealth + InHealth, 0.f, MaxHealth);
+	bInterpolatingHealth = true;
+
+	if (OnHealthBarUpdate.IsBound())
+		OnHealthBarUpdate.Broadcast(GetCurrentHealthPercent());
+
+	if (TargetHealth <= 0.f)
+	{
+		bIsDead = true;
+		//PlayDead Animation
+	}
+
+}
+
 void ACPlayer::BeginPlay()
 {
 	Super::BeginPlay();
@@ -136,10 +152,6 @@ void ACPlayer::ToggleStatMenu()
 	HUD->ToggleStat();
 }
 
-void ACPlayer::Dead()
-{
-	UE_LOG(LogTemp, Warning, TEXT("ACPlayer::Dead"));
-}
 
 void ACPlayer::OnPlayerTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
 {
@@ -149,42 +161,87 @@ void ACPlayer::OnPlayerTakeDamage(AActor* DamagedActor, float Damage, const UDam
 	if (FinalDamage > 0)
 		SetCurrentHealth(-FinalDamage);
 
+	PlayHitReactionMontage(DamageCauser, FinalDamage);
 
 	if (OnHealthBarUpdate.IsBound())
 		OnHealthBarUpdate.Broadcast(GetCurrentHealthPercent());
 
 }
 
+void ACPlayer::PlayHitReactionMontage(AActor* DamageCauser, float InDamageAmount)
+{
+	if (GetMesh()->GetAnimInstance()->IsAnyMontagePlaying()) return;
+
+	if (!DamageCauser || !HitReactMontage) return;
+
+	UE_LOG(LogTemp, Warning, TEXT("ACPlayer::OnPlayerTakeAnyDmage - Location %s"),*GetActorLocation().ToString());
+
+
+	FVector causerLocation = DamageCauser->GetActorLocation();
+	FVector forwardDirection = GetActorForwardVector();
+	FVector hitDirection = (causerLocation - GetActorLocation()).GetSafeNormal();
+
+	float forwardDot = FVector::DotProduct(forwardDirection, hitDirection);
+	float rightDot = FVector::CrossProduct(forwardDirection, hitDirection).Z;
+
+	FName montageSectionName;
+
+	if (FMath::Abs(forwardDot) > FMath::Abs(rightDot))
+	{
+		if (forwardDot > 0.f) //전방
+		{
+			if (InDamageAmount > 30.f)
+			{
+				montageSectionName = FName("HitFromFrontCritical");
+			}
+			else
+			{
+				int32 selection = FMath::RandRange(1, 4);
+				switch (selection)
+				{
+				case 1: montageSectionName = FName("HitFront"); break;
+				case 2: montageSectionName = FName("HitFront2"); break;
+				case 3: montageSectionName = FName("HitFront3"); break;
+				case 4: montageSectionName = FName("HitFront4"); break;
+				default: montageSectionName = FName("HitFront");
+				}
+			}
+		}
+		else //후방
+		{
+			montageSectionName = (InDamageAmount > 30.f) ? FName("HitFromBackCritical") : FName("HitFromBack");
+		}
+	}
+	else
+	{
+		if (rightDot > 0.f) //오른쪽
+		{
+			montageSectionName = FName("HitFromRight");
+		}
+		else //왼쪽
+		{
+			montageSectionName = FName("HitFromLeft");
+		}
+	}
+
+	PlayAnimMontage(HitReactMontage, HitMontagePlayRate, montageSectionName);
+}
+
 void ACPlayer::OnSphereComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	if (OtherActor->ActorHasTag("Enemy"))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("%s"), *OtherActor->GetActorLabel());
 		if (IHPBarInteraction* hpBar = Cast<IHPBarInteraction>(OtherActor))
-		{
 			hpBar->ShowHPBar();
-		}
-		else
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Not HPBarInteraction"));
-		}
 	}
 }
 
 void ACPlayer::OnSphereComponentEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	UE_LOG(LogTemp, Warning, TEXT("End Overlap %s"), *OtherActor->GetName());
-
 	if (OtherActor->ActorHasTag("Enemy"))
 	{
 		if (IHPBarInteraction* hpBar = Cast<IHPBarInteraction>(OtherActor))
-		{
 			hpBar->HideHPBar();
-		}
-		else
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Not HPBarInteraction"));
-		}
 	}
 }
 

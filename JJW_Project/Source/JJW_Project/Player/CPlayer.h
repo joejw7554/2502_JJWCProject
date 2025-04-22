@@ -12,6 +12,7 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FHealthBarUpdate, float, HealthPercent);
 
+
 UCLASS()
 class JJW_PROJECT_API ACPlayer : public ACharacter, public IGenericTeamAgentInterface
 {
@@ -38,21 +39,7 @@ public: //Getter
 
 
 private:
-	UFUNCTION(BlueprintCallable)
-	FORCEINLINE void SetCurrentHealth(float InHealth)
-	{
-		TargetHealth = FMath::Clamp(CurrentHealth + InHealth, 0.f, MaxHealth);
-		bInterpolatingHealth = true;
-
-		if (OnHealthBarUpdate.IsBound())
-			OnHealthBarUpdate.Broadcast(GetCurrentHealthPercent());
-
-		if (TargetHealth <= 0.f)
-		{
-			Dead();
-		}
-
-	}
+	void SetCurrentHealth(float InHealth);
 
 protected:
 	virtual void BeginPlay() override;
@@ -67,10 +54,10 @@ private:
 
 	void ToggleStatMenu();
 
-	void Dead();
-
 	UFUNCTION()
 	void OnPlayerTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser);
+
+	void PlayHitReactionMontage(AActor* DamageCauser, float InDamageAmount);
 
 	UFUNCTION()
 	void OnSphereComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
@@ -135,9 +122,14 @@ protected:
 	class USphereComponent* SphereComponent;
 
 private:
-
 	UPROPERTY(EditDefaultsOnly)
 	uint8 TeamID = 1;
+
+	UPROPERTY(EditDefaultsOnly)
+	UAnimMontage* HitReactMontage;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Montage|Hit")
+	float HitMontagePlayRate = 1.5f;
 
 	UPROPERTY(VisibleAnywhere)
 	FRotator CursorTargetRotation;
@@ -167,4 +159,6 @@ private:
 
 	UPROPERTY()
 	class ACHUD* HUD;
+
+	bool bIsDead = false;
 };

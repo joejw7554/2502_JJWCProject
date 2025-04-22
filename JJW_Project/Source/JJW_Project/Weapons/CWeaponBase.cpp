@@ -128,7 +128,10 @@ void ACWeaponBase::OnWeaponBeginOverlap(UPrimitiveComponent* OverlappedComponent
 	{
 		ApplyDamage(OtherActor, Damage, EnemyCharacter);
 	}
-	
+
+	UE_LOG(LogTemp, Warning, TEXT("CWeaponBase- BeginOverlap:: Weapon Location: %s"), *GetActorLocation().ToString());
+	UE_LOG(LogTemp, Warning, TEXT("CWeaponBase- BeginOverlap:: OtherActor Location: %s"), *GetActorLocation().ToString());
+
 }
 
 float ACWeaponBase::CalculateDamageForPlayer() const

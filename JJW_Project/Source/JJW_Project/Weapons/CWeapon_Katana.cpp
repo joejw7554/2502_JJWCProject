@@ -14,5 +14,4 @@ void ACWeapon_Katana::PostInitializeComponents()
 void ACWeapon_Katana::BeginPlay()
 {
 	Super::BeginPlay();
-
 }
