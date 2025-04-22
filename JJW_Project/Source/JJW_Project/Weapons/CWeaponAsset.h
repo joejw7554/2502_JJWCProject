@@ -19,19 +19,12 @@ public:
 	FORCEINLINE FEquipmentData GetEquipmentData() { return EquipmentData; }
 	FORCEINLINE FWeaponSkillSet& GetWeaponSkillSet() { return WeaponSkillSet; }
 
-	FORCEINLINE ACWeaponBase* GetWeapon() { return  Weapon; }
-
-	FORCEINLINE void SetWeapon(ACWeaponBase* InWeapon) { Weapon = InWeapon; }
-
 private:
 	UPROPERTY(EditAnywhere)
 	EWeaponType WeaponType = EWeaponType::Max;
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<ACWeaponBase> WeaponClass;
-
-	UPROPERTY(VisibleAnywhere)
-	ACWeaponBase* Weapon;
 
 	UPROPERTY(EditAnywhere, Category = "Equipment")
 	FEquipmentData EquipmentData;

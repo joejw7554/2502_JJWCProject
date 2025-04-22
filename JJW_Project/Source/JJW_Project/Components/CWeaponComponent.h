@@ -2,13 +2,33 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "../Weapons/CWeaponBase.h"
 #include "../Weapons/CWeaponStructure.h"
 #include "../Weapons/CSkillStructure.h"
+#include "../Weapons/CWeaponAsset.h"
 #include "CWeaponComponent.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FWeaponTypeChanged, EWeaponType, InPrevType, EWeaponType, InNewType);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FAIWeaponEquipped, bool, bIsArmed);
+
+
+USTRUCT()
+struct FWeaponData
+{
+	GENERATED_BODY()
+public:
+	FWeaponData() : Weapon(nullptr), WeaponType(EWeaponType::Max) {}
+	FWeaponData(ACWeaponBase* InWeapon, EWeaponType InType) : Weapon(InWeapon), WeaponType(InType) {}
+
+	ACWeaponBase* GetWeapon() { return Weapon; }
+	EWeaponType GetWeaponType() { return WeaponType; }
+
+private:
+	UPROPERTY()
+	ACWeaponBase* Weapon;
+
+	UPROPERTY()
+	EWeaponType WeaponType;
+};
 
 UCLASS()
 class JJW_PROJECT_API UCWeaponComponent : public UActorComponent
@@ -31,7 +51,26 @@ public:
 
 public:
 	EWeaponType GetCurrentWeaponType() { return CurrentWeaponType; }
-	class ACWeaponBase* GetCurrentWeapon();
+
+	class ACWeaponBase* GetWeapon(EWeaponType InType)
+	{
+		ACWeaponBase* weapon = WeaponData[(int8)InType].GetWeapon();
+		return weapon;
+	}
+	class ACWeaponBase* GetCurrentWeapon()
+	{
+		return GetWeapon(CurrentWeaponType);
+	}
+
+	class UCWeaponAsset* GetWeaponAsset(EWeaponType InType)
+	{
+		for (UCWeaponAsset* asset : WeaponAssets)
+		{
+			if (InType == asset->GetWeaponType())
+				return asset;
+		}
+		return nullptr;
+	}
 
 	FWeaponTypeChanged OnWeaponTypeChanged;
 	FAIWeaponEquipped OnAIWeaponStateChanged;
@@ -56,7 +95,7 @@ public:
 	void DisableWeaponCollision();
 
 public:
-	class UCWeaponAsset* GetWeaponAsset(EWeaponType WeaponType);
+	
 
 protected:
 	ACharacter* GetOwnerCharacter() { return OwnerCharacter; }
@@ -101,4 +140,7 @@ protected:
 
 	ESkillKey CurrentSkillKey;
 	bool bEnableCombo = false;
+
+	UPROPERTY()
+	TArray<FWeaponData> WeaponData;
 };

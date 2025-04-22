@@ -25,9 +25,10 @@ void UCAnimNotify_SetDamage::Notify(USkeletalMeshComponent* MeshComp, UAnimSeque
 	if (!weaponComp) return;
 
 	UCWeaponAsset* currentWeaponAsset = weaponComp->GetWeaponAsset(weaponComp->GetCurrentWeaponType());
+	
 	if (!currentWeaponAsset) return;
 
-	ACWeaponBase* weapon = currentWeaponAsset->GetWeapon();
+	ACWeaponBase* weapon = weaponComp->GetCurrentWeapon();
 	if (!weapon) return;
 
 	FWeaponSkillSet weaponSkillSet = currentWeaponAsset->GetWeaponSkillSet();

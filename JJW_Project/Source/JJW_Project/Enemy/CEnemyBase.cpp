@@ -39,7 +39,7 @@ ACEnemyBase::ACEnemyBase()
 	EnemyHPBarComponent = CreateDefaultSubobject<UCHPBarWidgetComponent>(TEXT("EnemyHPBarUIComponent"));
 	EnemyHPBarComponent->SetupAttachment(RootComponent);
 	EnemyHPBarComponent->SetWidgetSpace(EWidgetSpace::Screen);
-	EnemyHPBarComponent->SetDrawSize(FVector2D(100.f, 10.f));
+	EnemyHPBarComponent->SetDrawSize(FVector2D(200.f, 20.f));
 
 
 	SetWalkMode();

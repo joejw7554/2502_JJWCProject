@@ -5,8 +5,6 @@
 
 #include "CMovementComponent.h"
 #include "Weapons/CWeaponBase.h"
-#include "Weapons/CWeaponAsset.h"
-#include "Weapons/CSkillStructure.h"
 #include "Enemy/CAIController.h"
 
 #include "CSkill_Q.h"
@@ -50,15 +48,18 @@ void UCWeaponComponent::SpawnWeapons(UCWeaponAsset* asset)
 
 
 	ACWeaponBase* weapon = GetWorld()->SpawnActor<ACWeaponBase>(asset->GetWeaponClass(), params);
-	weapon->AttachToActor(OwnerCharacter, FAttachmentTransformRules::SnapToTargetIncludingScale);
 	if (!weapon) return;
 
-	asset->SetWeapon(weapon);
-	UCSkill_BasicCombo* basic = asset->GetWeapon()->GetBasicCombo();
-	UCSkill_Q* skillQ = asset->GetWeapon()->GetSkill_Q();
-	UCSkill_W* skillW = asset->GetWeapon()->GetSkill_W();
-	UCSkill_E* skillE = asset->GetWeapon()->GetSkill_E();
-	UCSkill_R* skillR = asset->GetWeapon()->GetSkill_R();
+	FWeaponData weaponData(weapon, asset->GetWeaponType());
+	WeaponData.Add(weaponData);
+
+	weapon->AttachToActor(OwnerCharacter, FAttachmentTransformRules::SnapToTargetIncludingScale);
+
+	UCSkill_BasicCombo* basic = weapon->GetBasicCombo();
+	UCSkill_Q* skillQ = weapon->GetSkill_Q();
+	UCSkill_W* skillW = weapon->GetSkill_W();
+	UCSkill_E* skillE = weapon->GetSkill_E();
+	UCSkill_R* skillR = weapon->GetSkill_R();
 
 	if (basic)
 		basic->InitialzeSkillData(&(asset->GetWeaponSkillSet()), ESkillKey::BasicCombo);
@@ -87,7 +88,7 @@ void UCWeaponComponent::AttachWeaponToSocket(EWeaponType WeaponType)
 {
 	UCWeaponAsset* asset = GetWeaponAsset(WeaponType);
 	if (!asset) return;
-	ACWeaponBase* weapon = asset->GetWeapon();
+	ACWeaponBase* weapon = WeaponData[(int8)WeaponType].GetWeapon();
 	if (!weapon) return;
 
 	FAttachmentTransformRules transformRules = FAttachmentTransformRules::SnapToTargetIncludingScale;
@@ -106,8 +107,8 @@ void UCWeaponComponent::AttachWeaponToSocket(EWeaponType WeaponType)
 void UCWeaponComponent::AttachWeaponToHand(EWeaponType WeaponType)
 {
 	UCWeaponAsset* asset = GetWeaponAsset(WeaponType);
+	ACWeaponBase* weapon = WeaponData[(int8)WeaponType].GetWeapon();
 	if (!asset) return;
-	ACWeaponBase* weapon = asset->GetWeapon();
 	if (!weapon) return;
 
 	FAttachmentTransformRules transformRules = FAttachmentTransformRules::SnapToTargetIncludingScale;
@@ -142,24 +143,6 @@ void UCWeaponComponent::DisableWeaponCollision()
 	weapon->GetRightMesh()->SetCollisionProfileName("NoCollision");
 	if (CurrentWeaponType == EWeaponType::Katana)
 		weapon->GetLeftMesh()->SetCollisionProfileName("NoCollision");
-
-}
-
-UCWeaponAsset* UCWeaponComponent::GetWeaponAsset(EWeaponType InType)
-{
-	for (UCWeaponAsset* asset : WeaponAssets)
-	{
-		if (InType == asset->GetWeaponType())
-			return asset;
-	}
-	return nullptr;
-}
-
-ACWeaponBase* UCWeaponComponent::GetCurrentWeapon()
-{
-	UCWeaponAsset* asset = GetWeaponAsset(CurrentWeaponType);
-
-	return asset->GetWeapon();
 }
 
 bool UCWeaponComponent::IsPlayingAnimAction()
@@ -282,12 +265,12 @@ void UCWeaponComponent::ActivateWeapon(EWeaponType WeaponType)
 {
 	if (WeaponType == EWeaponType::Katana)// 카타나일 경우 예외처리
 	{
-		UMeshComponent* LeftMesh = GetWeaponAsset(WeaponType)->GetWeapon()->GetLeftMesh();
+		UMeshComponent* LeftMesh = GetWeapon(WeaponType)->GetLeftMesh();
 		if (!LeftMesh) return;
 		LeftMesh->SetVisibility(true);
 	}
 
-	UMeshComponent* RightMesh = GetWeaponAsset(WeaponType)->GetWeapon()->GetRightMesh();
+	UMeshComponent* RightMesh = GetWeapon(WeaponType)->GetRightMesh();
 	if (!RightMesh) return;
 	RightMesh->SetVisibility(true);
 }
@@ -301,7 +284,7 @@ void UCWeaponComponent::DeActivateWeapon(EWeaponType WeaponType)
 
 	if (WeaponType == EWeaponType::Katana)
 	{
-		UMeshComponent* LeftMesh = GetWeaponAsset(WeaponType)->GetWeapon()->GetLeftMesh();
+		UMeshComponent* LeftMesh = GetWeapon(WeaponType)->GetLeftMesh();
 		if (!LeftMesh) return;
 
 		FName LHolsterSocket = GetWeaponAsset(WeaponType)->GetEquipmentData().LHolsterSocket;
@@ -310,7 +293,7 @@ void UCWeaponComponent::DeActivateWeapon(EWeaponType WeaponType)
 		LeftMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	}
 
-	UMeshComponent* RightMesh = GetWeaponAsset(WeaponType)->GetWeapon()->GetRightMesh();
+	UMeshComponent* RightMesh = GetWeapon(WeaponType)->GetRightMesh();
 	if (!RightMesh) return;
 
 	FName RHolsterSocket = GetWeaponAsset(WeaponType)->GetEquipmentData().RHolsterSocket;
