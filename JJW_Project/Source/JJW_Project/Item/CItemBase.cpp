@@ -13,16 +13,6 @@ ACItemBase::ACItemBase()
 	Tags.Add("Item");
 
 	SetRootComponent(ItemMesh);
-	ItemMesh->SetCollisionProfileName("Custom");
-	ItemMesh->SetCollisionObjectType(ECollisionChannel::ECC_WorldStatic);
-	ItemMesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldStatic, ECollisionResponse::ECR_Ignore);
-	ItemMesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
-	ItemMesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Ignore);
-
-	ItemMesh->SetSimulatePhysics(true);
-	ItemMesh->SetNotifyRigidBodyCollision(true);
-	ItemMesh->BodyInstance.bLockYTranslation = false;
-	ItemMesh->BodyInstance.bLockXTranslation = false;
 }
 
 void ACItemBase::Tick(float DeltaTime)
@@ -34,13 +24,27 @@ void ACItemBase::Tick(float DeltaTime)
 
 }
 
+void ACItemBase::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+
+	ItemMesh->SetSimulatePhysics(true);
+	ItemMesh->SetNotifyRigidBodyCollision(true);
+	ItemMesh->BodyInstance.bLockYTranslation = false;
+	ItemMesh->BodyInstance.bLockXTranslation = false;
+
+	ItemMesh->SetCollisionProfileName("Custom");
+	ItemMesh->SetCollisionObjectType(ECollisionChannel::ECC_WorldStatic);
+	ItemMesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldStatic, ECollisionResponse::ECR_Ignore);
+	ItemMesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
+	ItemMesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Ignore);
+}
+
 void ACItemBase::BeginPlay()
 {
 	Super::BeginPlay();
 
 	ItemMesh->OnComponentHit.AddDynamic(this, &ACItemBase::OnItemHit);
-
-	
 }
 
 void ACItemBase::ItemWave(float InDeltaTime)
@@ -58,6 +62,7 @@ void ACItemBase::OnItemHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPr
 		ItemMesh->SetSimulatePhysics(false);
 	}
 }
+
 
 //아이템 스폰 규칙
 	//몬스터가 Item PID 값을 가지고 있는다 Done

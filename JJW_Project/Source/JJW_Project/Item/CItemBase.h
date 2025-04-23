@@ -18,11 +18,13 @@ public:
 	FItemStructure& GetItemData() { return ItemData; }
 
 protected:
+	virtual void PostInitializeComponents() override;
 	virtual void BeginPlay() override;
 	void ItemWave(float InDeltaTime);
 
 	UFUNCTION()
 	void OnItemHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+
 
 	//Default Properties
 protected:

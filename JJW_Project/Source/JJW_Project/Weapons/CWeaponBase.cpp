@@ -127,8 +127,6 @@ void ACWeaponBase::OnWeaponBeginOverlap(UPrimitiveComponent* OverlappedComponent
 	else if (!bIsOwnerPlayer && bIsPlayerTarget)
 	{
 		ApplyDamage(OtherActor, Damage, EnemyCharacter);
-		UE_LOG(LogTemp, Warning, TEXT("CWeaponBase- BeginOverlap:: Player Location: %s"), *GetActorLocation().ToString());
-		UE_LOG(LogTemp, Warning, TEXT("CWeaponBase- BeginOverlap:: Player Address: %p"), OtherActor);
 	}
 
 

@@ -46,6 +46,8 @@ protected:
 
 
 private:
+	virtual void PostInitializeComponents() override;
+
 	void InitializePlayerEnhnacedInput();
 
 	void PickupItem();

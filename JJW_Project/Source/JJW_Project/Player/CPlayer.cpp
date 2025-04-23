@@ -58,7 +58,6 @@ ACPlayer::ACPlayer()
 	SphereComponent = CreateDefaultSubobject<USphereComponent>("SphereComponent");
 	SphereComponent->SetupAttachment(GetCapsuleComponent());
 	SphereComponent->SetSphereRadius(500.f);
-
 }
 
 void ACPlayer::SetCurrentHealth(float InHealth)
@@ -95,6 +94,15 @@ void ACPlayer::BeginPlay()
 
 	SphereComponent->OnComponentBeginOverlap.AddDynamic(this, &ThisClass::OnSphereComponentBeginOverlap);
 	SphereComponent->OnComponentEndOverlap.AddDynamic(this, &ThisClass::OnSphereComponentEndOverlap);
+}
+
+void ACPlayer::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+
+	SphereComponent->SetCollisionResponseToAllChannels(ECR_Ignore); //To Prvent Overlap with Weapon(WorldStatic)
+	SphereComponent->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap); //To Enable Overlap with Enemy
+
 }
 
 void ACPlayer::InitializePlayerEnhnacedInput()
@@ -160,9 +168,7 @@ void ACPlayer::OnPlayerTakeDamage(AActor* DamagedActor, float Damage, const UDam
 
 	if (FinalDamage > 0)
 		SetCurrentHealth(-FinalDamage);
-
-	UE_LOG(LogTemp, Warning, TEXT("ACPlayer::OnPlayerTakeAnyDmage - Location %s"),*GetActorLocation().ToString());
-	UE_LOG(LogTemp, Warning, TEXT("ACPlayer::OnPlayerTakeAnyDmage - PlayerAddress %p"),this);
+	
 	PlayHitReactionMontage(DamageCauser, FinalDamage);
 
 	if (OnHealthBarUpdate.IsBound())
@@ -258,7 +264,7 @@ void ACPlayer::Tick(float DeltaTime)
 		{
 			bInterpolatingHealth = false;
 			CurrentHealth = TargetHealth;
-			UE_LOG(LogTemp, Warning, TEXT("ACPlayer::CurrentHealth: %f"), CurrentHealth);
+			//UE_LOG(LogTemp, Warning, TEXT("ACPlayer::CurrentHealth: %f"), CurrentHealth);
 		}
 
 		if (OnHealthBarUpdate.IsBound())
