@@ -170,11 +170,13 @@ void ACPlayer::OnPlayerTakeDamage(AActor* DamagedActor, float Damage, const UDam
 
 void ACPlayer::PlayHitReactionMontage(AActor* DamageCauser, float InDamageAmount)
 {
-	if (GetMesh()->GetAnimInstance()->IsAnyMontagePlaying()) return;
+	//if (GetMesh()->GetAnimInstance()->IsAnyMontagePlaying()) return; //????
 
 	if (!DamageCauser || !HitReactMontage) return;
 
 	UE_LOG(LogTemp, Warning, TEXT("ACPlayer::OnPlayerTakeAnyDmage - Location %s"),*GetActorLocation().ToString());
+	UE_LOG(LogTemp, Warning, TEXT("ACPlayer::OnPlayerTakeAnyDmage - PlayerAddress %p"),this);
+	
 
 
 	FVector causerLocation = DamageCauser->GetActorLocation();
@@ -199,11 +201,11 @@ void ACPlayer::PlayHitReactionMontage(AActor* DamageCauser, float InDamageAmount
 				int32 selection = FMath::RandRange(1, 4);
 				switch (selection)
 				{
-				case 1: montageSectionName = FName("HitFront"); break;
-				case 2: montageSectionName = FName("HitFront2"); break;
-				case 3: montageSectionName = FName("HitFront3"); break;
-				case 4: montageSectionName = FName("HitFront4"); break;
-				default: montageSectionName = FName("HitFront");
+				case 1: montageSectionName = FName("HitFromFront1"); break;
+				case 2: montageSectionName = FName("HitFromFront2"); break;
+				case 3: montageSectionName = FName("HitFromFront3"); break;
+				case 4: montageSectionName = FName("HitFromFront4"); break;
+				default: montageSectionName = FName("HitFromFront1");
 				}
 			}
 		}
