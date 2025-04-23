@@ -161,6 +161,8 @@ void ACPlayer::OnPlayerTakeDamage(AActor* DamagedActor, float Damage, const UDam
 	if (FinalDamage > 0)
 		SetCurrentHealth(-FinalDamage);
 
+	UE_LOG(LogTemp, Warning, TEXT("ACPlayer::OnPlayerTakeAnyDmage - Location %s"),*GetActorLocation().ToString());
+	UE_LOG(LogTemp, Warning, TEXT("ACPlayer::OnPlayerTakeAnyDmage - PlayerAddress %p"),this);
 	PlayHitReactionMontage(DamageCauser, FinalDamage);
 
 	if (OnHealthBarUpdate.IsBound())
@@ -174,8 +176,6 @@ void ACPlayer::PlayHitReactionMontage(AActor* DamageCauser, float InDamageAmount
 
 	if (!DamageCauser || !HitReactMontage) return;
 
-	UE_LOG(LogTemp, Warning, TEXT("ACPlayer::OnPlayerTakeAnyDmage - Location %s"),*GetActorLocation().ToString());
-	UE_LOG(LogTemp, Warning, TEXT("ACPlayer::OnPlayerTakeAnyDmage - PlayerAddress %p"),this);
 	
 
 
