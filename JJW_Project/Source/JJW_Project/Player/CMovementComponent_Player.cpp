@@ -55,6 +55,8 @@ void UCMovementComponent_Player::BeginPlay()
 
 	PlayerController->bShowMouseCursor = true;
 	OwnerCharacter->GetCharacterMovement()->RotationRate = FRotator(0, 540.f, 0);
+
+	LastInputLocation = OwnerCharacter->GetActorLocation();
 }
 
 void UCMovementComponent_Player::MoveAction(const FInputActionValue& Value)

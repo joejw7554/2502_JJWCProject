@@ -178,12 +178,9 @@ void ACPlayer::OnPlayerTakeDamage(AActor* DamagedActor, float Damage, const UDam
 
 void ACPlayer::PlayHitReactionMontage(AActor* DamageCauser, float InDamageAmount)
 {
-	//if (GetMesh()->GetAnimInstance()->IsAnyMontagePlaying()) return; //????
-
 	if (!DamageCauser || !HitReactMontage) return;
 
-	
-
+	Movement->DisableMovment();
 
 	FVector causerLocation = DamageCauser->GetActorLocation();
 	FVector forwardDirection = GetActorForwardVector();
