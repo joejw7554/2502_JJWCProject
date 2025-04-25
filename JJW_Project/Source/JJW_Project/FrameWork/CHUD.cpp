@@ -39,5 +39,6 @@ void ACHUD::BeginPlay()
 
 
 	player->OnHealthBarUpdate.AddDynamic(healthUI, &UCUI_HealthBar::OnHealthBarChanged);
+	player->OnHealthBarUpdate.AddDynamic(healthUI, &UCUI_HealthBar::OnPlayerHealthValueTextUpdate);
 
 }

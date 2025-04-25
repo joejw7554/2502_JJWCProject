@@ -12,7 +12,6 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FHealthBarUpdate, float, HealthPercent);
 
-
 UCLASS()
 class JJW_PROJECT_API ACPlayer : public ACharacter, public IGenericTeamAgentInterface
 {

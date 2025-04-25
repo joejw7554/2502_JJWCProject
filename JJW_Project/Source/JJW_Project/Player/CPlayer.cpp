@@ -94,6 +94,10 @@ void ACPlayer::BeginPlay()
 
 	SphereComponent->OnComponentBeginOverlap.AddDynamic(this, &ThisClass::OnSphereComponentBeginOverlap);
 	SphereComponent->OnComponentEndOverlap.AddDynamic(this, &ThisClass::OnSphereComponentEndOverlap);
+
+	if(OnHealthBarUpdate.IsBound())
+	OnHealthBarUpdate.Broadcast(GetCurrentHealthPercent());
+	
 }
 
 void ACPlayer::PostInitializeComponents()

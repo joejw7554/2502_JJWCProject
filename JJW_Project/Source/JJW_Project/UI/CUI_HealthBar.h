@@ -13,6 +13,9 @@ protected:
 	UPROPERTY(meta = (BindWidget))
 	class UProgressBar* HealthBar;
 
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* HealthText;
+
 protected:
 	virtual void NativeConstruct() override;
 
@@ -20,5 +23,7 @@ public:
 	UFUNCTION()
 	void OnHealthBarChanged(float HealthPercent);
 	
+	UFUNCTION()
+	void OnPlayerHealthValueTextUpdate(float HealthValue);
 	
 };

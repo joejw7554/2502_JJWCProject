@@ -30,6 +30,11 @@ void UCSkillComponentBase::PerformSkill(bool bEnableCombo, int8 InComboIndex,  A
 	}
 
 	UAnimMontage* montage = SkillData->Montage;
+
+	if(InWeaponOwner->GetMesh()->GetAnimInstance()->IsAnyMontagePlaying()==true)
+	if (InWeaponOwner->GetMesh()->GetAnimInstance()->GetCurrentActiveMontage()!=montage)
+		return;
+
 	float playRate = SkillData->PlayRate;
 
 	UAnimInstance* animInstance = InWeaponOwner->GetMesh()->GetAnimInstance();
