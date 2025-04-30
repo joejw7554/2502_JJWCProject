@@ -50,6 +50,9 @@ public:
 	FORCEINLINE bool IsUnArmed() { return CurrentWeaponType == EWeaponType::Max; }
 
 public:
+	void DisableOwnerCollision();
+	void EnableOwnerCollision();
+
 	EWeaponType GetCurrentWeaponType() { return CurrentWeaponType; }
 
 	class ACWeaponBase* GetWeapon(EWeaponType InType)
@@ -84,7 +87,7 @@ public:
 
 protected:
 	void SetUnarmedMode();
-	
+
 
 public:
 	void ResetComboIndex() { CurrentComboIndex = 1; }
@@ -95,7 +98,7 @@ public:
 	void DisableWeaponCollision();
 
 public:
-	
+
 
 protected:
 	ACharacter* GetOwnerCharacter() { return OwnerCharacter; }
@@ -123,10 +126,13 @@ protected:
 public:
 	void Begin_Equip();
 	void End_Equip();
-	
+
+public:
+	void Defend();
+
 
 protected:
-	UPROPERTY(EditDefaultsOnly, Category="Weapon Assets")
+	UPROPERTY(EditDefaultsOnly, Category = "Weapon Assets")
 	TArray<class UCWeaponAsset*> WeaponAssets;
 
 protected:
@@ -143,4 +149,11 @@ protected:
 
 	UPROPERTY()
 	TArray<FWeaponData> WeaponData;
+
+protected:
+	UPROPERTY(EditDefaultsOnly)
+	class UAnimMontage* KatanaDefend_Montage;
+
+	UPROPERTY(EditDefaultsOnly)
+	float KatanaDefend_PlayRate = 1.f;
 };

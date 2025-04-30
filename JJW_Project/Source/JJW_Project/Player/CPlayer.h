@@ -113,6 +113,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	class UInputAction* IA_StatAction;
 
+	UPROPERTY(EditDefaultsOnly, Category="Input")
+	class UInputAction* IA_Defend;
+
 	UPROPERTY(VisibleAnywhere)
 	class USpringArmComponent* SpringArm;
 

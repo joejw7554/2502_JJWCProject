@@ -6,6 +6,7 @@
 #include "Weapons/CSkillStructure.h"
 #include "Enemy/CMovementComponent_Enemy.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "Enemy/CWeaponComponent_Enemy.h"
 
 UCBTTaskNode_Attack::UCBTTaskNode_Attack()
 {
@@ -29,7 +30,7 @@ EBTNodeResult::Type UCBTTaskNode_Attack::ExecuteTask(UBehaviorTreeComponent& Own
 	bool bIsPlayingMontage = enemy->GetMesh()->GetAnimInstance()->IsAnyMontagePlaying();
 	if (bIsPlayingMontage) return EBTNodeResult::Failed;
 
-	UCMovementComponent_Enemy* movementComponent = enemy->GetMovementComponent();
+	UCMovementComponent_Enemy* movementComponent = enemy->GetCMovementComponent();
 	if (!movementComponent)return EBTNodeResult::Failed;
 
 	AActor* target= Cast<AActor>(controller->GetBlackboardComponent()->GetValueAsObject(TEXT("Target")));
@@ -43,7 +44,7 @@ EBTNodeResult::Type UCBTTaskNode_Attack::ExecuteTask(UBehaviorTreeComponent& Own
 	targetRotation.Roll = 0.f;
 	movementComponent->SetTargetRotation(targetRotation);
 
-	UCWeaponComponent* weaponComponent = enemy->GetWeaponComponent();
+	UCWeaponComponent_Enemy* weaponComponent = enemy->GetWeaponComponent();
 	if (!weaponComponent) return EBTNodeResult::Failed;
 	int skillKey= FMath::RandRange(0,4);
 	ESkillKey skill = static_cast<ESkillKey>(skillKey);

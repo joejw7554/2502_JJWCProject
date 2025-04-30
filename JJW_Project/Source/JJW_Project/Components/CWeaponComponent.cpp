@@ -6,6 +6,7 @@
 #include "CMovementComponent.h"
 #include "Weapons/CWeaponBase.h"
 #include "Enemy/CAIController.h"
+#include "Components/CapsuleComponent.h"
 
 #include "CSkill_Q.h"
 #include "CSkill_W.h"
@@ -25,9 +26,15 @@ void UCWeaponComponent::BeginPlay()
 	Super::BeginPlay();
 
 	OwnerCharacter = Cast<ACharacter>(GetOwner());
-	if (!OwnerCharacter) return;
+	if (!OwnerCharacter)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("OwnerCharacter NULL"));
+		return;
+	}
 
 	MovementComp = OwnerCharacter->GetComponentByClass<UCMovementComponent>();
+	if(!MovementComp)
+	UE_LOG(LogTemp, Warning, TEXT("MovementComp NULL"));
 	if (!MovementComp) return;
 
 	for (UCWeaponAsset* asset : WeaponAssets)
@@ -123,6 +130,20 @@ void UCWeaponComponent::AttachWeaponToHand(EWeaponType WeaponType)
 	FName RHandSocket = asset->GetEquipmentData().RHandSocket;
 	weapon->GetRightMesh()->AttachToComponent(OwnerCharacter->GetMesh(), transformRules, RHandSocket);
 
+}
+
+void UCWeaponComponent::DisableOwnerCollision()
+{
+	if (!OwnerCharacter) return;
+
+	OwnerCharacter->GetCapsuleComponent()->SetGenerateOverlapEvents(false);
+}
+
+void UCWeaponComponent::EnableOwnerCollision()
+{
+	if (!OwnerCharacter) return;
+
+	OwnerCharacter->GetCapsuleComponent()->SetGenerateOverlapEvents(true);
 }
 
 void UCWeaponComponent::EnableWeaponCollision()
@@ -335,6 +356,16 @@ void UCWeaponComponent::End_Equip()
 {
 	UCWeaponAsset* asset = GetWeaponAsset(CurrentWeaponType);
 	MovementComp->DisableMovment();
+
+}
+
+void UCWeaponComponent::Defend()
+{
+	if (!KatanaDefend_Montage || !OwnerCharacter) return;
+	if (IsUnArmed()) return;
+
+	OwnerCharacter->PlayAnimMontage(KatanaDefend_Montage, KatanaDefend_PlayRate, "Section1");
+	DisableOwnerCollision();
 
 }
 

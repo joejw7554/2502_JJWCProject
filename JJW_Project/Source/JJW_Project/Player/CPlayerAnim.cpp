@@ -8,15 +8,9 @@
 void UCPlayerAnim::NativeInitializeAnimation()
 {
 	OwnerCharacter = Cast<ACharacter>(TryGetPawnOwner());
-
 	if (!OwnerCharacter) return;
 
 	Movement = OwnerCharacter->GetCharacterMovement();
-
-	ACPlayer* player = Cast<ACPlayer>(OwnerCharacter);
-	if (!player) return;
-
-	player->GetWeaponComponent()->OnWeaponTypeChanged.AddDynamic(this, &UCPlayerAnim::OnWeaponTypeChanged);
 }
 
 void UCPlayerAnim::NativeUpdateAnimation(float DeltaSeconds)
@@ -25,6 +19,13 @@ void UCPlayerAnim::NativeUpdateAnimation(float DeltaSeconds)
 		Speed = Movement->Velocity.Size2D();
 }
 
-void UCPlayerAnim::OnWeaponTypeChanged(EWeaponType InPrevType, EWeaponType InNewType)
+void UCPlayerAnim::NativeBeginPlay()
 {
+	Super::NativeBeginPlay();
+
+	ACPlayer* player = Cast<ACPlayer>(OwnerCharacter);
+	if (!player) return;
+
+
 }
+

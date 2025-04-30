@@ -24,7 +24,7 @@ class JJW_PROJECT_API ACEnemyBase_Katana : public ACEnemyBase
 public:
 	ACEnemyBase_Katana();
 	FORCEINLINE class UCWeaponComponent_Enemy* GetWeaponComponent() { return WeaponComponent; }
-	FORCEINLINE class UCMovementComponent_Enemy* GetMovementComponent() { return MovementComponent; }
+	FORCEINLINE class UCMovementComponent_Enemy* GetCMovementComponent() { return MovementComponent; }
 
 protected:
 	virtual void BeginPlay() override;

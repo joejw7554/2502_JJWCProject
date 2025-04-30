@@ -16,9 +16,7 @@ public:
 
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 
-private:
-	UFUNCTION()
-	void OnWeaponTypeChanged(EWeaponType InPrevType, EWeaponType InNewType);
+	virtual void NativeBeginPlay() override;
 
 protected:
 	UPROPERTY(VisibleAnywhere, Category="Player Property", BlueprintReadOnly)

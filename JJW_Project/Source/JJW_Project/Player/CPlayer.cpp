@@ -331,4 +331,7 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	if (IA_StatAction)
 		enhancedInput->BindAction(IA_StatAction, ETriggerEvent::Started, this, &ACPlayer::ToggleStatMenu);
+
+	if (IA_Defend)
+		enhancedInput->BindAction(IA_Defend, ETriggerEvent::Started, Weapon, &UCWeaponComponent::Defend);
 }
