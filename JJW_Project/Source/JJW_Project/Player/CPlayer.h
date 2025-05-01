@@ -7,13 +7,16 @@
 #include "Stats/CStatStructure.h"
 
 #include "GenericTeamAgentInterface.h"
+#include "Interfaces/Status.h"
+#include "PlayerStatus.h"
 
 #include "CPlayer.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FHealthBarUpdate, float, HealthPercent);
 
+
 UCLASS()
-class JJW_PROJECT_API ACPlayer : public ACharacter, public IGenericTeamAgentInterface
+class JJW_PROJECT_API ACPlayer : public ACharacter, public IGenericTeamAgentInterface, public IStatus
 {
 	GENERATED_BODY()
 
@@ -31,11 +34,19 @@ public:
 
 public: //Getter
 	FORCEINLINE UCWeaponComponent* GetWeaponComponent() { return Weapon; }
+
 	FORCEINLINE float GetCurrentHealthPercent() { return CurrentHealth / MaxHealth; }
 	FORCEINLINE float GetCurrentHealth() { return CurrentHealth; }
 	FORCEINLINE void IncreamentHealth(float InHealth) { SetCurrentHealth(InHealth); }
+
 	FORCEINLINE class ACPlayerState* GetPlayerState() { return CPlayerState; }
 
+	FORCEINLINE EStatus GetCurrentStatus() { return CurrentStatus; }
+	FORCEINLINE void SetCurrentStatus(EStatus InStatus) {  CurrentStatus= InStatus; }
+
+	virtual EStatus GetStatus() override { return CurrentStatus; }
+	virtual void SetStatus(EStatus InStatus) override { CurrentStatus = InStatus; UE_LOG(LogTemp, Warning, TEXT("SetStatus from player Called")); }
+	bool IsStatusDefend() { return CurrentStatus == EStatus::ES_Defend; }
 
 private:
 	void SetCurrentHealth(float InHealth);
@@ -165,4 +176,10 @@ private:
 	class ACHUD* HUD;
 
 	bool bIsDead = false;
+
+	private:
+	UPROPERTY()
+	EStatus CurrentStatus;
+
+
 };

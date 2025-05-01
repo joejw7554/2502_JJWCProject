@@ -13,6 +13,7 @@
 #include "CSkill_E.h"
 #include "CSkill_R.h"
 #include "CSkill_BasicCombo.h"
+#include "Interfaces/Status.h"
 
 UCWeaponComponent::UCWeaponComponent()
 {
@@ -130,13 +131,6 @@ void UCWeaponComponent::AttachWeaponToHand(EWeaponType WeaponType)
 	FName RHandSocket = asset->GetEquipmentData().RHandSocket;
 	weapon->GetRightMesh()->AttachToComponent(OwnerCharacter->GetMesh(), transformRules, RHandSocket);
 
-}
-
-void UCWeaponComponent::DisableOwnerCollision()
-{
-	if (!OwnerCharacter) return;
-
-	OwnerCharacter->GetCapsuleComponent()->SetGenerateOverlapEvents(false);
 }
 
 void UCWeaponComponent::EnableOwnerCollision()
@@ -364,8 +358,15 @@ void UCWeaponComponent::Defend()
 	if (!KatanaDefend_Montage || !OwnerCharacter) return;
 	if (IsUnArmed()) return;
 
+	if (IStatus* interface = Cast<IStatus>(OwnerCharacter))
+	{
+		interface->SetStatus(EStatus::ES_Defend);
+	}
+	
 	OwnerCharacter->PlayAnimMontage(KatanaDefend_Montage, KatanaDefend_PlayRate, "Section1");
-	DisableOwnerCollision();
+	GetCurrentWeapon()->GetLeftMesh()->SetCollisionResponseToChannel(ECC_WorldStatic, ECollisionResponse::ECR_Overlap);
+	GetCurrentWeapon()->GetRightMesh()->SetCollisionResponseToChannel(ECC_WorldStatic, ECollisionResponse::ECR_Overlap);
+
 
 }
 

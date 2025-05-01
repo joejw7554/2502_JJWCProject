@@ -10,7 +10,6 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FWeaponTypeChanged, EWeaponType, InPrevType, EWeaponType, InNewType);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FAIWeaponEquipped, bool, bIsArmed);
 
-
 USTRUCT()
 struct FWeaponData
 {
@@ -50,7 +49,6 @@ public:
 	FORCEINLINE bool IsUnArmed() { return CurrentWeaponType == EWeaponType::Max; }
 
 public:
-	void DisableOwnerCollision();
 	void EnableOwnerCollision();
 
 	EWeaponType GetCurrentWeaponType() { return CurrentWeaponType; }
@@ -156,4 +154,5 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly)
 	float KatanaDefend_PlayRate = 1.f;
+
 };

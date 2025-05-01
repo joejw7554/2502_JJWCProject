@@ -76,7 +76,6 @@ void ACWeaponBase::BeginPlay()
 	}
 
 
-
 	DamagedActors.Reserve(10);
 
 	ACEnemyBase* ownerEnemy = Cast<ACEnemyBase>(GetOwner());
@@ -128,6 +127,15 @@ void ACWeaponBase::OnWeaponBeginOverlap(UPrimitiveComponent* OverlappedComponent
 	{
 		ApplyDamage(OtherActor, Damage, EnemyCharacter);
 	}
+
+
+	if (Cast<IStatus>(OtherActor))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("This is a player Possess IStatus"));
+	}
+
+
+	
 
 
 }

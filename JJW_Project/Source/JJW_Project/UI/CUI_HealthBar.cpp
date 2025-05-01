@@ -27,7 +27,7 @@ void UCUI_HealthBar::OnHealthBarChanged(float HealthPercent)
 
 void UCUI_HealthBar::OnPlayerHealthValueTextUpdate(float HealthValue)
 {
-	UE_LOG(LogTemp, Warning, TEXT("UCUI_HealthBar::OnPlayerHealthValueTextUpdate: %f"), HealthValue);
+	//UE_LOG(LogTemp, Warning, TEXT("UCUI_HealthBar::OnPlayerHealthValueTextUpdate: %f"), HealthValue);
 	if (HealthText)
 	{
 		int32 HealthValueInt = FMath::RoundToInt(HealthValue * 100);
